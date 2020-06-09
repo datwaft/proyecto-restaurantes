@@ -1,9 +1,10 @@
 :root {
-  --header-fg: #ED561A;
-  --header-bg: #FFFFFF;
-  --body-bg: #EFEDED;
-  --footer-bg: #372B27;
-  --footer-fg: rgba(255, 255, 255, 0.75);
+  --headerfg: #ED561A;
+  --headerbg: #FFFFFF;
+  --header-active: rgba(0, 0, 0, 0.9);
+  --bodybg: #EFEDED;
+  --footerbg: #372B27;
+  --footerfg: rgba(255, 255, 255, 0.75);
 }
 
 @font-face {
@@ -14,6 +15,10 @@
 @font-face {
   font-family: TitilliumWebSemiBold;
   src: url(../fonts/TitilliumWeb-SemiBold.ttf);
+}
+
+[onclick] {
+  cursor: pointer;
 }
 
 html {
@@ -40,7 +45,6 @@ a {
 ul {
   list-style-type: none;
   padding: 0;
-  margin: 0;
 }
 
 img {
@@ -54,17 +58,30 @@ header {
   top: 0;
   left: 0;
   right: 0;
+  z-index: 1;
 }
 
 .header {
-  background: var(--header-bg);
-  color: var(--header-fg);
+  background: var(--headerbg);
+  color: var(--headerfg);
   font-family: TitilliumWebSemiBold;
   padding: .5rem 10vw;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.header a {
+  opacity: 0.769;
+}
+
+.header a:hover {
+  opacity: 1;
+}
+
+.header a.active {
+  color: var(--header-active);
 }
 
 .nav ul {
@@ -82,12 +99,12 @@ header {
 
 .body {
   flex-grow: 1;
-  background: var(--body-bg);
+  background: var(--bodybg);
 }
 
 .footer {
-  background: var(--footer-bg);
-  color: var(--footer-fg);
+  background: var(--footerbg);
+  color: var(--footerfg);
   display: flex;
   flex-direction: column;
   font-family: TitilliumWebRegular;
