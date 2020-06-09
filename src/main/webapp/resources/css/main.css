@@ -1,6 +1,6 @@
 :root {
-  --box-fg: #ED561A;
-  --box-bg: #FFFFFF;
+  --boxfg: #ED561A;
+  --boxbg: #FFFFFF;
 }
 
 .center-w {
@@ -12,13 +12,13 @@
 
 .box {
   padding: 1rem;
-  background: var(--box-bg);
-  color: var(--box-fg);
+  background: var(--boxbg);
+  color: var(--boxfg);
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 3%;
+  border-radius: 5px;
   margin-bottom: 7.5rem;
 }
 
@@ -30,10 +30,11 @@
 }
 
 .box button {
-  background: var(--box-fg);
-  color: var(--box-bg);
+  background: var(--boxfg);
+  color: var(--boxbg);
+  font-family: TitilliumWebSemiBold;
   border: none;
-  border-radius: 25px;
+  border-radius: 5px;
   width: 40vw;
   padding: .5rem 0;
   cursor: pointer;
