@@ -7,17 +7,11 @@
           <li>
             <a href="${pageContext.request.contextPath}/menu/index.jsp">View Menu</a>
           </li>
-          <li>
-            <a href="${pageContext.request.contextPath}/locations/index.jsp">Our Locations</a>
-          </li>
         </ul>
       </div>
       <div>
         <b class="footer-header">Information</b>
         <ul>
-          <li>
-            <a href="${pageContext.request.contextPath}/contact/index.jsp">Contact Us</a>
-          </li>
           <li>
             <a href="${pageContext.request.contextPath}/admin/login/index.jsp">Administrator</a>
           </li>
