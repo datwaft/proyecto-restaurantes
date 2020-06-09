@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Test extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     System.out.println(UserModel.getInstance().findAll());
+    System.out.println("la wea llegó aqui xd");
   } 
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
