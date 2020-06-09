@@ -2,27 +2,6 @@
 <persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
   <!-- Define Persistence Unit -->
   <persistence-unit name="RESTAURANT">
-    <class>app.logic.Dish</class>
-    <class>app.logic.Address</class>
-    <class>app.logic.Dishtoaditionaltype</class>
-    <class>app.logic.Additional</class>
-    <class>app.logic.Category</class>
-    <class>app.logic.Account</class>
-    <class>app.logic.Movement</class>
-    <class>app.logic.Currency</class>
-    <class>app.logic.Additionaltype</class>
-    <class>app.logic.Link</class>
-    <class>app.logic.Order</class>
-    <class>app.logic.User</class>
-    <class>app.logic.model.Order1</class>
-    <class>app.logic.model.DishtoAditionalType</class>
-    <class>app.logic.model.AdditionalType</class>
-    <class>app.logic.model.User</class>
-    <class>app.logic.model.Dish</class>
-    <class>app.logic.model.Additional</class>
-    <class>app.logic.model.Address</class>
-    <class>app.logic.model.Category</class>
-    <class>app.logic.Order1</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Restaurant?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
