@@ -1,4 +1,4 @@
-insert into `User`(`id`, `password`, `client`, `administrator`, `name`, `cellphone`) values 
-("admin", "password", 0, 1, "Administrator", "00000000"),
-("user", "password", 1, 0, "User", "87980934");
+insert into `User`(`email`, `password`, `name`, `client`, `admin`, `cellphone`) values 
+("admin@mail.com", "password", "Administrator", 0, 1, "00000000"),
+("user@mail.com", "password", "User", 1, 0, "87980934");
 select * from `User`;
