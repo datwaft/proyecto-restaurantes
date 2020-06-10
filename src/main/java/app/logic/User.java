@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -26,34 +24,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class User implements Serializable {
 
   private static final long serialVersionUID = 1L;
-  // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
   @Id
   @Basic(optional = false)
-  @NotNull
-  @Size(min = 1, max = 35)
   @Column(name = "email")
   private String email;
   @Basic(optional = false)
-  @NotNull
-  @Size(min = 1, max = 64)
   @Column(name = "password")
   private String password;
   @Basic(optional = false)
-  @NotNull
-  @Size(min = 1, max = 45)
   @Column(name = "name")
   private String name;
   @Basic(optional = false)
-  @NotNull
   @Column(name = "client")
   private boolean client;
   @Basic(optional = false)
-  @NotNull
   @Column(name = "admin")
   private boolean admin;
   @Basic(optional = false)
-  @NotNull
-  @Size(min = 1, max = 8)
   @Column(name = "cellphone")
   private String cellphone;
 
