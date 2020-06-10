@@ -1,7 +1,9 @@
 package app;
 
+import app.logic.User;
 import app.logic.model.UserModel;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class test extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    System.out.println(UserModel.getInstance().getAll());
+    List<User> users = UserModel.getInstance().getAll();
+    System.out.println(users.get(0).getCellphone());
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
