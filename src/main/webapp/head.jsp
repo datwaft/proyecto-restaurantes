@@ -1,3 +1,6 @@
+<!-- HTML Configuration -->
+<meta charset="UTF-8">
+<!-- FAVICON --> <!-- Usado para poner iconos a las páginas web -->
 <link rel="apple-touch-icon" sizes="180x180" href="${pageContext.request.contextPath}/resources/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/icons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/icons/favicon-16x16.png">
@@ -7,12 +10,17 @@
 <meta name="msapplication-TileColor" content="#9f00a7">
 <meta name="msapplication-config" content="${pageContext.request.contextPath}/resources/icons/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dropdown.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://kit.fontawesome.com/c3ca684320.js" crossorigin="anonymous"></script>
+<!-- FlatPickr --> <!-- Se usa para el selector de fecha -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/c3ca684320.js" crossorigin="anonymous"></script>
+<!-- VueJS -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+<!-- Dropdown -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dropdown.css">
 <script src="${pageContext.request.contextPath}/resources/js/dropdown.js"></script>
-<meta charset="UTF-8">
