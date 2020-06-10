@@ -1,41 +1,17 @@
-:root {
-  --boxfg: #ED561A;
-  --boxbg: #FFFFFF;
-}
-
-.center-w {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-}
-
 .box {
-  padding: 1rem;
-  background: var(--boxbg);
-  color: var(--boxfg);
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
   margin-bottom: 7.5rem;
 }
 
 .main-header {
+  color: rgb(var(--main-color));
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
-  font-weight: 600;
-  font-family: TitilliumWebSemiBold;
-  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
-.box button {
-  background: var(--boxfg);
-  color: var(--boxbg);
-  font-family: TitilliumWebSemiBold;
-  border: none;
-  border-radius: 5px;
+.main-button {
   width: 40vw;
-  padding: .5rem 0;
-  cursor: pointer;
 }

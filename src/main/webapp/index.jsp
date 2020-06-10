@@ -13,7 +13,7 @@
     <div class="center-w">
       <div class="box">
         <h1 class="main-header">Order delicious food online</h1>
-        <button class="main-button" onclick="window.location.href='${pageContext.request.contextPath}/menu/index.jsp'">Find</button>
+        <button class="main-button button" onclick="window.location.href='${pageContext.request.contextPath}/menu/index.jsp'">Find</button>
       </div>
     </div>
   </main>

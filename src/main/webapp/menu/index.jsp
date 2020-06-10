@@ -18,24 +18,24 @@
       <div class="center">
         <div class="box">
           <div class="dropdown">
-            <button class="dropdown-trigger">
+            <button class="dropdown-trigger button">
               <i class="fas fa-clock"></i>
               <b id="time">&nbsp;ASAP&nbsp;</b>
               <i class="fas fa-arrow-up"></i>
             </button>
             <div class="dropdown-item inactive">
-              <button onclick="time.value='ASAP'">
+              <button class="button" onclick="time.value='ASAP'">
                 <i class="fas fa-clock"></i>&nbsp;ASAP
               </button>
               <div class="dropdown">
-                <button class="dropdown-trigger">
+                <button class="dropdown-trigger button">
                   <i class="fas fa-calendar-times"></i>
                   &nbsp;Select Date&nbsp;
                   <i class="fas fa-arrow-up"></i>
                 </button>
                 <div class="dropdown-item inactive">
                   <input type="text" id="date" placeholder="Select Date..." readonly>
-                  <button onclick="processDate()">Set delivery time</button>
+                  <button class="button" onclick="processDate()">Set delivery time</button>
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
         <div class="cart">
           Add menu items to your cart.
         </div>
-        <button id="checkout">Checkout</button>
+        <button class="button" id="checkout">Checkout</button>
       </div>
     </div>
   </main>

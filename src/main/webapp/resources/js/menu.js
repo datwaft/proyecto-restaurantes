@@ -125,7 +125,7 @@ function renderDishes(category = null) {
           </div>
           <div class="content-left">
             <b>$${e.price}</b>
-            <button onclick="cart.push(${e.id})">
+            <button class="button" onclick="cart.push(${e.id})">
               <i class="fas fa-plus"></i>
             </button>
           </div>

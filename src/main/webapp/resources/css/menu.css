@@ -1,11 +1,16 @@
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                    Previous Declaration                                    ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
 :root {
-  --buttonbg: #efeded;
-  --buttonbg-selected: #d7d2d2;
-  --background: #ffffff;
-  --boxfg: #ED561A;
-  --boxbg: #FFFFFF;
+  --buttonbg: rgb(var(--background-color));
+  --buttonbg-selected: rgb(var(--background-alternate-color));
   --descriptionfg: #6D6461;
 }
+
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                  General Characteristics                                   ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
 
 .main {
   display: flex;
@@ -13,13 +18,6 @@
   justify-content: space-between;
   align-items: flex-start;
   margin: 0 10vw;
-  font-family: TitilliumWebRegular;
-}
-
-b, h1, h2, h3, h4, h5, h6 {
-  font-family: TitilliumWebSemiBold;
-  font-weight: normal;
-  margin: 0;
 }
 
 .left,
@@ -31,6 +29,15 @@ b, h1, h2, h3, h4, h5, h6 {
   bottom: 1rem;
 }
 
+.box {
+  padding: 1.5rem;
+  margin-bottom: .1rem;
+}
+
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                     Categories Column                                      ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
 .left {
   width: 10vw;
 }
@@ -39,17 +46,91 @@ b, h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
 }
 
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                        Menu Column                                         ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
 .center {
   flex-grow: 1;
   margin: 1.5rem 2rem;
 }
 
-.box {
-  background: var(--background);
-  padding: 1.5rem;
-  border-radius: 5px;
-  margin-bottom: .1rem;
+/* Dropdown */
+
+.dropdown-item {
+  display: flex;
+  flex-direction: column;
+  width: 10vw;
 }
+
+.dropdown-item > button {
+  margin-bottom: .5rem;
+}
+
+.dropdown-item input {
+  text-align: center;
+  margin-bottom: .5rem;
+}
+
+.dropdown-item input + button {
+  margin-bottom: 0;
+}
+
+.dropdown-inline-trigger {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  font-size: 1.3125rem;
+  cursor: pointer;
+}
+
+.dropdown-inline-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.dropdown-inline-item button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 1rem;
+}
+
+.dropdown-inline-item:not(.inactive) {
+  margin-top: 1rem;
+}
+
+.menu {
+  margin-top: .5rem;
+}
+
+.title {
+  margin-bottom: .5rem;
+  font-family: TitilliumWebSemiBold;
+  font-weight: normal;
+}
+
+.description {
+  color: var(--descriptionfg);
+}
+
+.content-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+}
+
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                      Checkout Column                                       ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
+/* ==> Mode Button <== */
 
 #mode {
   display: flex;
@@ -78,95 +159,12 @@ b, h1, h2, h3, h4, h5, h6 {
   border-radius: 0 5px 5px 0;
 }
 
+/* ==> Cart <== */
+
 .cart {
   min-height: 20vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-.box button {
-  background: var(--boxfg);
-  color: var(--boxbg);
-  font-family: TitilliumWebSemiBold;
-  border: none;
-  border-radius: 5px;
-  width: 100%;
-  padding: .5rem 0;
-  cursor: pointer;
-}
-
-.box button:hover {
-  opacity: 0.769;
-}
-
-.dropdown-item {
-  display: flex;
-  flex-direction: column;
-  width: 10vw;
-}
-
-.dropdown-item > button {
-  margin-bottom: .5rem;
-}
-
-.dropdown-item input {
-  text-align: center;
-  margin-bottom: .5rem;
-  font-family: TitilliumWebRegular;
-}
-
-.dropdown-item input + button {
-  margin-bottom: 0;
-}
-
-.menu {
-  margin-top: .5rem;
-}
-
-.dropdown-inline-trigger {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
-  font-size: 1.3125rem;
-  cursor: pointer;
-}
-
-.dropdown-inline-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.title {
-  margin-bottom: .5rem;
-  font-family: TitilliumWebSemiBold;
-  font-weight: normal;
-}
-
-.description {
-  color: var(--descriptionfg);
-}
-
-.content-left {
-  display: flex;
-  flex-direction: row;
-  justify-content: right;
-  align-items: center;
-}
-
-.dropdown-inline-item button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 2rem;
-  height: 2rem;
-  margin-left: 1rem;
-}
-
-.dropdown-inline-item:not(.inactive) {
-  margin-top: 1rem;
 }
