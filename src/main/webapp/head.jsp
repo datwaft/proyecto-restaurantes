@@ -6,7 +6,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/icons/favicon-16x16.png">
 <link rel="manifest" href="${pageContext.request.contextPath}/resources/icons/site.webmanifest">
 <link rel="mask-icon" href="${pageContext.request.contextPath}/resources/icons/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/icons/favicon.ico">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/icons/favicon2.ico">
 <meta name="msapplication-TileColor" content="#9f00a7">
 <meta name="msapplication-config" content="${pageContext.request.contextPath}/resources/icons/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">

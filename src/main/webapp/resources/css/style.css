@@ -3,7 +3,7 @@
 /* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
 
 :root {
-  --main-color: 237, 86, 26;
+  --main-color: 0, 179, 0;
   --background-color: 239, 237, 237;
   --background-alternate-color: 215, 210, 210;
   --secondary-color: 255, 255, 255;
@@ -13,7 +13,7 @@
   --headerbg: rgb(var(--secondary-color));
   --header-active: rgba(0, 0, 0, 0.9);
   --bodybg: rgb(var(--background-color));
-  --footerbg: #372B27;
+  --footerbg: #665500;
   --footerfg: rgba(var(--secondary-color), 0.75);
 }
 
