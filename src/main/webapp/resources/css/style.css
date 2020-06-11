@@ -31,8 +31,14 @@
 /* ║                                 Universal Characteristics                                  ║ */
 /* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
 
-[onclick] {
+[onclick],
+.selectable {
   cursor: pointer;
+}
+
+.selectable:hover,
+.selectable:focus {
+  opacity: 0.769;
 }
 
 * {

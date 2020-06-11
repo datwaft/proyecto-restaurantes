@@ -23,4 +23,3 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 <!-- Dropdown -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dropdown.css">
-<script src="${pageContext.request.contextPath}/resources/js/dropdown.js"></script>

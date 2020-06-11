@@ -13,47 +13,82 @@
     <div class="main">
       <div class="left">
         <h2>Categories</h2>
-        <ul id="categories"></ul>
+        <!-- START Vue: vmCategories -->
+        <ul id="categories">
+          <li v-if="selected !== null" class="clear-selection-button">
+            <a @click="selected = null" class="selectable">
+              <i class="fas fa-times"></i>&nbsp;Clear selection
+						</a>
+          </li>
+          <li v-for="category of categories" :key="category.id">
+            <a @click="selected = category.id" class="selectable">
+              {{ category.description }}
+            </a>
+          </li>
+        </ul>
+        <!-- END Vue: vmCategories -->
       </div>
       <div class="center">
         <div class="box">
-          <div class="dropdown">
-            <button class="dropdown-trigger button">
-              <i class="fas fa-clock"></i>
-              <b id="time">&nbsp;ASAP&nbsp;</b>
-              <i class="fas fa-arrow-up"></i>
-            </button>
-            <div class="dropdown-item inactive">
-              <button class="button" onclick="time.value='ASAP'">
+          <!-- START Vue: vmTime -->
+          <div id="time">
+            <dropdown-menu>
+              <template #trigger>
+                <i class="fas fa-clock"></i>
+                <b>&nbsp;{{time}}&nbsp;</b>
+              </template>
+              <button class="button" @click="time='ASAP'">
                 <i class="fas fa-clock"></i>&nbsp;ASAP
               </button>
-              <div class="dropdown">
-                <button class="dropdown-trigger button">
+              <dropdown-menu>
+                <template #trigger>
                   <i class="fas fa-calendar-times"></i>
                   &nbsp;Select Date&nbsp;
-                  <i class="fas fa-arrow-up"></i>
-                </button>
-                <div class="dropdown-item inactive">
-                  <input type="text" id="date" placeholder="Select Date..." readonly>
-                  <button class="button" onclick="processDate()">Set delivery time</button>
-                </div>
+                </template>
+                <input type="text" id="date-picker" placeholder="Select Date..." readonly>
+                <button class="button" @click="update">Set delivery time</button>
+              </dropdown-menu>
+            </dropdown-menu>
+          </div>
+          <!-- END Vue: vmTime -->
+        </div>
+        <!-- START Vue: vmDishes -->
+        <div class="menu" id="dishes">
+          <div class="box" v-for="(dishes, id) in dishesByCategory" :key="id">
+            <dropdown-menu>
+              <template #trigger>
+                <h3>{{ getCategoryById(id) }}</h3>
+              </template>
+              <div class="dropdown-inline-item" v-for="dish in dishes" :key="dish.id">
+                <div>
+									<div class="title">{{ dish.name }}</div>
+									<div class="description">{{ dish.description }}</div>
+								</div>
+								<div class="content-left">
+									<b>\${{ dish.price }}</b>
+									<button class="button">
+										<i class="fas fa-plus"></i>
+									</button>
+								</div>
               </div>
-            </div>
+            </dropdown-menu>
           </div>
         </div>
-        <div class="menu" id="dishes"></div>
+        <!-- END Vue: vmDishes -->
       </div>
       <div class="right box">
-        <div id="mode">
-          <span id="delivery" onclick="mode.mode = 'delivery'">
+        <!-- START Vue: vmOrderMode -->
+        <div id="orderMode">
+          <span class="selectable" :class="{active: isDelivery}" @click="orderMode = 'delivery'">
             <b>Delivery</b><br>
             in 15 min
           </span>
-          <span id="pick-up" onclick="mode.mode = 'pick-up'">
+          <span class="selectable" :class="{active: isPickUp}" @click="orderMode = 'pick-up'">
             <b>Pick-up</b><br>
             starts 06:00am
           </span>
         </div>
+        <!-- END Vue: vmOrderMode -->
         <div class="cart">
           Add menu items to your cart.
         </div>
@@ -65,16 +100,16 @@
 </body>
 <script>
   $(window).on('load', () => {
-    $('#date').flatpickr({
+    $('#date-picker').flatpickr({
       enableTime: true,
       dateFormat: "Y-m-d H:i",
       defaultDate: 'today',
       minDate: 'today',
       onChange: (_1, result, _2) => {
-        $('#date').val(result)
+        $('#date-picker').val(result);
       }
     })
   })
 </script>
-<script src="${pageContext.request.contextPath}/resources/js/menu.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/menu-new.js"></script>
 </html>

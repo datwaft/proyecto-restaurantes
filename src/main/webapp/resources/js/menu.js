@@ -1,85 +1,182 @@
-var categories = []
-var dishes = []
-var time = {
-  val: null,
-  listener: changeTime,
-  set value(val) {
-    if (this.val != val) {
-      this.val = val
-      this.listener(this)
-    }
-  },
-  get value() {
-    return this.val
-  }
-}
-var mode = {
-  delivery: false,
-  pickup: false,
-  listener: changeMode,
-  set mode(val) {
-    if (val == "delivery" && !this.delivery) {
-      this.delivery = true
-      this.pickup = false
-      this.listener(this)
-    } else if (val == "pick-up" && !this.pickup) {
-      this.pickup = true
-      this.delivery = false
-      this.listener(this)
-    }
-  },
-  get mode() {
-    if (this.delivery) return "delivery"
-    if (this.pickup) return "pick-up"
-  }
-}
-var cart = {
-  array: [],
-  listener: modifyCart,
-  push: function(e) {
-    this.array.push(e)
-    this.listener(this)
-  },
-  pop: function(callback) {
-    let x = this.array.findIndex(callback)
-    if (x >= 0) {
-      this.array.splice(x, x+1)
-      this.listener(this)
-    }
-  }
-}
+/*  NOTA IMPORTANTE 
+ *  
+ *  En la variable global llamada 'data' es donde se guardan los datos de esta página web,
+ *  con solo modificarla ya se modifican sus datos.
+ *
+ *  Ejemplo: 
+ *    Para actualizar las categorias basta con hacer `data.categories = [...]` y con eso ya
+ *    se renderizan las nuevas categorías.
+ *
+ *  Adicionalmente, voy a poner una descripción a cada atributo del data para saber qué
+ *  hace cada uno y qué utilidad posee.
+ *
+ *  Pd: Abajo del todo está la función donde se hacen las llamadas a la BD al inicio del
+ *  programa.
+ */ 
 
-$(window).on('load', async () => {
-  time.value = "ASAP"
-  mode.mode = "delivery"
-  await updateCategories()
-  renderCategories()
-  await updateDishes()
-  renderDishes()
+var data = {
+  /*  Aquí van las categorias para los platillos.
+   *
+   *  ¿Cómo deben ser los objetos internos?
+   *    Deben tener mínimo un atributo 'id' y un atributo 'description'.
+   *    Se le puede cambiar el nombre a los atributos internos, nada más avisar (ejemplo: si se
+   *    quiere 'name' en lugar de 'description').
+   */
+  categories: [],
+  /*  Aquí van los platillos.
+   *
+   *  ¿Cómo deben ser los objetos internos?
+   *    Deben tener mínimo los siguientes atributos:
+   *    - id
+   *    - name
+   *    - description
+   *    - price
+   *    - category (el id de la categoría a la que pertenecen)
+   *
+   *  La categoría se puede cambiar cuando se vaya a usar con la base de datos.
+   */
+  dishes: [],
+  /*  Aquí van los platillos que están en el carrito.
+   *
+   *  Todavía NO está planeado cómo seran, o cómo implementarlo, ahí lo vemos :D
+   */
+  cart: [],
+  /*  Es el id de la categoría que está seleccionada actualmente.
+   *  Si es null entonces se muestran todas las categorias.
+   */
+  selected: null,
+  /*  Es el modo de entrega, o sea, si es por envío o la persona viene a recogerlo.
+   *  Es un string siempre.
+   *  Puede ser "delivery" o "pick-up".
+   */
+  orderMode: "delivery",
+  /*  Es la fecha de entrega que el usuario eligió.
+   *  Puede ser "ASAP", en cuyo caso equivaldría a decir la fecha y hora actual.
+   *  También puede ser una fecha en formato: yyyy-MM-dd HH:mm e.g. 2020-06-10 22:53.
+   */
+  time: "ASAP"
+};
+
+/* ============================================================================================ 
+ * INICIO DE LA PROGRAMACIÓN RELACIONADA CON VUEJS
+ * ============================================================================================
+ */
+
+/* --> Vue Components <-- */
+
+var dropdown = {
+  data: function () {
+    return {
+      isShown: false
+    }
+  },
+  template: `
+    <div class="dropdown">
+      <button class="dropdown-trigger button" @click="isShown=!isShown">
+        <slot name="trigger"></slot>
+        <i class="fas" :class="{'fa-arrow-up': !isShown, 'fa-arrow-down': isShown}"></i>
+      </button>
+      <div v-show="isShown" class="dropdown-item">
+        <slot></slot>
+      </div>
+    </div>
+  `
+};
+
+var dropdownInline = {
+  data: function () {
+    return {
+      isShown: true
+    }
+  },
+  template: `
+    <div class="dropdown-inline">
+      <div class="dropdown-inline-trigger" @click="isShown=!isShown">
+        <slot name="trigger"></slot>
+        <i class="fas" :class="{'fa-arrow-up': !isShown, 'fa-arrow-down': isShown}"></i>
+      </div>
+      <div v-show="isShown">
+        <slot></slot>
+      </div>
+    </div>
+  `
+};
+
+/* --> Vue Instances <-- */
+
+var vmCategories = new Vue({
+  el: '#categories',
+  data: data
+});
+
+var vmOrderMode = new Vue({
+  el: '#orderMode',
+  data: data,
+  computed: {
+    isDelivery: function () {
+      return this.orderMode == "delivery";
+    },
+    isPickUp: function () {
+      return this.orderMode == "pick-up";
+    }
+  }
+});
+
+var vmTime = new Vue({
+  el: '#time',
+  data: data,
+  components: {
+    'dropdown-menu': dropdown
+  },
+  methods: {
+    update() {
+      this.time = $('#date-picker').val();
+    }
+  }
 })
 
-function renderCategories() {
-  let ul =  $('#categories')
-  ul.html(`
-    <li id="clear-selection-button" style="display: none; color: red;">
-      <a onclick="renderDishes()">
-        <i class="fas fa-times"></i>
-        Clear selection
-      </a>
-    </li>
-  `)
-  categories.forEach((e) => {
-    let li = $('<li>')
-    li.html(`
-      <a onclick="renderDishes(${e.id})">
-        ${e.description}
-      </a>
-    `)
-    ul.append(li)
-  })
-}
-async function updateCategories() {
-  categories = [
+var vmDishes = new Vue({
+  el: '#dishes',
+  data: data,
+  components: {
+    'dropdown-menu': dropdownInline
+  },
+  methods: {
+    getCategoryById(id) {
+      var object = this.categories.find((e) => e.id == id);
+      return (object ? object.description : "Invalid Category");
+    }
+  },
+  computed: {
+    dishesByCategory: function() {
+      if (this.selected !== null) {
+        return { [this.selected]: this.dishes.filter((e) => e.category == this.selected) };
+      }
+      var result = {};
+      this.dishes.forEach((e) => {
+        if (!result[e.category]) {
+					result[e.category] = [];
+				}
+        result[e.category].push(e);
+      });
+      return result;
+    }
+  }
+})
+
+/* ============================================================================================ 
+ * FIN DE LA PROGRAMACIÓN RELACIONADA CON VUEJS
+ * ============================================================================================
+ */
+
+/*  NOTA IMPORTANTE
+ *
+ *  Aquí se hacen las llamadas a la BD al inicio del programa.
+ *  Actualmente tienen datos de prueba.
+ */
+
+$(window).on('load', async () => {
+  data.categories = [
     {id: 0, description: "Appetizer"},
     {id: 1, description: "Main Course"},
     {id: 2, description: "Salads"},
@@ -92,91 +189,9 @@ async function updateCategories() {
     {id: 9, description: "Specials"},
     {id: 10, description: "Rice Dishes"}
   ]
-}
-
-function renderDishes(category = null) {
-  let div =  $('#dishes')
-  div.html('')
-  if (category === null) {
-    var to_render = dishes
-    $('#clear-selection-button').css({
-      display: "none"
-    })
-  } else {
-    var to_render = dishes.filter((e) => e.category === category)
-    $('#clear-selection-button').css({
-      display: "block"
-    })
-  }
-  to_render.forEach((e) => {
-    let box = $('<div>', {
-      class: 'box'
-    })
-    box.html(`
-      <div class="dropdown-inline">
-        <div class="dropdown-inline-trigger">
-          <h3>${categories.find((x) => e.category === x.id).description}</h3>
-          <i class="fas fa-arrow-down"></i>
-        </div>
-        <div class="dropdown-inline-item">
-          <div>
-            <div class="title">${e.name}</div>
-            <div class="description">${e.description}</div>
-          </div>
-          <div class="content-left">
-            <b>$${e.price}</b>
-            <button class="button" onclick="cart.push(${e.id})">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    `)
-    div.append(box)
-  })
-  var dropdown = $('.dropdown-inline');
-  dropdown.each((_, e) => {
-    let button = $(e).children('.dropdown-inline-trigger')
-    button.click(() => {
-      $(e).children('.dropdown-inline-item').toggleClass('inactive')
-      button.children('.fa-arrow-down, .fa-arrow-up')
-        .toggleClass('fa-arrow-up')
-        .toggleClass('fa-arrow-down')
-    })
-  })
-}
-async function updateDishes() {
-  dishes = [
+  data.dishes = [
     {id: 0, name: "PUFF-PUFF", description: "Is very tasty", price: '4.99', category: 0},
     {id: 1, name: "Pika Pika", description: "Do not eat pickachu", price: '199.99', category: 0},
-    {id: 2, name: "Pika Pika Not", description: "Un rico plato", price: '50', category: 1}
+    {id: 2, name: "Pika Pika Not", description: "Un rico plato", price: '50.99', category: 1}
   ]
-}
-
-function modifyCart(result) {
-  console.log("TODO: Cart has been modified")
-  console.log(result.array)
-}
-
-function changeMode(mode) {
-  if (mode.delivery) {
-    $('#pick-up').removeClass('active')
-    $('#delivery').addClass('active')
-  } else {
-    $('#delivery').removeClass('active')
-    $('#pick-up').addClass('active')
-  }
-}
-
-function processDate() {
-  let date = $('#date').val()
-  if (date !== "") {
-    time.value = date
-  }
-}
-
-function changeTime(time) {
-  console.log("TODO: Time has been changed")
-  console.log(time.value)
-  $('#time').text(time.value)
-}
+});
