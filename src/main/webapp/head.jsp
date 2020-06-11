@@ -24,3 +24,4 @@
 <!-- Dropdown -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dropdown.css">
 <script src="${pageContext.request.contextPath}/resources/js/dropdown.js"></script>
+<script>const ctx = "${pageContext.request.contextPath}"</script>

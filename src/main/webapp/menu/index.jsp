@@ -77,4 +77,5 @@
   })
 </script>
 <script src="${pageContext.request.contextPath}/resources/js/menu.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/petitions.js"></script>
 </html>
