@@ -3,7 +3,7 @@
 }
 
 .dropdown-item {
-  background: var(--background);
+  background: rgb(var(--secondary-color));
   position: absolute;
   top: 100%;
   left: 0;

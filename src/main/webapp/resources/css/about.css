@@ -1,7 +1,5 @@
 :root {
-  --defaultfg: #372b27;
-  --itemfg: #ED561A;
-  --boxbg: #FFFFFF;
+  --boxbg: rgb(var(--secondary-color));
 }
 
 .body > * {
@@ -10,7 +8,7 @@
 }
 
 .body {
-  padding: 10vh 0;
+  padding: 8vh 0;
   display: flex;
   flex-direction: column;
 }
@@ -22,22 +20,25 @@
   align-items: flex-start;
 }
 
+.h1 {
+  margin-bottom: 3rem;
+}
+
 .item,
 .description {
-  background: var(--boxbg);
+  background: rgb(var(--secondary-color));
   padding: 1rem;
   border-radius: 5px;
 }
 
 .item {
-  color: var(--itemfg);
+  color: rgb(var(--main-color));
   margin-right: 2rem;
   white-space: nowrap;
 }
 
 .description {
   flex-grow: 1;
-  font-family: TitilliumWebRegular;
 }
 
 .description h3 {
@@ -47,9 +48,4 @@
 .h1,
 .item {
   font-family: TitilliumWebSemiBold;
-}
-
-.h1,
-.description {
-  color: var(--defaultfg);
 }

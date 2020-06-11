@@ -1,10 +1,20 @@
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                    Previous Declaration                                    ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
 :root {
-  --headerfg: #ED561A;
-  --headerbg: #FFFFFF;
+  --main-color: 237, 86, 26;
+  --background-color: 239, 237, 237;
+  --background-alternate-color: 215, 210, 210;
+  --secondary-color: 255, 255, 255;
+  --font-color: 0, 0, 0;
+
+  --headerfg: rgb(var(--main-color));
+  --headerbg: rgb(var(--secondary-color));
   --header-active: rgba(0, 0, 0, 0.9);
-  --bodybg: #EFEDED;
+  --bodybg: rgb(var(--background-color));
   --footerbg: #372B27;
-  --footerfg: rgba(255, 255, 255, 0.75);
+  --footerfg: rgba(var(--secondary-color), 0.75);
 }
 
 @font-face {
@@ -17,24 +27,22 @@
   src: url(../fonts/TitilliumWeb-SemiBold.ttf);
 }
 
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                 Universal Characteristics                                  ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
 [onclick] {
   cursor: pointer;
 }
 
-html {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+* {
+  font-family: TitilliumWebRegular;
 }
 
-body {
-  flex-grow: 1;
+b, h1, h2, h3, h4, h5, h6 {
+  font-family: TitilliumWebSemiBold;
+  font-weight: normal;
   margin: 0;
-  padding: 0;
-  font-size: 0.875rem;
-  display: flex;
-  flex-direction: column;
-  overflow: visible;
 }
 
 a {
@@ -61,10 +69,62 @@ header {
   z-index: 1;
 }
 
+html {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  flex-grow: 1;
+  margin: 0;
+  padding: 0;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                    Reusable Components                                     ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
+.box {
+  padding: 1rem;
+  background: rgb(var(--secondary-color));
+  color: rgb(var(--font-color));
+  border-radius: 5px;
+}
+
+.button {
+  background: rgb(var(--main-color));
+  color: rgb(var(--secondary-color));
+  font-family: TitilliumWebSemiBold;
+  border: none;
+  border-radius: 5px;
+  padding: .5rem 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  opacity: 0.769;
+}
+
+.center-w {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                        Header & Nav                                        ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
 .header {
   background: var(--headerbg);
   color: var(--headerfg);
-  font-family: TitilliumWebSemiBold;
   padding: .5rem 10vw;
   display: flex;
   flex-direction: row;
@@ -73,6 +133,7 @@ header {
 }
 
 .header a {
+  font-family: TitilliumWebSemiBold;
   opacity: 0.769;
 }
 
@@ -97,17 +158,24 @@ header {
   font-size: 1.8rem;
 }
 
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                       Document Body                                        ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
 .body {
   flex-grow: 1;
   background: var(--bodybg);
 }
+
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                           Footer                                           ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
 
 .footer {
   background: var(--footerbg);
   color: var(--footerfg);
   display: flex;
   flex-direction: column;
-  font-family: TitilliumWebRegular;
 }
 
 .footer-top {
