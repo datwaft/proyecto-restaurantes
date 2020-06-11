@@ -111,5 +111,5 @@
     })
   })
 </script>
-<script src="${pageContext.request.contextPath}/resources/js/menu-new.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/menu.js"></script>
 </html>

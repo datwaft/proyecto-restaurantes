@@ -21,5 +21,4 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
-<!-- Dropdown -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dropdown.css">
