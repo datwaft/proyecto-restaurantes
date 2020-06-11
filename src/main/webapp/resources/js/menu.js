@@ -44,7 +44,7 @@ var data = {
   /*  Es el id de la categoría que está seleccionada actualmente.
    *  Si es null entonces se muestran todas las categorias.
    */
-  selected: null,
+  selected: [],
   /*  Es el modo de entrega, o sea, si es por envío o la persona viene a recogerlo.
    *  Es un string siempre.
    *  Puede ser "delivery" o "pick-up".
@@ -106,7 +106,16 @@ var dropdownInline = {
 
 var vmCategories = new Vue({
   el: '#categories',
-  data: data
+  data: data,
+  methods: {
+    select(id) {
+      if (this.selected.includes(id)) {
+        this.selected = this.selected.filter((e) => e !== id);
+      } else {
+        this.selected.push(id);
+      }
+    }
+  }
 });
 
 var vmOrderMode = new Vue({
@@ -149,15 +158,14 @@ var vmDishes = new Vue({
   },
   computed: {
     dishesByCategory: function() {
-      if (this.selected !== null) {
-        return { [this.selected]: this.dishes.filter((e) => e.category == this.selected) };
-      }
       var result = {};
       this.dishes.forEach((e) => {
-        if (!result[e.category]) {
-					result[e.category] = [];
-				}
-        result[e.category].push(e);
+        if (this.selected.length == 0 || this.selected.includes(e.category)) {
+          if (!result[e.category]) {
+            result[e.category] = [];
+          }
+          result[e.category].push(e);
+        }
       });
       return result;
     }

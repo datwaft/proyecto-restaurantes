@@ -15,13 +15,13 @@
         <h2>Categories</h2>
         <!-- START Vue: vmCategories -->
         <ul id="categories">
-          <li v-if="selected !== null" class="clear-selection-button">
-            <a @click="selected = null" class="selectable">
+          <li v-if="selected.length != 0" class="clear-selection-button">
+            <a @click="selected = []" class="selectable">
               <i class="fas fa-times"></i>&nbsp;Clear selection
 						</a>
           </li>
           <li v-for="category of categories" :key="category.id">
-            <a @click="selected = category.id" class="selectable">
+            <a @click="select(category.id)" class="selectable" :class="{selected: selected.includes(category.id)}">
               {{ category.description }}
             </a>
           </li>

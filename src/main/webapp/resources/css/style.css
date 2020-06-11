@@ -13,7 +13,7 @@
   --headerbg: rgb(var(--secondary-color));
   --header-active: rgba(0, 0, 0, 0.9);
   --bodybg: rgb(var(--background-color));
-  --footerbg: #665500;
+  --footerbg: #26220b;
   --footerfg: rgba(var(--secondary-color), 0.75);
 }
 
@@ -122,6 +122,12 @@ body {
   flex-direction: row;
   justify-content: center;
   align-content: center;
+}
+
+a.selected {
+  color: rgb(var(--main-color));
+  font-family: TitilliumWebSemiBold;
+  font-weight: normal;
 }
 
 /* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
