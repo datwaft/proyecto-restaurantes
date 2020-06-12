@@ -160,7 +160,7 @@ var vmDishes = new Vue({
     dishesByCategory: function() {
       var result = {};
       this.dishes.forEach((e) => {
-        if (this.selected.length == 0 || this.selected.includes(e.category)) {
+        if (this.selected.length == 0 || this.selected.includes(e.category.id)) {
           if (!result[e.category.id]) {
             result[e.category.id] = [];
           }
