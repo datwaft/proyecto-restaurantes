@@ -21,7 +21,7 @@
             <input type="password" v-model="password" placeholder="Password" :class="{invalid: !isPasswordValid}">
             <div><i class="fas fa-asterisk"></i></div>
           </div>
-          <button class="button">Login</button>
+          <button class="button" @click="submit()" v-bind:disabled="!isValid">Login</button>
           <button class="alt-button" onclick="location.href = '${pageContext.request.contextPath}/user/register';">Register</button>
         </div>
         <!-- END Vue: vmLogIn -->

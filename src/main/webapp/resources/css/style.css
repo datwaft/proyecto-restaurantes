@@ -98,6 +98,15 @@ input.invalid {
   border: 1px solid rgba(var(--invalid-color), .8);
 }
 
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button:disabled:hover {
+  opacity: 0.6;
+}
+
 /* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
 /* ║                                    Reusable Components                                     ║ */
 /* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */

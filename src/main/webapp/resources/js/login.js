@@ -53,6 +53,18 @@ var vmLogIn = new Vue({
         this.password.length <= 64
       ];
       return conditions.every((e) => e);
+    },
+    isValid: function() {
+        return this.isEmailValid && this.isPasswordValid;
+    }
+  },
+  methods: {
+    submit() {
+      /*  NOTA IMPORTANTE
+       *  
+       *  Aquí se coloca el envío a la base de datos y la redirección si la petición es correcta.
+       */
+      console.log(this.email, this.password);
     }
   }
 });
