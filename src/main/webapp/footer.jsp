@@ -5,7 +5,7 @@
         <b class="footer-header">TastyTasty</b>
         <ul>
           <li>
-            <a href="${pageContext.request.contextPath}/menu/index.jsp">View Menu</a>
+            <a href="${pageContext.request.contextPath}/menu">View Menu</a>
           </li>
         </ul>
       </div>
@@ -13,10 +13,10 @@
         <b class="footer-header">Information</b>
         <ul>
           <li>
-            <a href="${pageContext.request.contextPath}/admin/login/index.jsp">Administrator</a>
+            <a href="${pageContext.request.contextPath}/admin/login">Administrator</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/about/index.jsp">About Us</a>
+            <a href="${pageContext.request.contextPath}/about">About Us</a>
           </li>
         </ul>
       </div>
