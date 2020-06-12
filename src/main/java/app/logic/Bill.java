@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.logic;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
@@ -19,24 +15,23 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Mario
- */
 @Entity
 @Table(name = "bill")
 @XmlRootElement
 @NamedQueries({
   @NamedQuery(name = "Bill.findAll", query = "SELECT b FROM Bill b"),
   @NamedQuery(name = "Bill.findById", query = "SELECT b FROM Bill b WHERE b.id = :id"),
-  @NamedQuery(name = "Bill.findByAddress", query = "SELECT b FROM Bill b WHERE b.address = :address"),
-  @NamedQuery(name = "Bill.findByClient", query = "SELECT b FROM Bill b WHERE b.client = :client"),
-  @NamedQuery(name = "Bill.findByDeliveryType", query = "SELECT b FROM Bill b WHERE b.deliveryType = :deliveryType")})
+  @NamedQuery(name = "Bill.findByName", query = "SELECT b FROM Bill b WHERE b.name = :name"),
+  @NamedQuery(name = "Bill.findByOrderType", query = "SELECT b FROM Bill b WHERE b.orderType = :orderType"),
+  @NamedQuery(name = "Bill.findByOrderTime", query = "SELECT b FROM Bill b WHERE b.orderTime = :orderTime"),
+  @NamedQuery(name = "Bill.findByStatus", query = "SELECT b FROM Bill b WHERE b.status = :status")})
 public class Bill implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -45,27 +40,33 @@ public class Bill implements Serializable {
   @NotNull
   @Column(name = "id")
   private Integer id;
-  @Basic(optional = false)
-  @NotNull
-  @Size(min = 1, max = 100)
-  @Column(name = "address")
-  private String address;
-  @Basic(optional = false)
-  @NotNull
-  @Size(min = 1, max = 45)
-  @Column(name = "client")
-  private String client;
+  @Size(max = 45)
+  @Column(name = "name")
+  private String name;
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 10)
-  @Column(name = "deliveryType")
-  private String deliveryType;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "billId")
+  @Column(name = "orderType")
+  private String orderType;
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "orderTime")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date orderTime;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 45)
+  @Column(name = "status")
+  private String status;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "bill")
   @JsonbTransient
-  private List<Billtodish> billtodishList;
-  @JoinColumn(name = "user_id", referencedColumnName = "email")
+  private List<SelectedDish> selectedDishList;
+  @JoinColumn(name = "address", referencedColumnName = "id")
   @ManyToOne
-  private User userId;
+  private Address address;
+  @JoinColumn(name = "user", referencedColumnName = "email")
+  @ManyToOne
+  private User user;
 
   public Bill() {
   }
@@ -74,11 +75,11 @@ public class Bill implements Serializable {
     this.id = id;
   }
 
-  public Bill(Integer id, String address, String client, String deliveryType) {
+  public Bill(Integer id, String orderType, Date orderTime, String status) {
     this.id = id;
-    this.address = address;
-    this.client = client;
-    this.deliveryType = deliveryType;
+    this.orderType = orderType;
+    this.orderTime = orderTime;
+    this.status = status;
   }
 
   public Integer getId() {
@@ -89,45 +90,61 @@ public class Bill implements Serializable {
     this.id = id;
   }
 
-  public String getAddress() {
-    return address;
+  public String getName() {
+    return name;
   }
 
-  public void setAddress(String address) {
-    this.address = address;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public String getClient() {
-    return client;
+  public String getOrderType() {
+    return orderType;
   }
 
-  public void setClient(String client) {
-    this.client = client;
+  public void setOrderType(String orderType) {
+    this.orderType = orderType;
   }
 
-  public String getDeliveryType() {
-    return deliveryType;
+  public Date getOrderTime() {
+    return orderTime;
   }
 
-  public void setDeliveryType(String deliveryType) {
-    this.deliveryType = deliveryType;
+  public void setOrderTime(Date orderTime) {
+    this.orderTime = orderTime;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
   }
 
   @XmlTransient
-  public List<Billtodish> getBilltodishList() {
-    return billtodishList;
+  public List<SelectedDish> getSelectedDishList() {
+    return selectedDishList;
   }
 
-  public void setBilltodishList(List<Billtodish> billtodishList) {
-    this.billtodishList = billtodishList;
+  public void setSelectedDishList(List<SelectedDish> selectedDishList) {
+    this.selectedDishList = selectedDishList;
   }
 
-  public User getUserId() {
-    return userId;
+  public Address getAddress() {
+    return address;
   }
 
-  public void setUserId(User userId) {
-    this.userId = userId;
+  public void setAddress(Address address) {
+    this.address = address;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 
   @Override
@@ -154,5 +171,5 @@ public class Bill implements Serializable {
   public String toString() {
     return "app.logic.Bill[ id=" + id + " ]";
   }
-  
+
 }

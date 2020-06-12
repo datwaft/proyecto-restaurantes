@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.logic;
 
 import java.io.Serializable;
@@ -26,10 +21,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Mario
- */
 @Entity
 @Table(name = "dish")
 @XmlRootElement
@@ -61,14 +52,15 @@ public class Dish implements Serializable {
   @Size(min = 1, max = 45)
   @Column(name = "description")
   private String description;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "dishId")
-  private List<Billtodish> billtodishList;
-  @JoinColumn(name = "category_id", referencedColumnName = "id")
-  @ManyToOne(optional = false)
-  private Category categoryId;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "dishId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
   @JsonbTransient
-  private List<Dishtoadditionaltype> dishtoadditionaltypeList;
+  private List<SelectedDish> selectedDishList;
+  @JoinColumn(name = "category", referencedColumnName = "id")
+  @ManyToOne(optional = false)
+  private Category category;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
+  @JsonbTransient
+  private List<AdditionalCategory> additionalCategoryList;
 
   public Dish() {
   }
@@ -117,29 +109,29 @@ public class Dish implements Serializable {
   }
 
   @XmlTransient
-  public List<Billtodish> getBilltodishList() {
-    return billtodishList;
+  public List<SelectedDish> getSelectedDishList() {
+    return selectedDishList;
   }
 
-  public void setBilltodishList(List<Billtodish> billtodishList) {
-    this.billtodishList = billtodishList;
+  public void setSelectedDishList(List<SelectedDish> selectedDishList) {
+    this.selectedDishList = selectedDishList;
   }
 
-  public Category getCategoryId() {
-    return categoryId;
+  public Category getCategory() {
+    return category;
   }
 
-  public void setCategoryId(Category categoryId) {
-    this.categoryId = categoryId;
+  public void setCategory(Category category) {
+    this.category = category;
   }
 
   @XmlTransient
-  public List<Dishtoadditionaltype> getDishtoadditionaltypeList() {
-    return dishtoadditionaltypeList;
+  public List<AdditionalCategory> getAdditionalCategoryList() {
+    return additionalCategoryList;
   }
 
-  public void setDishtoadditionaltypeList(List<Dishtoadditionaltype> dishtoadditionaltypeList) {
-    this.dishtoadditionaltypeList = dishtoadditionaltypeList;
+  public void setAdditionalCategoryList(List<AdditionalCategory> additionalCategoryList) {
+    this.additionalCategoryList = additionalCategoryList;
   }
 
   @Override
@@ -166,5 +158,5 @@ public class Dish implements Serializable {
   public String toString() {
     return "app.logic.Dish[ id=" + id + " ]";
   }
-  
+
 }

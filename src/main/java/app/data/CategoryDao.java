@@ -19,7 +19,7 @@ public class CategoryDao extends AbstractFacade<Category> implements Serializabl
     try {
       super.persist(obj);
     } catch (PersistenceException e) {
-      System.out.print("An error occurred while creating the User.\n\n Error:" + e + "\n\n");
+      System.out.print("An error occurred while creating the Category.\n\n Error:" + e + "\n\n");
     }
   }
 
@@ -27,7 +27,7 @@ public class CategoryDao extends AbstractFacade<Category> implements Serializabl
     try {
       super.merge(obj);
     } catch (PersistenceException e) {
-      System.out.print("An error occurred while editing the User.\n\n Error:" + e + "\n\n");
+      System.out.print("An error occurred while editing the Category.\n\n Error:" + e + "\n\n");
     }
   }
 
@@ -35,7 +35,7 @@ public class CategoryDao extends AbstractFacade<Category> implements Serializabl
     try {
       super.remove(obj);
     } catch (PersistenceException e) {
-      System.out.print("An error occurred while deleting the User.\n\n Error:" + e + "\n\n");
+      System.out.print("An error occurred while deleting the Category.\n\n Error:" + e + "\n\n");
     }
   }
 
@@ -46,7 +46,7 @@ public class CategoryDao extends AbstractFacade<Category> implements Serializabl
         .setParameter("id", id)
         .getResultList();
     } catch (Exception e) {
-      System.out.print("An error occurred while getting email = '" + id + "' from table category.\n\n Error:" + e + "\n\n");
+      System.out.print("An error occurred while getting id = '" + id + "' from table category.\n\n Error:" + e + "\n\n");
       return null;
     } finally {
       em.close();
