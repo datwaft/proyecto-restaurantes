@@ -21,9 +21,9 @@ public class Personas {
 
     
     @GET
-    @Path("/users")
+    @Path("/us")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<User> get(@PathParam("cedula") String cedula) {
+    public List<User> get() {
         try {
             return UserModel.getInstance().getAll();
         } catch (Exception ex) {
