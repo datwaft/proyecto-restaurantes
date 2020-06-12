@@ -184,22 +184,5 @@ var vmDishes = new Vue({
  */
 
 $(window).on('load', async () => {
-  data.categories = [
-    {id: 0, description: "Appetizer"},
-    {id: 1, description: "Main Course"},
-    {id: 2, description: "Salads"},
-    {id: 3, description: "Seafoods"},
-    {id: 4, description: "Traditional"},
-    {id: 5, description: "Vegetarian"},
-    {id: 6, description: "Soups"},
-    {id: 7, description: "Desserts"},
-    {id: 8, description: "Drinks"},
-    {id: 9, description: "Specials"},
-    {id: 10, description: "Rice Dishes"}
-  ]
-  data.dishes = [
-    {id: 0, name: "PUFF-PUFF", description: "Is very tasty", price: '4.99', category: 0},
-    {id: 1, name: "Pika Pika", description: "Do not eat pickachu", price: '199.99', category: 0},
-    {id: 2, name: "Pika Pika Not", description: "Un rico plato", price: '50.99', category: 1}
-  ]
+  data.categories = await loadCategory();
 });

@@ -4,6 +4,7 @@
 
 :root {
   --main-color: 0, 179, 0;
+  --main-alternate-color: 109, 100, 97;
   --background-color: 239, 237, 237;
   --background-alternate-color: 215, 210, 210;
   --secondary-color: 255, 255, 255;
@@ -115,6 +116,22 @@ body {
 
 .button:hover {
   opacity: 0.769;
+}
+
+.alt-button {
+  background: rgb(var(--secondary-color));
+  color: rgb(var(--main-alternate-color));
+  font-family: TitilliumWebSemiBold;
+  border: 1px solid rgb(var(--main-alternate-color));
+  border-radius: 5px;
+  padding: .5rem 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.alt-button:hover {
+  background: rgb(var(--main-alternate-color));
+  color: rgb(var(--secondary-color));
 }
 
 .center-w {
