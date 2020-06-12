@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,6 +40,7 @@ public class Billtodish implements Serializable {
   @Column(name = "id")
   private Integer id;
   @Basic(optional = false)
+  @NotNull
   @Column(name = "quantity")
   private int quantity;
   @JoinColumn(name = "bill_id", referencedColumnName = "id")

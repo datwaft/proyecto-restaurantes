@@ -185,4 +185,5 @@ var vmDishes = new Vue({
 
 $(window).on('load', async () => {
   data.categories = await loadCategory();
+  data.dishes = await loadDishes();
 });

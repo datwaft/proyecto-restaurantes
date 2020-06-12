@@ -7,6 +7,7 @@ package app.logic;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -41,9 +44,12 @@ public class Category implements Serializable {
   @Column(name = "id")
   private Integer id;
   @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 15)
   @Column(name = "description")
   private String description;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
+  @JsonbTransient
   private List<Dish> dishList;
 
   public Category() {

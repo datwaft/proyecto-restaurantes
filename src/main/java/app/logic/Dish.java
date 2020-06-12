@@ -7,6 +7,7 @@ package app.logic;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -33,7 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
   @NamedQuery(name = "Dish.findAll", query = "SELECT d FROM Dish d"),
   @NamedQuery(name = "Dish.findById", query = "SELECT d FROM Dish d WHERE d.id = :id"),
-  @NamedQuery(name = "Dish.findByPrice", query = "SELECT d FROM Dish d WHERE d.price = :price")})
+  @NamedQuery(name = "Dish.findByPrice", query = "SELECT d FROM Dish d WHERE d.price = :price"),
+  @NamedQuery(name = "Dish.findByName", query = "SELECT d FROM Dish d WHERE d.name = :name"),
+  @NamedQuery(name = "Dish.findByDescription", query = "SELECT d FROM Dish d WHERE d.description = :description")})
 public class Dish implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -43,14 +48,26 @@ public class Dish implements Serializable {
   @Column(name = "id")
   private Integer id;
   @Basic(optional = false)
+  @NotNull
   @Column(name = "price")
   private int price;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 45)
+  @Column(name = "name")
+  private String name;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 45)
+  @Column(name = "description")
+  private String description;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "dishId")
   private List<Billtodish> billtodishList;
   @JoinColumn(name = "category_id", referencedColumnName = "id")
   @ManyToOne(optional = false)
   private Category categoryId;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "dishId")
+  @JsonbTransient
   private List<Dishtoadditionaltype> dishtoadditionaltypeList;
 
   public Dish() {
@@ -60,9 +77,11 @@ public class Dish implements Serializable {
     this.id = id;
   }
 
-  public Dish(Integer id, int price) {
+  public Dish(Integer id, int price, String name, String description) {
     this.id = id;
     this.price = price;
+    this.name = name;
+    this.description = description;
   }
 
   public Integer getId() {
@@ -79,6 +98,22 @@ public class Dish implements Serializable {
 
   public void setPrice(int price) {
     this.price = price;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   @XmlTransient

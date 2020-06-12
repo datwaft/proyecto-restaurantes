@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,9 +42,12 @@ public class Additional implements Serializable {
   @Column(name = "id")
   private Integer id;
   @Basic(optional = false)
+  @NotNull
   @Column(name = "price")
   private int price;
   @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 25)
   @Column(name = "description")
   private String description;
   @JoinColumn(name = "additional_type_id", referencedColumnName = "id")
