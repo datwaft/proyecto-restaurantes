@@ -4,7 +4,8 @@
 <head>
   <%@ include file="/head.jsp" %> 
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css">
-  <title>Login - TastyTasty</title>
+  <title>LogIn - TastyTasty</title>
+  <script>$(window).on('load', () => $('#a-login').addClass('active'))</script>
 </head>
 <body>
   <%@ include file="/header.jsp" %> 
@@ -14,12 +15,12 @@
         <div id="login">
           <h3 class="title">Log In</h3>
           <div class="input-group">
-            <input type="text" v-model="email" placeholder="Email Address" :class="{invalid: !isEmailValid}">
-            <div><i class="fas fa-at"></i></div>
+            <input type="text" v-model.trim="email" placeholder="Email Address" :class="{invalid: !isEmailValid}">
+            <div class="symbol"><i class="fas fa-at"></i></div>
           </div>
           <div class="input-group">
             <input type="password" v-model="password" placeholder="Password" :class="{invalid: !isPasswordValid}">
-            <div><i class="fas fa-asterisk"></i></div>
+            <div class="symbol"><i class="fas fa-asterisk"></i></div>
           </div>
           <button class="button" @click="submit()" v-bind:disabled="!isValid">Login</button>
           <button class="alt-button" onclick="location.href = '${pageContext.request.contextPath}/user/register';">Register</button>

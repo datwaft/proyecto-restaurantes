@@ -21,14 +21,24 @@
  */
 
 var data = {
+  /*  Esta variable guarda el nombre del usuario.
+   */
+  firstname: '',
+  /*  Esta variable guarda el apellido del usuario.
+   */
+  lastname: '',
   /*  Esta variable guarda la dirección de email del usuario.
-   *  Se actualiza de manera automática.
    */
   email: '',
   /*  Esta variable guarda la contraseña del usuario.
-   *  Se actualiza de manera automática.
    */
-  password: ''
+  password: '',
+  /*  Esta variable contiene la confirmación de la contraseña.
+   */
+  repassword: '',
+  /*  Esta variable contiene el número teléfono.
+   */
+  telephone: ''
 };
 
 /* ============================================================================================ 
@@ -36,10 +46,24 @@ var data = {
  * ============================================================================================
  */
 
-var vmLogIn = new Vue({
-  el: '#login',
+var vmRegister = new Vue({
+  el: '#register',
   data: data,
   computed: {
+    isFirstNameValid: function () {
+      var conditions = [
+        this.firstname.length > 0,
+        this.firstname.length <= 45
+      ];
+      return conditions.every((e) => e);
+    },
+    isLastNameValid: function () {
+      var conditions = [
+        this.lastname.length > 0,
+        this.lastname.length <= 45
+      ];
+      return conditions.every((e) => e);
+    },
     isEmailValid: function () {
       var conditions = [
         this.email.length > 0,
@@ -54,10 +78,29 @@ var vmLogIn = new Vue({
       ];
       return conditions.every((e) => e);
     },
+    isRePasswordValid: function () {
+      var conditions = [
+        this.repassword.length > 0,
+        this.repassword == this.password
+      ];
+      return conditions.every((e) => e);
+    },
+    isTelephoneValid: function () {
+      var conditions = [
+        this.telephone.length > 0,
+        this.telephone.length <= 8,
+        !isNaN(this.telephone)
+      ];
+      return conditions.every((e) => e);
+    },
     isValid: function() {
       var conditions = [
+        this.isFirstNameValid,
+        this.isLastNameValid,
         this.isEmailValid,
-        this.isPasswordValid
+        this.isPasswordValid,
+        this.isRePasswordValid,
+        this.isTelephoneValid
       ];
       return conditions.every((e) => e);
     }
@@ -68,7 +111,7 @@ var vmLogIn = new Vue({
        *  
        *  Aquí se coloca el envío a la base de datos y la redirección si la petición es correcta.
        */
-      console.log(this.email, this.password);
+      console.log(this.$data);
     }
   }
 });

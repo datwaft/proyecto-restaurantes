@@ -9,19 +9,28 @@
   font-size: 1.1rem;
 }
 
-#login {
+#login,
+#register {
   display: flex;
   flex-direction: column;
   justify-content: start;
 }
 
-#login .title {
+#login .title,
+#register .title {
   font-size: 1.3rem;
   margin-bottom: 1rem;
 }
 
-input {
+#login input {
   border-radius: 5px 0 0 5px;
+}
+
+#register input {
+  border-radius: 5px;
+}
+
+input {
   padding: 0.5rem 1rem;
   border: 1px solid rgb(var(--background-color));
 }
@@ -32,7 +41,15 @@ input {
   margin-bottom: 1rem;
 }
 
-.input-group div:last-child {
+.input-group input:not(:last-of-type) {
+  margin-right: .5rem;
+}
+
+.input-group input:first-of-type:last-of-type {
+  flex-grow: 1;
+}
+
+.input-group .symbol {
   background: rgb(var(--background-color));
   color: rgb(var(--main-alternate-color));
   display: flex;
