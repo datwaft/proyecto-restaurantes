@@ -23,4 +23,5 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 <!-- Dropdown -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dropdown.css">
+<!-- Context -->
 <script>const ctx = "${pageContext.request.contextPath}"</script>
