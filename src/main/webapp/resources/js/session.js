@@ -78,7 +78,7 @@ var vmHeader = new Vue({
  */
 $(window).on('load', () => {
   if (sessionStorage.getItem("user")) {
-    sessionData.user = sessionStorage.getItem('user');
+    sessionData.user = JSON.parse(sessionStorage.getItem('user'));
   }
 });
 
@@ -87,7 +87,7 @@ $(window).on('load', () => {
  */
 $(window).on('unload', () => {
   if (sessionData.user !== null) {
-    sessionStorage.setItem('user', sessionData.user);
+    sessionStorage.setItem('user', JSON.stringify(sessionData.user));
   } else {
     if (sessionStorage.getItem("user")) {
     sessionData.user = sessionStorage.removeItem('user');
