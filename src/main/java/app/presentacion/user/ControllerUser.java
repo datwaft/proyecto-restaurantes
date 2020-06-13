@@ -40,15 +40,28 @@ public class ControllerUser {
         }
     }
     
+    @POST
+    @Path("/logout")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON})
+    public void logOut() {
+        try {
+            
+        } catch (Exception ex) {
+          System.out.println(ex.getMessage());
+            throw new NotFoundException(); 
+        }
+    }
+    
     @PUT
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON})
-    public Boolean registerUser(User userData) {
+    public User registerUser(User userData) {
         try {
             System.out.print(userData);
             UserModel.getInstance().create(userData);
-            return true;
+            return userData;
         } catch (Exception ex) {
           System.out.println(ex.getMessage());
             throw new NotFoundException(); 

@@ -38,8 +38,7 @@ async function loadDishes() {
 
 async function verifyLogin(email,password)
 {
-  try
-  {
+    console.log(email,password);
     var user = {
       email:email,
       password:password
@@ -53,27 +52,20 @@ async function verifyLogin(email,password)
               contentType: "application/json"});
     console.log(result);
     return result;
-
-  } catch (exception)
-  {
-    console.error(exception);
-  }
   
 }
 
-async function register(email, password, name, cellphone, user, admin)
+async function register(email, password, firstName, lastName, cellphone)
 {
   var new_user = {
     email: email,
     password: password,
-    name: name,
+    firstName: firstName,
+    lastName: lastName,
     cellphone: cellphone,
-    user: user,
-    admin: admin
   };
-  console.log(user);
-  try
-  {
+  console.log(new_user);
+  
     var result = 
             await $.ajax({
               type: "PUT",
@@ -83,16 +75,10 @@ async function register(email, password, name, cellphone, user, admin)
             
     console.log(result);
     return result;
-
-  } catch (exception)
-  {
-    console.error(exception);
-  }
 }
 
 async function loadAddiotionals(dish_id)
 {
-
   try
   {
     var result = await $.ajax({
