@@ -111,8 +111,13 @@ var vmRegister = new Vue({
        *  
        *  Aquí se coloca el envío a la base de datos y la redirección si la petición es correcta.
        */
-      var a = await register(this.email, this.password, this.firstname, this.lastname, this.telephone);
-      console.log(a);
+      try {
+        var user = await register(this.email, this.password, this.firstname, this.lastname, this.telephone);
+        sessionData.user = user;
+        window.location.href = `${ctx}/`;
+      } catch(ex) {
+        console.error(ex);
+      }
     }
   }
 });

@@ -13,11 +13,11 @@
           <li>
             <dropdown-menu>
               <template #trigger>
-                <a id="a-user">My Account</a>
+                <a>My Account</a>
               </template>
-              <a href="${pageContext.request.contextPath}/user/orders">Recent Orders</a>
-              <a href="${pageContext.request.contextPath}/user/account">My Account</a>
-              <a href="${pageContext.request.contextPath}/user/address">Address Book</a>
+              <a id="a-orders" href="${pageContext.request.contextPath}/user/orders">Recent Orders</a>
+              <a id="a-account" href="${pageContext.request.contextPath}/user/account">My Account</a>
+              <a id="a-address" href="${pageContext.request.contextPath}/user/address">Address Book</a>
               <a @click="logOut">Log Out</a>
             </dropdown-menu>
           </li>
