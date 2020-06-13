@@ -67,6 +67,9 @@
 .dropdown-item {
   display: flex;
   flex-direction: column;
+}
+
+.wide {
   width: 10vw;
 }
 

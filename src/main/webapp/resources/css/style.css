@@ -162,6 +162,20 @@ a.selected {
   font-weight: normal;
 }
 
+.vertical-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-nav a {
+  cursor: pointer;
+}
+
+.vertical-nav a:hover,
+.vertical-nav a:focus {
+  opacity: 0.769;
+}
+
 /* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
 /* ║                                        Header & Nav                                        ║ */
 /* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
@@ -198,7 +212,7 @@ a.selected {
   padding: 0 .5rem;
 }
 
-.header .fas {
+.header .logo {
   font-size: 1.8rem;
 }
 
