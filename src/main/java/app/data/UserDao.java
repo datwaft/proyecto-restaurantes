@@ -52,6 +52,20 @@ public class UserDao extends AbstractFacade<User> implements Serializable {
       em.close();
     }
   }
+  
+   public User exist(String email) {
+    EntityManager em = getEntityManager();
+    try {
+      return (User) em.createQuery("SELECT obj FROM User obj WHERE obj.email = :email")
+        .setParameter("email", email).getSingleResult();
+        
+    } catch (Exception e) {
+      System.out.print("An error occurred while getting email = '" + email + "' from table User.\n\n Error:" + e + "\n\n");
+      return null;
+    } finally {
+      em.close();
+    }
+  }
 
   public List<User> getAll() {
     EntityManager em = getEntityManager();
