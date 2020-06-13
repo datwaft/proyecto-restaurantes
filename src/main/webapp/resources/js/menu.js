@@ -76,7 +76,7 @@ var dropdown = {
         <slot name="trigger"></slot>
         <i class="fas" :class="{'fa-arrow-up': !isShown, 'fa-arrow-down': isShown}"></i>
       </button>
-      <div v-show="isShown" class="dropdown-item">
+      <div v-show="isShown" class="dropdown-item wide">
         <slot></slot>
       </div>
     </div>

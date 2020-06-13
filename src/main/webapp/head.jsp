@@ -27,3 +27,5 @@
 <script>const ctx = "${pageContext.request.contextPath}"</script>
 <!-- Petitions -->
 <script src="${pageContext.request.contextPath}/resources/js/petitions.js"></script>
+<!-- Session -->
+<script src="${pageContext.request.contextPath}/resources/js/session.js" defer></script>

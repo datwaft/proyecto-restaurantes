@@ -2,6 +2,11 @@
   position: relative;  
 }
 
+.dropdown-trigger,
+.dropdown-inline-trigger {
+  cursor: pointer;
+}
+
 .dropdown-item {
   background: rgb(var(--secondary-color));
   position: absolute;
@@ -10,6 +15,8 @@
   padding: .5rem;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 5px;
+  width: max-content;
+  max-width: max(20vw, 100%);
 }
 
 .dropdown-item.inactive {
