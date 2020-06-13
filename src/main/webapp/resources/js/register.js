@@ -106,12 +106,13 @@ var vmRegister = new Vue({
     }
   },
   methods: {
-    submit() {
+    async submit() {
       /*  NOTA IMPORTANTE
        *  
        *  Aquí se coloca el envío a la base de datos y la redirección si la petición es correcta.
        */
-      console.log(this.$data);
+      var a = await register(this.email, this.password, this.firstname, this.lastname, this.telephone);
+      console.log(a);
     }
   }
 });

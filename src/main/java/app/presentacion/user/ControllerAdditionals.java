@@ -34,9 +34,22 @@
 //  }
 //
 //  @GET
-//  @Path("{id}")
+//  @Path("/additionals")
 //  @Produces(MediaType.APPLICATION_JSON)
-//  public String getAdditionals(@PathParam("id") String id) {
+//  public String getAdditionals() {
+//    
+//    try {
+//            //operaciones de la bd para traer por id.
+//        } catch (Exception ex) {
+//            throw new NotFoundException(); 
+//        }
+//    return null;
+//  }
+//  
+//  @GET
+//  @Path("/adi-cats")
+//  @Produces(MediaType.APPLICATION_JSON)
+//  public String getAdditionalCategories() {
 //    
 //    try {
 //            //operaciones de la bd para traer por id.
