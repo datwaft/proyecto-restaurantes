@@ -47,7 +47,7 @@ public class DishDao extends AbstractFacade<Dish> implements Serializable {
         .setParameter("id", id)
         .getResultList();
     } catch (Exception e) {
-      System.out.print("An error occurred while getting email = '" + id + "' from table Dish.\n\n Error:" + e + "\n\n");
+      System.out.print("An error occurred while getting id = '" + id + "' from table Dish.\n\n Error:" + e + "\n\n");
       return null;
     } finally {
       em.close();
@@ -60,7 +60,7 @@ public class DishDao extends AbstractFacade<Dish> implements Serializable {
       return em.createQuery("SELECT obj FROM Dish obj")
         .getResultList();
     } catch (Exception e) {
-      System.out.print("An error occurred while getting all from table dish.\n\n Error:" + e + "\n\n");
+      System.out.print("An error occurred while getting all from table Dish.\n\n Error:" + e + "\n\n");
       return null;
     } finally {
       em.close();

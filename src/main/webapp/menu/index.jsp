@@ -65,7 +65,7 @@
 									<div class="description">{{ dish.description }}</div>
 								</div>
 								<div class="content-left">
-									<b>\${{ dish.price }}</b>
+									<b>₡{{ dish.price }}</b>
 									<button class="button">
 										<i class="fas fa-plus"></i>
 									</button>

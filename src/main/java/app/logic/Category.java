@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.logic;
 
 import java.io.Serializable;
@@ -24,10 +19,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Mario
- */
 @Entity
 @Table(name = "category")
 @XmlRootElement
@@ -45,10 +36,10 @@ public class Category implements Serializable {
   private Integer id;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 15)
+  @Size(min = 1, max = 45)
   @Column(name = "description")
   private String description;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
   @JsonbTransient
   private List<Dish> dishList;
 
@@ -113,5 +104,5 @@ public class Category implements Serializable {
   public String toString() {
     return "app.logic.Category[ id=" + id + " ]";
   }
-  
+
 }

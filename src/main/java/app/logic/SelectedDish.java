@@ -1,12 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.logic;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,22 +14,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Mario
- */
 @Entity
-@Table(name = "billtodish")
+@Table(name = "selecteddish")
 @XmlRootElement
 @NamedQueries({
-  @NamedQuery(name = "Billtodish.findAll", query = "SELECT b FROM Billtodish b"),
-  @NamedQuery(name = "Billtodish.findById", query = "SELECT b FROM Billtodish b WHERE b.id = :id"),
-  @NamedQuery(name = "Billtodish.findByQuantity", query = "SELECT b FROM Billtodish b WHERE b.quantity = :quantity")})
-public class Billtodish implements Serializable {
+  @NamedQuery(name = "SelectedDish.findAll", query = "SELECT s FROM SelectedDish s"),
+  @NamedQuery(name = "SelectedDish.findById", query = "SELECT s FROM SelectedDish s WHERE s.id = :id"),
+  @NamedQuery(name = "SelectedDish.findByQuantity", query = "SELECT s FROM SelectedDish s WHERE s.quantity = :quantity")})
+public class SelectedDish implements Serializable {
 
   private static final long serialVersionUID = 1L;
   @Id
@@ -43,21 +39,24 @@ public class Billtodish implements Serializable {
   @NotNull
   @Column(name = "quantity")
   private int quantity;
-  @JoinColumn(name = "bill_id", referencedColumnName = "id")
+  @JoinColumn(name = "bill", referencedColumnName = "id")
   @ManyToOne(optional = false)
-  private Bill billId;
-  @JoinColumn(name = "dish_id", referencedColumnName = "id")
+  private Bill bill;
+  @JoinColumn(name = "dish", referencedColumnName = "id")
   @ManyToOne(optional = false)
-  private Dish dishId;
+  private Dish dish;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "selectedDish")
+  @JsonbTransient
+  private List<SelectedAdditionalCategory> selectedAdditionalCategoryList;
 
-  public Billtodish() {
+  public SelectedDish() {
   }
 
-  public Billtodish(Integer id) {
+  public SelectedDish(Integer id) {
     this.id = id;
   }
 
-  public Billtodish(Integer id, int quantity) {
+  public SelectedDish(Integer id, int quantity) {
     this.id = id;
     this.quantity = quantity;
   }
@@ -78,20 +77,29 @@ public class Billtodish implements Serializable {
     this.quantity = quantity;
   }
 
-  public Bill getBillId() {
-    return billId;
+  public Bill getBill() {
+    return bill;
   }
 
-  public void setBillId(Bill billId) {
-    this.billId = billId;
+  public void setBill(Bill bill) {
+    this.bill = bill;
   }
 
-  public Dish getDishId() {
-    return dishId;
+  public Dish getDish() {
+    return dish;
   }
 
-  public void setDishId(Dish dishId) {
-    this.dishId = dishId;
+  public void setDish(Dish dish) {
+    this.dish = dish;
+  }
+
+  @XmlTransient
+  public List<SelectedAdditionalCategory> getSelectedAdditionalCategoryList() {
+    return selectedAdditionalCategoryList;
+  }
+
+  public void setSelectedAdditionalCategoryList(List<SelectedAdditionalCategory> selectedAdditionalCategoryList) {
+    this.selectedAdditionalCategoryList = selectedAdditionalCategoryList;
   }
 
   @Override
@@ -104,10 +112,10 @@ public class Billtodish implements Serializable {
   @Override
   public boolean equals(Object object) {
     // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof Billtodish)) {
+    if (!(object instanceof SelectedDish)) {
       return false;
     }
-    Billtodish other = (Billtodish) object;
+    SelectedDish other = (SelectedDish) object;
     if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
       return false;
     }
@@ -116,7 +124,7 @@ public class Billtodish implements Serializable {
 
   @Override
   public String toString() {
-    return "app.logic.Billtodish[ id=" + id + " ]";
+    return "app.logic.SelectedDish[ id=" + id + " ]";
   }
-  
+
 }

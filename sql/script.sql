@@ -1,22 +1,22 @@
-select * from User;
+insert into `admin`(`username`, `password`) values
+('admin', 'password');
 
-insert into User values('admin','admin',0,1,'Mario',83864943);
+insert into `category`(`description`) values
+('Appetizer'),
+('Main Course'),
+('Salads'),
+('Seafoods'),
+('Traditional'),
+('Vegetarian'),
+('Soups'),
+('Desserts'),
+('Drinks'),
+('Specials'),
+('Rice Dishes');
 
-
-insert into category values (null,'Appetizer');
-insert into category values (null,'Main Course');
-insert into category values (null,'Salads');
-insert into category values (null,'Seafoods');
-insert into category values (null,'Traditional');
-insert into category values (null,'Vegetarian');
-insert into category values (null,'Soups');
-insert into category values (null,'Dessertsr');
-insert into category values (null,'Drinks');
-insert into category values (null,'Specials');
-insert into category values (null,'Rice Dishes');
-
-insert into Dish values (null,3,2500, 'Espaguetti','Rico espaguetti');
-insert into Dish values (null,4,6500, 'Ensalada griega','Rica ensalada');
-insert into Dish values (null,5,4500, 'Ensalada rusa', 'Rica ensalada');
-
-select * from category;
+insert into `dish`(`category`, `price`, `name`, `description`) values
+(1, 3900, "Vento d'Oro", 'Viento dorado bien ricolin'),
+(1, 5000, "Vento d'Plata", 'Viento plateado bien ricolin tintin'),
+(3, 49000, 'Espaguetti', 'Rico espaguetti'),
+(4, 29000, 'Ensalada griega', 'Rica ensalada'),
+(5, 45000, 'Ensalada rusa', 'Rica ensalada vegetariana');

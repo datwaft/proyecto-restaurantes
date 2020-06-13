@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.logic;
 
 import java.io.Serializable;
@@ -19,17 +14,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Mario
- */
 @Entity
-@Table(name = "dishtoadditionaltype")
+@Table(name = "selectedadditional")
 @XmlRootElement
 @NamedQueries({
-  @NamedQuery(name = "Dishtoadditionaltype.findAll", query = "SELECT d FROM Dishtoadditionaltype d"),
-  @NamedQuery(name = "Dishtoadditionaltype.findById", query = "SELECT d FROM Dishtoadditionaltype d WHERE d.id = :id")})
-public class Dishtoadditionaltype implements Serializable {
+  @NamedQuery(name = "SelectedAdditional.findAll", query = "SELECT s FROM SelectedAdditional s"),
+  @NamedQuery(name = "SelectedAdditional.findById", query = "SELECT s FROM SelectedAdditional s WHERE s.id = :id")})
+public class SelectedAdditional implements Serializable {
 
   private static final long serialVersionUID = 1L;
   @Id
@@ -37,17 +28,17 @@ public class Dishtoadditionaltype implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Integer id;
-  @JoinColumn(name = "additional_type_id", referencedColumnName = "id")
+  @JoinColumn(name = "additional", referencedColumnName = "id")
   @ManyToOne(optional = false)
-  private Additionaltype additionalTypeId;
-  @JoinColumn(name = "dish_id", referencedColumnName = "id")
+  private Additional additional;
+  @JoinColumn(name = "selectedAdditionalCategory", referencedColumnName = "id")
   @ManyToOne(optional = false)
-  private Dish dishId;
+  private SelectedAdditionalCategory selectedAdditionalCategory;
 
-  public Dishtoadditionaltype() {
+  public SelectedAdditional() {
   }
 
-  public Dishtoadditionaltype(Integer id) {
+  public SelectedAdditional(Integer id) {
     this.id = id;
   }
 
@@ -59,20 +50,20 @@ public class Dishtoadditionaltype implements Serializable {
     this.id = id;
   }
 
-  public Additionaltype getAdditionalTypeId() {
-    return additionalTypeId;
+  public Additional getAdditional() {
+    return additional;
   }
 
-  public void setAdditionalTypeId(Additionaltype additionalTypeId) {
-    this.additionalTypeId = additionalTypeId;
+  public void setAdditional(Additional additional) {
+    this.additional = additional;
   }
 
-  public Dish getDishId() {
-    return dishId;
+  public SelectedAdditionalCategory getSelectedAdditionalCategory() {
+    return selectedAdditionalCategory;
   }
 
-  public void setDishId(Dish dishId) {
-    this.dishId = dishId;
+  public void setSelectedAdditionalCategory(SelectedAdditionalCategory selectedAdditionalCategory) {
+    this.selectedAdditionalCategory = selectedAdditionalCategory;
   }
 
   @Override
@@ -85,10 +76,10 @@ public class Dishtoadditionaltype implements Serializable {
   @Override
   public boolean equals(Object object) {
     // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof Dishtoadditionaltype)) {
+    if (!(object instanceof SelectedAdditional)) {
       return false;
     }
-    Dishtoadditionaltype other = (Dishtoadditionaltype) object;
+    SelectedAdditional other = (SelectedAdditional) object;
     if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
       return false;
     }
@@ -97,7 +88,7 @@ public class Dishtoadditionaltype implements Serializable {
 
   @Override
   public String toString() {
-    return "app.logic.Dishtoadditionaltype[ id=" + id + " ]";
+    return "app.logic.SelectedAdditional[ id=" + id + " ]";
   }
-  
+
 }

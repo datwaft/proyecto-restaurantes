@@ -3,15 +3,17 @@
   <persistence-unit name="RESTAURANT" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <non-jta-data-source>jdbc/restaurant</non-jta-data-source>
-    <class>app.logic.User</class>
-    <class>app.logic.Dish</class>
-    <class>app.logic.Dishtoadditionaltype</class>
     <class>app.logic.Category</class>
     <class>app.logic.Additional</class>
-    <class>app.logic.Billtodish</class>
+    <class>app.logic.Admin</class>
+    <class>app.logic.SelectedDish</class>
     <class>app.logic.Bill</class>
-    <class>app.logic.Additionaltype</class>
     <class>app.logic.Address</class>
+    <class>app.logic.Dish</class>
+    <class>app.logic.AdditionalCategory</class>
+    <class>app.logic.User</class>
+    <class>app.logic.SelectedAdditionalCategory</class>
+    <class>app.logic.SelectedAdditional</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/restaurant?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;autoReconnect=true&amp;serverTimezone=UTC&amp;useSSL=false"/>

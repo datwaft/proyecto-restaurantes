@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.logic;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,10 +16,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Mario
- */
 @Entity
 @Table(name = "user")
 @XmlRootElement
@@ -33,9 +23,8 @@ import javax.xml.bind.annotation.XmlTransient;
   @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
   @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
   @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
-  @NamedQuery(name = "User.findByClient", query = "SELECT u FROM User u WHERE u.client = :client"),
-  @NamedQuery(name = "User.findByAdmin", query = "SELECT u FROM User u WHERE u.admin = :admin"),
-  @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name"),
+  @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
+  @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
   @NamedQuery(name = "User.findByCellphone", query = "SELECT u FROM User u WHERE u.cellphone = :cellphone")})
 public class User implements Serializable {
 
@@ -54,25 +43,23 @@ public class User implements Serializable {
   private String password;
   @Basic(optional = false)
   @NotNull
-  @Column(name = "client")
-  private short client;
-  @Basic(optional = false)
-  @NotNull
-  @Column(name = "admin")
-  private short admin;
+  @Size(min = 1, max = 45)
+  @Column(name = "firstName")
+  private String firstName;
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 45)
-  @Column(name = "name")
-  private String name;
+  @Column(name = "lastName")
+  private String lastName;
   @Basic(optional = false)
   @NotNull
+  @Size(min = 1, max = 8)
   @Column(name = "cellphone")
-  private int cellphone;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+  private String cellphone;
+  @OneToMany(mappedBy = "user")
   @JsonbTransient
   private List<Address> addressList;
-  @OneToMany(mappedBy = "userId")
+  @OneToMany(mappedBy = "user")
   @JsonbTransient
   private List<Bill> billList;
 
@@ -83,12 +70,11 @@ public class User implements Serializable {
     this.email = email;
   }
 
-  public User(String email, String password, short client, short admin, String name, int cellphone) {
+  public User(String email, String password, String firstName, String lastName, String cellphone) {
     this.email = email;
     this.password = password;
-    this.client = client;
-    this.admin = admin;
-    this.name = name;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.cellphone = cellphone;
   }
 
@@ -108,35 +94,27 @@ public class User implements Serializable {
     this.password = password;
   }
 
-  public short getClient() {
-    return client;
+  public String getFirstName() {
+    return firstName;
   }
 
-  public void setClient(short client) {
-    this.client = client;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
 
-  public short getAdmin() {
-    return admin;
+  public String getLastName() {
+    return lastName;
   }
 
-  public void setAdmin(short admin) {
-    this.admin = admin;
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public int getCellphone() {
+  public String getCellphone() {
     return cellphone;
   }
 
-  public void setCellphone(int cellphone) {
+  public void setCellphone(String cellphone) {
     this.cellphone = cellphone;
   }
 
@@ -182,5 +160,5 @@ public class User implements Serializable {
   public String toString() {
     return "app.logic.User[ email=" + email + " ]";
   }
-  
+
 }
