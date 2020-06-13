@@ -27,3 +27,26 @@
 <script>const ctx = "${pageContext.request.contextPath}"</script>
 <!-- Petitions -->
 <script src="${pageContext.request.contextPath}/resources/js/petitions.js"></script>
+
+<!-- Session -->
+<script>
+  var sessionData = {
+    /*  Contiene el usuario.
+     */
+    user: null
+  };
+  $(window).on('load', () => {
+    if (sessionStorage.getItem("user")) {
+      sessionData.user = sessionStorage.getItem('user');
+    }
+  });
+  $(window).on('unload', () => {
+    if (sessionData.user !== null) {
+      sessionStorage.setItem('user', sessionData.user);
+    } else {
+      if (sessionStorage.getItem("user")) {
+      sessionData.user = sessionStorage.removeItem('user');
+    }
+    }
+  });
+</script>
