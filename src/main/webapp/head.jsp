@@ -25,3 +25,5 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dropdown.css">
 <!-- Context -->
 <script>const ctx = "${pageContext.request.contextPath}"</script>
+<!-- Petitions -->
+<script src="${pageContext.request.contextPath}/resources/js/petitions.js"></script>

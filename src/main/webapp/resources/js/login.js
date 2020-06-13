@@ -68,7 +68,7 @@ var vmLogIn = new Vue({
        *  
        *  Aquí se coloca el envío a la base de datos y la redirección si la petición es correcta.
        */
-      console.log(this.email, this.password);
+      var user = verifyLogin(this.email, this.password);
     }
   }
 });
