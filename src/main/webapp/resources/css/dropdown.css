@@ -5,6 +5,7 @@
 .dropdown-trigger,
 .dropdown-inline-trigger {
   cursor: pointer;
+  user-select: none;
 }
 
 .dropdown-item {
