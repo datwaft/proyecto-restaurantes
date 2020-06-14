@@ -19,52 +19,56 @@ import javax.ws.rs.POST;
 @Path("/users")
 public class ControllerUser {
 
-    
-    @POST
-    @Path("/login")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.APPLICATION_JSON})
-    public User getUser(User userData) {
-        try {
-            User user = UserModel.getInstance().search(userData.getEmail()).get(0);
-            if (user == null)
-              throw new Exception("Invalid user");
-            else if(!user.getPassword().equals(userData.getPassword()))
-            {
-             throw new Exception("Invalid password");
-            }
-            return user;
-        } catch (Exception ex) {
-          System.out.println(ex.getMessage());
-            throw new NotFoundException(); 
-        }
+  @POST
+  @Path("/login")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces({MediaType.APPLICATION_JSON})
+  public User getUser(User userData) {
+    try {
+      User user = UserModel.getInstance().search(userData.getEmail()).get(0);
+      if (user == null) {
+        throw new Exception("Invalid user");
+      } else if (!user.getPassword().equals(userData.getPassword())) {
+        throw new Exception("Invalid password");
+      }
+      return user;
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+      throw new NotFoundException();
     }
-    
-    @POST
-    @Path("/logout")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.APPLICATION_JSON})
-    public void logOut() {
-        try {
-            
-        } catch (Exception ex) {
-          System.out.println(ex.getMessage());
-            throw new NotFoundException(); 
-        }
+  }
+
+  @POST
+  @Path("/logout")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces({MediaType.APPLICATION_JSON})
+  public void logOut() {
+    try {
+
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+      throw new NotFoundException();
     }
-    
-    @PUT
-    @Path("/register")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.APPLICATION_JSON})
-    public User registerUser(User userData) {
-        try {
-            System.out.print(userData);
-            UserModel.getInstance().create(userData);
-            return userData;
-        } catch (Exception ex) {
-          System.out.println(ex.getMessage());
-            throw new NotFoundException(); 
-        }
+  }
+
+  @PUT
+  @Path("/register")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces({MediaType.APPLICATION_JSON})
+  public User registerUser(User userData) {
+    try {
+
+      User exist = UserModel.getInstance().exist(userData.getEmail());
+      if (exist != null) {
+        throw new NotFoundException();
+      } else {
+        System.out.print(userData);
+        UserModel.getInstance().create(userData);
+        return userData;
+      }
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+      throw new NotFoundException();
     }
+  }
 }

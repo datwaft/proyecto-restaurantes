@@ -77,13 +77,32 @@ async function register(email, password, firstName, lastName, cellphone)
     return result;
 }
 
-async function loadAddiotionals(dish_id)
+async function loadAddiotionals()
 {
   try
   {
     var result = await $.ajax({
       type: "GET", 
-      url:"restaurant/additionals?id="+dish_id,
+      url:"restaurant/Additionals/additionals",
+      contentType: "application/json"});
+    
+    console.log(result);
+    console.log("la wea");
+    return result;
+
+  } catch (exception)
+  {
+    console.error(exception);
+  }
+}
+
+async function loadAddiotionalsCategory()
+{
+  try
+  {
+    var result = await $.ajax({
+      type: "GET", 
+      url:"restaurant/Additionals/adi-cats",
       contentType: "application/json"});
     
     console.log(result);
