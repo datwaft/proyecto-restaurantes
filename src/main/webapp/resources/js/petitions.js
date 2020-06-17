@@ -130,10 +130,8 @@ async function updateUser(email, password, firstName, lastName, cellphone)
     password: password,
     firstName: firstName,
     lastName: lastName,
-    cellphone: cellphone,
+    cellphone: cellphone
   };
-  console.log(new_user);
-  
     var result = 
             await $.ajax({
               type: "PUT",

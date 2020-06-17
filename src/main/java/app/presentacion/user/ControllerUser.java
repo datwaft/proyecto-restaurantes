@@ -83,15 +83,15 @@ public class ControllerUser {
       if (exist != null) {
         
         System.out.print(userData);
+        System.out.print("la wea llegga aqui");
         UserModel.getInstance().edit(userData);
-        return userData;
+        return UserModel.getInstance().exist(userData.getEmail());
         
       } else {
          throw new NotFoundException();
       }
     } catch (Exception ex) {
-      System.out.println(ex.getMessage());
-      throw new NotFoundException();
+      return null;
     }
   }
 }
