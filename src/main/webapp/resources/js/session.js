@@ -88,6 +88,16 @@ var vmNotification = new Vue({
         information: this.type === 'information'
       }
     }
+  },
+  methods: {
+    async showNotification(title, description, type) {
+      this.title = title;
+      this.description = description;
+      this.type = type;
+      this.isVisible = true;
+      await new Promise((res) => setTimeout(res, 5000));
+      this.isVisible = false;
+    }
   }
 });
 

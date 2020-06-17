@@ -73,7 +73,10 @@ var vmLogIn = new Vue({
         sessionData.user = user;
         window.location.href = `${ctx}/`;
       } catch(ex) {
-        console.error(ex);
+        vmNotification.showNotification(
+          "An error ocurred while trying to log in",
+          "Your logging information is invalid, try again please",
+          "error")
       }
     }
   }
