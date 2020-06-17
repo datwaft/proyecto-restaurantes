@@ -67,4 +67,17 @@ public class AddressDao extends AbstractFacade<Address> implements Serializable 
       em.close();
     }
   }
+  
+  public List<Address> getAll(String email) {
+    EntityManager em = getEntityManager();
+    try {
+      return em.createQuery("SELECT obj FROM Address obj where obj.user = :email")
+        .getResultList();
+    } catch (Exception e) {
+      System.out.print("An error occurred while getting all from table Address.\n\n Error:" + e + "\n\n");
+      return null;
+    } finally {
+      em.close();
+    }
+  }
 }

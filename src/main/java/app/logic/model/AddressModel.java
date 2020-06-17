@@ -5,13 +5,13 @@
  */
 package app.logic.model;
 
-import app.data.DishDao;
+import app.data.AddressDao;
 
 /**
  *
  * @author Mario
  */
-public class AddressModel extends DishDao{
+public class AddressModel extends AddressDao{
   
   private AddressModel() {
   }

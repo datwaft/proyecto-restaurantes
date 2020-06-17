@@ -53,6 +53,20 @@ public class DishDao extends AbstractFacade<Dish> implements Serializable {
       em.close();
     }
   }
+  
+  public Dish exist(int id) {
+    EntityManager em = getEntityManager();
+    try {
+      return (Dish) em.createQuery("SELECT obj FROM Dish obj WHERE obj.id = :id")
+        .setParameter("id", id).getSingleResult();
+        
+    } catch (Exception e) {
+      System.out.print("An error occurred while getting id = '" + id + "' from table Dish.\n\n Error:" + e + "\n\n");
+      return null;
+    } finally {
+      em.close();
+    }
+  }
 
   public List<Dish> getAll() {
     EntityManager em = getEntityManager();

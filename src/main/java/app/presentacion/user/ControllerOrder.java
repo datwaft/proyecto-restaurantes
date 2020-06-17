@@ -5,8 +5,8 @@
  */
 package app.presentacion.user;
 
-import app.logic.Dish;
-import app.logic.model.DishModel;
+import app.logic.Bill;
+import app.logic.model.BillModel;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -24,45 +24,48 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Mario
  */
-@Path("/Dishes")
+@Path("/Orders")
 @RequestScoped
-public class ControllerDishes {
+public class ControllerOrder {
 
   @Context
   private UriInfo context;
 
   
-  public ControllerDishes() {
+  public ControllerOrder() {
   }
-  @Path("/dishes")
+  @Path("/orders")
   @GET
+  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public List<Dish> getDishes() {
-    try {
-           return DishModel.getInstance().getAll();
+  public List<Bill> getDishes(Bill bill) {
+    try {        
+          return BillModel.getInstance().search(bill.getId());
         } catch (Exception ex) {
             throw new NotFoundException(); 
         }
   }
   
-  @Path("/update")
+  @Path("/status")
   @GET
-  @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Dish updateDishes( Dish dish) {
+  public Bill updateStatus(Bill bill) {
     try {
-         Dish exist = DishModel.getInstance().exist(dish.getId());
-      if (exist != null) {        
-        System.out.print(dish);
-        DishModel.getInstance().edit(dish);
-        return dish;
+      Bill exist = BillModel.getInstance().exist(bill.getId());
+      
+      if (exist != null) {
+        
+        System.out.print(exist);
+        exist.setStatus(bill.getStatus());
+        BillModel.getInstance().edit(exist);
+        return exist;
+        
       } else {
-         throw new NotFoundException();
+        
+        throw new NotFoundException();
       }
-        } catch (Exception ex) {
-            throw new NotFoundException(); 
-        }
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
   }
-
- 
 }

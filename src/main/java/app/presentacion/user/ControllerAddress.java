@@ -5,6 +5,8 @@
  */
 package app.presentacion.user;
 
+import app.logic.Address;
+import app.logic.model.AddressModel;
 import app.logic.model.CategoryModel;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -19,39 +21,19 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MediaType;
 
 
-@Path("/category")
+@Path("/Address")
 @RequestScoped
-public class ControllerCategory {
+public class ControllerAddress {
 
   @Context
   private UriInfo context;
 
   @GET
-  @Path("/us")
+  @Path("/address")
   @Produces({MediaType.APPLICATION_JSON})
-  public List<app.logic.Category> get() {
+  public List<Address> get(Address address) {
     try {
-      return CategoryModel.getInstance().getAll();
-    } catch (Exception ex) {
-      throw new NotFoundException();
-    }
-  }
-  
-  @GET
-  @Path("/update")
-  @Produces({MediaType.APPLICATION_JSON})
-  public app.logic.Category update(app.logic.Category category) {
-    try {
-      app.logic.Category exist = CategoryModel.getInstance().exist(category.getId());
-      if (exist != null) {
-
-        System.out.print(category);
-        CategoryModel.getInstance().edit(category);
-        return category;
-
-      } else {
-        throw new NotFoundException();
-      }
+      return AddressModel.getInstance().getAll(address.getAddress1());
     } catch (Exception ex) {
       throw new NotFoundException();
     }

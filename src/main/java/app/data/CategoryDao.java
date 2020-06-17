@@ -52,6 +52,20 @@ public class CategoryDao extends AbstractFacade<Category> implements Serializabl
       em.close();
     }
   }
+  
+  public Category exist(int id) {
+    EntityManager em = getEntityManager();
+    try {
+      return (Category) em.createQuery("SELECT obj FROM Category obj WHERE obj.id = :id")
+        .setParameter("id", id).getSingleResult();
+        
+    } catch (Exception e) {
+      System.out.print("An error occurred while getting email = '" + id + "' from table Category.\n\n Error:" + e + "\n\n");
+      return null;
+    } finally {
+      em.close();
+    }
+  }
 
   public List<Category> getAll() {
     EntityManager em = getEntityManager();

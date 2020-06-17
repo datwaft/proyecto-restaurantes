@@ -51,7 +51,7 @@ public class ControllerUser {
     }
   }
 
-  @PUT
+  @POST //CAMBIAR A PUT CUALQUIER VARAX XDXD
   @Path("/register")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces({MediaType.APPLICATION_JSON})
@@ -65,6 +65,29 @@ public class ControllerUser {
         System.out.print(userData);
         UserModel.getInstance().create(userData);
         return userData;
+      }
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
+      throw new NotFoundException();
+    }
+  }
+  
+  @PUT
+  @Path("/update")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces({MediaType.APPLICATION_JSON})
+  public User updateUser(User userData) {
+    try {
+
+      User exist = UserModel.getInstance().exist(userData.getEmail());
+      if (exist != null) {
+        
+        System.out.print(userData);
+        UserModel.getInstance().edit(userData);
+        return userData;
+        
+      } else {
+         throw new NotFoundException();
       }
     } catch (Exception ex) {
       System.out.println(ex.getMessage());
