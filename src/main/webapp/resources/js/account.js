@@ -37,7 +37,7 @@ var vmApp = new Vue({
   },
   computed: {
     fullName: function () {
-      if (this.session.user === null) {
+      if (!this.session.user) {
         return "Invalid User";
       } else {
         return `${this.session.user.firstName} ${this.session.user.lastName}`;
@@ -46,14 +46,16 @@ var vmApp = new Vue({
     isFirstNameValid: function () {
       var conditions = [
         this.data.firstname.length > 0,
-        this.data.firstname.length <= 45
+        this.data.firstname.length <= 45,
+        this.data.firstname != (this.session.user ? this.session.user.firstName : '')
       ];
       return conditions.every((e) => e);
     },
     isLastNameValid: function () {
       var conditions = [
         this.data.lastname.length > 0,
-        this.data.lastname.length <= 45
+        this.data.lastname.length <= 45,
+        this.data.lastname != (this.session.user ? this.session.user.lastName : '')
       ];
       return conditions.every((e) => e);
     },
@@ -61,7 +63,8 @@ var vmApp = new Vue({
       var conditions = [
         this.data.cellphone.length > 0,
         this.data.cellphone.length <= 8,
-        !isNaN(this.data.cellphone)
+        !isNaN(this.data.cellphone),
+        this.data.cellphone != (this.session.user ? this.session.user.cellphone : '')
       ];
       return conditions.every((e) => e);
     },
@@ -95,7 +98,7 @@ var vmApp = new Vue({
         this.isLastNameValid,
         this.isCellphoneValid
       ];
-      return conditions.every((e) => e);
+      return conditions.some((e) => e);
     },
     isPasswordValid: function () {
       var conditions = [
@@ -114,14 +117,40 @@ var vmApp = new Vue({
     }
   },
   methods: {
+    reset() {
+      this.data.email = this.session.user.email;
+      this.data.firstname = this.session.user.firstName;
+      this.data.lastname = this.session.user.lastName;
+      this.data.cellphone = this.session.user.cellphone;
+      this.data.oldpassword = '';
+      this.data.password = '';
+      this.data.repassword = '';
+    },
     async submit () {
-      if (this.isDataValid && this.isPasswordValid) {
-        var user =  await updateUser(this.session.user.email, this.data.password, this.data.firstname, this.data.lastname, this.data.cellphone);
-        sessionData.user = user;
-      } else if (this.isDataValid) {
-
-      } else if (this.isPasswordValid) {
-         
+      var future_data = {
+        email: this.session.user.email,
+        password: this.isPasswordValid ? this.data.password : this.session.user.password,
+        firstname: this.isFirstNameValid ? this.data.firstname : this.session.user.firstName,
+        lastname: this.isLastNameValid ? this.data.lastname : this.session.user.lastName,
+        cellphone: this.isCellphoneValid ? this.data.cellphone : this.session.user.cellphone
+      }
+      try {
+        var user = await updateUser(future_data.email,
+          future_data.password,
+          future_data.firstname,
+          future_data.lastname,
+          future_data.cellphone);
+        this.session.user = user;
+        this.reset();
+        vmNotification.showNotification(
+          "Transaction processed",
+          "Your information has been updated",
+          "information")
+      } catch (ex) {
+        vmNotification.showNotification(
+          "An error ocurred while trying to update user information",
+          "Your user information is invalid, try again please",
+          "error")
       }
     }
   }
@@ -139,8 +168,5 @@ var vmApp = new Vue({
  */
 
 $(window).on('load', async () => {
-  data.email = sessionData.user.email;
-  data.firstname = sessionData.user.firstName;
-  data.lastname = sessionData.user.lastName;
-  data.cellphone = sessionData.user.cellphone;
+  vmApp.reset();
 });
