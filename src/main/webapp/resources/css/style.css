@@ -177,6 +177,57 @@ a.selected {
 }
 
 /* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                        Notification                                        ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
+#notification {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#notification .banner {
+  padding: .5rem 0;
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+#notification .title {
+  font-family: TitilliumWebSemiBold;
+  font-weight: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#notification .data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#notification .error {
+  background: rgba(255,25,25,.6);
+}
+
+#notification .warning {
+  background: rgba(255,255,0,.6);
+}
+
+#notification .information {
+  background: rgba(0,255,0,.6);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
 /* ║                                        Header & Nav                                        ║ */
 /* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
 

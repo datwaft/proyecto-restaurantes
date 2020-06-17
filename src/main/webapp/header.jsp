@@ -1,4 +1,16 @@
 <header>
+  <!-- START Vue: vmNotification -->
+  <div id="notification">
+    <transition name="fade">
+      <div class="banner" v-show="isValid" :class="classObject">
+        <div class="title">{{ title }}</div>
+        <div class="data">
+          {{ description }}
+        </div>
+      </div>
+    </transition>
+  </div>
+  <!-- END Vue: vmNotification -->
   <div class="header">
     <div class="title">
       <a href="${pageContext.request.contextPath}">

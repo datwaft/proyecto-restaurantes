@@ -15,10 +15,15 @@
  */ 
 
 var sessionData = {
-  /*  Contiene el usuario.
-   */
   user: null
 };
+
+var notificationData = {
+  type: '',
+  title: '',
+  description: '',
+  isVisible: false
+}
 
 /* --> Vue Components <-- */
 
@@ -46,7 +51,7 @@ var dropdown = {
 var vmHeader = new Vue({
   el: '#header',
   data: sessionData,
-    components: {
+  components: {
     'dropdown-menu': dropdown
   },
   methods: {
@@ -58,6 +63,30 @@ var vmHeader = new Vue({
   computed: {
     isUserLoggedIn: function () {
       return this.user !== null;
+    }
+  }
+});
+
+var vmNotification = new Vue({
+  el: '#notification',
+  data: notificationData,
+  computed: {
+    isValid: function () {
+      var conditions = [
+        this.type.length > 0,
+        this.title.length > 0,
+        this.description.length > 0,
+        ['error', 'warning', 'information'].includes(this.type),
+        this.isVisible
+      ];
+      return conditions.every((e) => e);
+    },
+    classObject: function () {
+      return {
+        error: this.type === 'error',
+        warning: this.type === 'warning',
+        information: this.type === 'information'
+      }
     }
   }
 });
@@ -90,7 +119,7 @@ $(window).on('unload', () => {
     sessionStorage.setItem('user', JSON.stringify(sessionData.user));
   } else {
     if (sessionStorage.getItem("user")) {
-    sessionData.user = sessionStorage.removeItem('user');
-  }
+      sessionData.user = sessionStorage.removeItem('user');
+    }
   }
 });
