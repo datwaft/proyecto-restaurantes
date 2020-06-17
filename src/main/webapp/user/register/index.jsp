@@ -26,7 +26,7 @@
             <input type="password" v-model="repassword" placeholder="Password Confirm" :class="{invalid: !isRePasswordValid}">
           </div>
           <div class="input-group">
-            <input type="text" v-model.trim="telephone" placeholder="Telephone" :class="{invalid: !isTelephoneValid}">
+            <input type="text" v-model.trim="cellphone" placeholder="Cellphone" :class="{invalid: !isCellphoneValid}">
           </div>
           <button class="button" @click="submit()" v-bind:disabled="!isValid">Register</button>
         </div>

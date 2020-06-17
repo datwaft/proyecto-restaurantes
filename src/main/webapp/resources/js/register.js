@@ -38,7 +38,7 @@ var data = {
   repassword: '',
   /*  Esta variable contiene el número teléfono.
    */
-  telephone: ''
+  cellphone: ''
 };
 
 /* ============================================================================================ 
@@ -85,11 +85,11 @@ var vmRegister = new Vue({
       ];
       return conditions.every((e) => e);
     },
-    isTelephoneValid: function () {
+    isCellphoneValid: function () {
       var conditions = [
-        this.telephone.length > 0,
-        this.telephone.length <= 8,
-        !isNaN(this.telephone)
+        this.cellphone.length > 0,
+        this.cellphone.length <= 8,
+        !isNaN(this.cellphone)
       ];
       return conditions.every((e) => e);
     },
@@ -100,7 +100,7 @@ var vmRegister = new Vue({
         this.isEmailValid,
         this.isPasswordValid,
         this.isRePasswordValid,
-        this.isTelephoneValid
+        this.isCellphoneValid
       ];
       return conditions.every((e) => e);
     }
@@ -112,7 +112,7 @@ var vmRegister = new Vue({
        *  Aquí se coloca el envío a la base de datos y la redirección si la petición es correcta.
        */
       try {
-        var user = await register(this.email, this.password, this.firstname, this.lastname, this.telephone);
+        var user = await register(this.email, this.password, this.firstname, this.lastname, this.cellphone);
         sessionData.user = user;
         window.location.href = `${ctx}/`;
       } catch(ex) {

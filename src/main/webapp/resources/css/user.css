@@ -1,3 +1,47 @@
+.body {
+  display: flex;
+}
+
 .main {
+  flex-grow: 1;
   margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: .25rem;
+}
+
+#app .title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+input {
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgb(var(--background-color));
+}
+
+.input-group {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+.input-group input:not(:last-of-type) {
+  margin-right: .5rem;
+}
+
+.input-group input:first-of-type:last-of-type {
+  flex-grow: 1;
+}
+
+.button {
+  margin-bottom: .5rem;
 }
