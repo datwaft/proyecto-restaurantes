@@ -184,6 +184,7 @@ a.selected {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  user-select: none;
 }
 
 #notification .banner {

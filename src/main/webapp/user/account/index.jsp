@@ -37,7 +37,7 @@
               :class="{invalid: !isCellphoneValid}">
             <input
               type="text"
-              v-model.trim="session.user.email"
+              v-model.trim="data.email"
               disabled>
           </div>
           <div class="title">Change Password</div>

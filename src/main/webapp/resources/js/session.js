@@ -95,7 +95,7 @@ var vmNotification = new Vue({
       this.description = description;
       this.type = type;
       this.isVisible = true;
-      await new Promise((res) => setTimeout(res, 5000));
+      await new Promise((res) => setTimeout(res, 3000));
       this.isVisible = false;
     }
   }

@@ -15,6 +15,7 @@
  */ 
 
 var data = {
+  email: '',
   firstname: '',
   lastname: '',
   cellphone: '',
