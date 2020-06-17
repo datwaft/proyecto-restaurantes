@@ -115,11 +115,12 @@ var vmApp = new Vue({
   methods: {
     async submit () {
       if (this.isDataValid && this.isPasswordValid) {
-
+        var user =  await updateUser(this.session.user.email, this.data.password, this.data.firstname, this.data.lastname, this.data.cellphone);
+        sessionData.user = user;
       } else if (this.isDataValid) {
 
       } else if (this.isPasswordValid) {
-
+         
       }
     }
   }
