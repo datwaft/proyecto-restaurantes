@@ -8,6 +8,7 @@ package app.presentacion.user;
 import app.logic.Address;
 import app.logic.model.AddressModel;
 import app.logic.model.CategoryModel;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -39,7 +40,7 @@ public class ControllerAddress {
       
       return AddressModel.getInstance().getAll(id);
     } catch (Exception ex) {
-      throw new NotFoundException();
+      return new ArrayList<Address>();
     }
   }
 
