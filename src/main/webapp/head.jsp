@@ -23,6 +23,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 <!-- Dropdown -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dropdown.css">
+<!-- Overlay -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/overlay.css">
+<!-- Transitions -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/transitions.css">
 <!-- Context -->
 <script>const ctx = "${pageContext.request.contextPath}"</script>
 <!-- Petitions -->
