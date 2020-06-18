@@ -4,7 +4,7 @@
 <head>
   <%@ include file="/head.jsp" %> 
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/user.css">
-  <title>Account - TastyTasty</title>
+  <title>Address Book - TastyTasty</title>
   <script>$(window).on('load', () => $('#a-address').addClass('active'))</script>
 </head>
 <body>
