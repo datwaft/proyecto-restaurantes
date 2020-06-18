@@ -225,15 +225,11 @@ async function updateOrderStatus(id,status)
 async function getDirections(id)
 {
 
-    var dir = {
-      id:id
-    };
-    
+
     var result = 
             await $.ajax({
               type: "GET", 
-              data: JSON.stringify(dir), 
-              url: `${ctx}/restaurant/Address/address`,            
+              url: `${ctx}/restaurant/Address/address/`+id,            
               contentType: "application/json"});
     console.log(result);
     return result;
@@ -259,3 +255,20 @@ async function getBills(id)
 }
 
 //-----------------------------Terminan gets especificos----------------------------//
+
+function prueba()
+{
+  var array = [1,2,3];
+  var array1 = [3,4,5];
+  var array2 = [6,7,8];
+  
+  var objeto1 =
+          {
+            lista1:array,
+    lista2:array1,
+    lista3:array2
+  };
+  
+  return objeto1;
+
+}

@@ -18,6 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 
@@ -29,11 +30,14 @@ public class ControllerAddress {
   private UriInfo context;
 
   @GET
-  @Path("/address")
+  @Path("/address/{id}")
   @Produces({MediaType.APPLICATION_JSON})
-  public List<Address> get(Address address) {
+  public List<Address> get(@PathParam("id") String id) {
     try {
-      return AddressModel.getInstance().getAll(address.getAddress1());
+      System.out.println("la pttttttttttttttttta");
+      System.out.println(id);
+      
+      return AddressModel.getInstance().getAll(id);
     } catch (Exception ex) {
       throw new NotFoundException();
     }
