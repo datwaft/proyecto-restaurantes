@@ -211,14 +211,17 @@ a.selected {
 
 #notification .error {
   background: rgba(255,25,25,.6);
+  border: 1px solid rgba(255,25,25,1);
 }
 
 #notification .warning {
   background: rgba(255,255,0,.6);
+  border: 1px solid rgba(255,255,0,1);
 }
 
 #notification .information {
   background: rgba(0,255,0,.6);
+  border: 1px solid rgba(0,255,0,1);
 }
 
 /* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
