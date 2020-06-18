@@ -1,6 +1,6 @@
 
 //-------------------------------Inician los llamados para carga----------------------------//
-async function loadCategory() {
+async function loadCategory() {  //Funcionando
   try
   {
     var result = 
@@ -8,8 +8,6 @@ async function loadCategory() {
               type: "GET", 
               url: `${ctx}/restaurant/category/us`, 
               contentType: "application/json"});
-            
-    console.log(result);
     return result;
 
   } catch (exception)
@@ -18,7 +16,7 @@ async function loadCategory() {
   }
 }
 
-async function loadDishes() {
+async function loadDishes() {  //Funcionando
   try
   {
     var result = 
@@ -26,9 +24,7 @@ async function loadDishes() {
               type: "GET", 
               url: `${ctx}/restaurant/Dishes/dishes`, 
               contentType: "application/json"});
-            
-    console.log(result);
-    console.log("la wea");
+
     return result;
 
   } catch (exception)
@@ -57,7 +53,7 @@ async function loadAddiotionals()
   }
 }
 
-async function loadAddiotionalsCategory()
+async function loadAddiotionalsCategory() 
 {
   try
   {
@@ -65,9 +61,8 @@ async function loadAddiotionalsCategory()
       type: "GET", 
       url:"restaurant/Additionals/adi-cats",
       contentType: "application/json"});
-    
-    console.log(result);
-    console.log("la wea");
+
+      console.log(result);
     return result;
 
   } catch (exception)
@@ -80,7 +75,7 @@ async function loadAddiotionalsCategory()
 
 //-------------------------------Inician peticiones relacionadas con el login y register-------------//
 
-async function verifyLogin(email,password)
+async function verifyLogin(email,password)  //Funcionando
 {
     console.log(email,password);
     var user = {
@@ -94,12 +89,11 @@ async function verifyLogin(email,password)
               data: JSON.stringify(user), 
               url: `${ctx}/restaurant/users/login`,            
               contentType: "application/json"});
-    console.log(result);
     return result;
   
 }
 
-async function register(email, password, firstName, lastName, cellphone)
+async function register(email, password, firstName, lastName, cellphone) //funcionando
 {
   var new_user = {
     email: email,
@@ -108,7 +102,6 @@ async function register(email, password, firstName, lastName, cellphone)
     lastName: lastName,
     cellphone: cellphone,
   };
-  console.log(new_user);
   
     var result = 
             await $.ajax({
@@ -117,13 +110,12 @@ async function register(email, password, firstName, lastName, cellphone)
               url: `${ctx}/restaurant/users/register`,
               contentType: "application/json"});
             
-    console.log(result);
     return result;
 }
 //-------------------------------Terminan peticiones relacionadas con el login y register-------------//
 
 //---------------------------------INICIAN UPDATES---------------------------------//
-async function updateUser(email, password, firstName, lastName, cellphone)
+async function updateUser(email, password, firstName, lastName, cellphone) //funcionando
 {
   var new_user = {
     email: email,
@@ -138,8 +130,7 @@ async function updateUser(email, password, firstName, lastName, cellphone)
               data: JSON.stringify(new_user),
               url: `${ctx}/restaurant/users/update`,
               contentType: "application/json"});
-            
-    console.log(result);
+
     return result;
 }
 
@@ -222,16 +213,13 @@ async function updateOrderStatus(id,status)
 
 //-----------------------------Inician gets especificos-----------------------------//
 
-async function getDirections(id)
+async function getDirections(id)  //Funcionando.
 {
-
-
     var result = 
             await $.ajax({
               type: "GET", 
               url: `${ctx}/restaurant/Address/address/`+id,            
               contentType: "application/json"});
-    console.log(result);
     return result;
   
 }
@@ -271,4 +259,32 @@ function prueba()
   
   return objeto1;
 
+}
+
+//-------------------------------------Creates--------------------------------------//
+
+
+async function createAddress(user,address1,address2,city,postcode,country)
+{
+  var Address = {
+    id:null,
+    user: user,
+    address1:address1,
+    address2:address2,
+    city:city,
+    postcode:postcode,
+    country:country
+  };
+  console.log(Address);
+  
+  var result = 
+            await $.ajax({
+              type: "POST",
+              data: JSON.stringify(Address),
+              url: `${ctx}/restaurant/Address/create`,
+              contentType: "application/json"});
+            
+    console.log(result);
+    return result;  
+  
 }

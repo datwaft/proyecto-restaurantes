@@ -69,6 +69,7 @@ var vmLogIn = new Vue({
        *  Aquí se coloca el envío a la base de datos y la redirección si la petición es correcta.
        */
       try {
+        console.log(createAddress(null,'address1','address2','city','postcode','country'));
         var user = await verifyLogin(this.email, this.password);
         sessionData.user = user;
         window.location.href = `${ctx}/`;

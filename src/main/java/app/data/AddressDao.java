@@ -41,6 +41,23 @@ public class AddressDao extends AbstractFacade<Address> implements Serializable 
     }
   }
   
+  public void personalCreate(Address obj) {
+    EntityManager em = getEntityManager();
+    try {
+      em.createQuery("insert into address values (null,null,:add1,:add2,:city,:state,:postcode,:country)")
+        .setParameter("add1", obj.getAddress1())
+              .setParameter("add2", obj.getAddress2())
+              .setParameter("city", obj.getCity())
+              .setParameter("state", obj.getState())
+              .setParameter("postcode", obj.getPostcode())
+              .setParameter("country", obj.getCountry());
+    } catch (Exception e) {
+      System.out.print("An error occurred while getting id's = '"  + "' from table Dish.\n\n Error:" + e + "\n\n");
+    } finally {
+      em.close();
+    }
+  }
+  
   public List<Address> search(int id) {
     EntityManager em = getEntityManager();
     try {

@@ -8,6 +8,7 @@ package app.presentacion.user;
 import app.logic.Address;
 import app.logic.model.AddressModel;
 import app.logic.model.CategoryModel;
+import app.logic.model.UserModel;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -19,6 +20,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
@@ -44,5 +46,18 @@ public class ControllerAddress {
     }
   }
 
+  @POST
+  @Path("/create")
+  @Produces({MediaType.APPLICATION_JSON})
+  public Address get(Address add) {
+    try {
+     
+      System.out.print(add.getAddress1());
+      AddressModel.getInstance().create(add);
+      return add;
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
+  }
     
 }
