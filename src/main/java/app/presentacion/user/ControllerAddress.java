@@ -19,6 +19,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
@@ -51,12 +52,62 @@ public class ControllerAddress {
   @Produces({MediaType.APPLICATION_JSON})
   public Address get(Address add) {
     try {
-     
+
       System.out.print(add.getAddress1());
       AddressModel.getInstance().create(add);
       return add;
     } catch (Exception ex) {
       throw new NotFoundException();
+    }
+  }
+  
+  @PUT
+  @Path("/update")
+  @Produces({MediaType.APPLICATION_JSON})
+  public Address update(Address add) {
+    try {
+      
+      Address exist = AddressModel.getInstance().find(add.getId());
+      System.out.println("la wea llega aqui");
+      System.out.print(add.getCountry());
+      if (exist != null)
+      {
+        exist.setAddress1(add.getAddress1());
+        exist.setAddress2(add.getAddress2());
+        exist.setCity(add.getCity());
+        exist.setCountry(add.getCountry());
+        exist.setPostcode(add.getPostcode());
+        exist.setState(add.getState());
+        
+        AddressModel.getInstance().edit(exist);
+        return exist;
+      }
+      else
+      {
+        throw new NotFoundException();
+      }
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
+  }
+  
+  @DELETE
+  @Path("/delete/{id}")
+  @Produces({MediaType.APPLICATION_JSON})
+  public Boolean del(@PathParam("id") String id) {
+    try {  
+      Address exist = AddressModel.getInstance().find(Integer.valueOf(id));
+      if (exist != null)
+      {
+        AddressModel.getInstance().delete(exist);
+        return true;
+      }
+      else
+        return false;
+      
+      
+    } catch (Exception ex) {
+      return false;
     }
   }
     

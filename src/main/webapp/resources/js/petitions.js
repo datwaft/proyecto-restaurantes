@@ -134,23 +134,23 @@ async function updateUser(email, password, firstName, lastName, cellphone) //fun
     return result;
 }
 
-async function updateCategory(id,description)
-{
-  var category = {
-    id:id,
-    description: description,
-  };
-  
-  var result = 
-            await $.ajax({
-              type: "PUT",
-              data: JSON.stringify(category),
-              url: `${ctx}/restaurant/category/update`,
-              contentType: "application/json"});
-            
-    console.log(result);
-    return result; 
-}
+//async function updateCategory(id,description)
+//{
+//  var category = {
+//    id:id,
+//    description: description,
+//  };
+//  
+//  var result = 
+//            await $.ajax({
+//              type: "PUT",
+//              data: JSON.stringify(category),
+//              url: `${ctx}/restaurant/category/update`,
+//              contentType: "application/json"});
+//            
+//    console.log(result);
+//    return result; 
+//}
 
 async function updateCategory(id,description)
 {
@@ -203,6 +203,32 @@ async function updateOrderStatus(id,status)
               type: "PUT",
               data: JSON.stringify(new_status),
               url: `${ctx}/restaurant/Orders/status`,
+              contentType: "application/json"});
+            
+    console.log(result);
+    return result;  
+}
+
+async function updateAddress(id,address1,address2,city,postcode,country,state)  //Funcionando
+{
+   var Address = {
+    id:id,
+    user: null,
+    address1:address1,
+    address2:address2,
+    city:city,
+    postcode:postcode,
+    country:country,
+    state:state
+    
+  };
+  console.log(Address);
+  
+  var result = 
+            await $.ajax({
+              type: "PUT",
+              data: JSON.stringify(Address),
+              url: `${ctx}/restaurant/Address/update`,
               contentType: "application/json"});
             
     console.log(result);
@@ -264,7 +290,7 @@ function prueba()
 //-------------------------------------Creates--------------------------------------//
 
 
-async function createAddress(user,address1,address2,city,postcode,country)
+async function createAddress(user,address1,address2,city,postcode,country,state)  //Funcionando
 {
   var Address = {
     id:null,
@@ -273,7 +299,8 @@ async function createAddress(user,address1,address2,city,postcode,country)
     address2:address2,
     city:city,
     postcode:postcode,
-    country:country
+    country:country,
+    state:state
   };
   console.log(Address);
   
@@ -286,5 +313,20 @@ async function createAddress(user,address1,address2,city,postcode,country)
             
     console.log(result);
     return result;  
+  
+}
+
+//--------------------------------------Terminan creates -----------------------//
+
+//-------------------------------------Inician deletes--------------------------//
+
+async function deleteDirections(id)  //Funcionando
+{
+    var result = 
+            await $.ajax({
+              type: "DELETE", 
+              url: `${ctx}/restaurant/Address/delete/`+id,            
+              contentType: "application/json"});
+    return result;
   
 }
