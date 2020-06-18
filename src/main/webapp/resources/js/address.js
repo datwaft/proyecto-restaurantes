@@ -63,13 +63,35 @@ var overlay = {
   `
 };
 
+var listitem = {
+  props: ['item'],
+  methods: {
+    update() {
+      this.$emit('update', this.item);
+    }
+  },
+  template: `
+    <div class="list-item">
+      <div>
+        <slot></slot>
+      </div>
+      <div>
+        <button class="button" @click="update">
+          <i class="fas fa-edit"></i>
+        </button>
+      </div>
+    </div>
+  `
+}
+
 /* --> Instancias de Vue <-- */
 
 var vmApp = new Vue({
   el: '#app',
   data: data,
   components: {
-    'overlay-box': overlay
+    'overlay-box': overlay,
+    'list-item': listitem
   },
   computed: {
     isAddress1Valid: function () {
@@ -129,7 +151,13 @@ var vmApp = new Vue({
   methods: {
     addmodify(address = null) {
       if (address !== null) {
-        console.log(address);
+        this.id = address.id;
+        this.address1 = address.address1;
+        this.address2 = address.address2;
+        this.city = address.city;
+        this.state = address.state;
+        this.postcode = address.postcode;
+        this.country = address.country;
       } else {
         this.id = null;
         this.address1 = '';
@@ -141,12 +169,38 @@ var vmApp = new Vue({
       }
       this.isOverlayAddShown = true;
     },
-    submit() {
-      if (id === null) {
-
-      } else {
-
+    async submit() {
+      try {
+        if (this.id === null) {
+          await createAddress(sessionData.user,
+            this.address1,
+            this.address2,
+            this.city,
+            this.postcode,
+            this.country,
+            this.state);
+        } else {
+          await updateAddress(this.id,
+            this.address1,
+            this.address2,
+            this.city,
+            this.postcode,
+            this.country,
+            this.state);
+        }
+        this.addresses = await getDirections(sessionData.user.email);
+        vmNotification.showNotification(
+          "Transaction processed",
+          "Your information has been updated",
+          "information")
+      } catch (ex) {
+        console.log(ex);
+        vmNotification.showNotification(
+          "An error ocurred while trying to update user information",
+          "Your address is invalid, try again please",
+          "error")
       }
+      this.isOverlayAddShown = false;
     }
   }
 });
@@ -163,6 +217,6 @@ var vmApp = new Vue({
  */
 
 $(window).on('load', async () => {
-  // data.orders = await getDirections(sessionData.user.email);
+  data.addresses = await getDirections(sessionData.user.email);
 });
 

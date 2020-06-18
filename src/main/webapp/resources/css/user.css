@@ -47,8 +47,30 @@ input {
   margin-bottom: .5rem;
 }
 
-.box div:last-of-type {
+.box > div:last-of-type {
   border-bottom: 1px solid rgb(0,0,0,0.1);
   margin-bottom: .5rem;
   padding-bottom: .5rem;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-item:not(:last-of-type) {
+  border-bottom: 1px solid rgb(0,0,0,0.1);
+  margin-bottom: .5rem;
+  padding-bottom: .5rem;
+}
+
+.list-item .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 1rem;
 }
