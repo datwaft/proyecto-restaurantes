@@ -33,6 +33,27 @@ async function loadDishes() {  //Funcionando
   }
 }
 
+async function loadUsers()
+{
+
+    var result = 
+            await $.ajax({
+              type: "GET",
+              url: `${ctx}/restaurant/users/users`,            
+              contentType: "application/json"});
+    return result;
+}
+
+async function loadAdmins()
+{
+   var result = 
+            await $.ajax({
+              type: "GET",
+              url: `${ctx}/restaurant/users/admins`,            
+              contentType: "application/json"});
+    return result;
+}
+
 
 //async function loadAddiotionals()
 //{
@@ -92,6 +113,24 @@ async function verifyLogin(email,password)  //Funcionando
   
 }
 
+async function verifyAdminLogin(username,password) //Funcionando
+{
+    console.log(username,password);
+    var user = {
+      username:username,
+      password:password
+    };
+    
+    var result = 
+            await $.ajax({
+              type: "POST", 
+              data: JSON.stringify(user), 
+              url: `${ctx}/restaurant/users/login-admin`,            
+              contentType: "application/json"});
+    return result;
+  
+}
+
 async function register(email, password, firstName, lastName, cellphone) //funcionando
 {
   var new_user = {
@@ -107,6 +146,23 @@ async function register(email, password, firstName, lastName, cellphone) //funci
               type: "POST",
               data: JSON.stringify(new_user),
               url: `${ctx}/restaurant/users/register`,
+              contentType: "application/json"});
+            
+    return result;
+}
+
+async function registerAdmin(username, password) //funcionando
+{
+  var new_user = {
+    username: username,
+    password: password
+  };
+  
+    var result = 
+            await $.ajax({
+              type: "POST",
+              data: JSON.stringify(new_user),
+              url: `${ctx}/restaurant/users/register-admin`,
               contentType: "application/json"});
             
     return result;
@@ -128,6 +184,22 @@ async function updateUser(email, password, firstName, lastName, cellphone) //fun
               type: "PUT",
               data: JSON.stringify(new_user),
               url: `${ctx}/restaurant/users/update`,
+              contentType: "application/json"});
+
+    return result;
+}
+
+async function updateAdmin(username,password) //funcionando
+{
+  var new_user = {
+    username:username,
+    password: password
+  };
+    var result = 
+            await $.ajax({
+              type: "PUT",
+              data: JSON.stringify(new_user),
+              url: `${ctx}/restaurant/users/update-admin`,
               contentType: "application/json"});
 
     return result;
