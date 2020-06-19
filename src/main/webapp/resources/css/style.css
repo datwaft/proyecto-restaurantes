@@ -181,10 +181,12 @@ a.selected {
 /* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
 
 #notification {
-  position: absolute;
+  position: fixed;
+  top: 1rem;
   left: 50%;
   transform: translateX(-50%);
   user-select: none;
+  z-index: 10;
 }
 
 #notification .banner {
