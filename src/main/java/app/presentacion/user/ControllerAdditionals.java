@@ -9,6 +9,7 @@ import app.logic.Additional;
 import app.logic.AdditionalCategory;
 import app.logic.model.AdditionalCategoryModel;
 import app.logic.model.AdditionalModel;
+import app.logic.model.DishModel;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -19,6 +20,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
@@ -64,4 +66,32 @@ public class ControllerAdditionals {
         }
   }
 
+  @POST
+  @Path("/create")
+  @Produces({MediaType.APPLICATION_JSON})
+  public Additional create(Additional add) {
+    try {
+      
+      add.setAdditionalCategory(AdditionalCategoryModel.getInstance().find(1));
+      System.out.print(add.getDescription());
+      AdditionalModel.getInstance().create(add);
+      return add;
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
+  }
+  
+  @POST
+  @Path("/create-cat")
+  @Produces({MediaType.APPLICATION_JSON})
+  public AdditionalCategory createCategory(AdditionalCategory add) {
+    try {
+      add.setDish(DishModel.getInstance().find(1));
+      System.out.print(add.getDescription());
+      AdditionalCategoryModel.getInstance().create(add);
+      return add;
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
+  }
 }

@@ -79,4 +79,5 @@ public class CategoryDao extends AbstractFacade<Category> implements Serializabl
       em.close();
     }
   }
+ 
 }

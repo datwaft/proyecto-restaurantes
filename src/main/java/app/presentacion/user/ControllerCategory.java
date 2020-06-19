@@ -16,8 +16,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
-
 
 @Path("/category")
 @RequestScoped
@@ -36,8 +36,8 @@ public class ControllerCategory {
       throw new NotFoundException();
     }
   }
-  
-  @GET
+
+  @PUT
   @Path("/update")
   @Produces({MediaType.APPLICATION_JSON})
   public app.logic.Category update(app.logic.Category category) {
@@ -45,9 +45,9 @@ public class ControllerCategory {
       app.logic.Category exist = CategoryModel.getInstance().exist(category.getId());
       if (exist != null) {
 
-        System.out.print(category);
-        CategoryModel.getInstance().edit(category);
-        return category;
+        exist.setDescription(category.getDescription());
+        CategoryModel.getInstance().edit(exist);
+        return exist;
 
       } else {
         throw new NotFoundException();
@@ -57,5 +57,18 @@ public class ControllerCategory {
     }
   }
 
-    
+  @POST
+  @Path("/create")
+  @Produces({MediaType.APPLICATION_JSON})
+  public app.logic.Category create(app.logic.Category add) {
+    try {
+
+//      System.out.print(add.getDescription());
+//      CategoryModel.getInstance().create(add);
+      return add;
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
+  }
+
 }

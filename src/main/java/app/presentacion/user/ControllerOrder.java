@@ -47,7 +47,7 @@ public class ControllerOrder {
   }
   
   @Path("/status")
-  @GET
+  @PUT
   @Produces(MediaType.APPLICATION_JSON)
   public Bill updateStatus(Bill bill) {
     try {

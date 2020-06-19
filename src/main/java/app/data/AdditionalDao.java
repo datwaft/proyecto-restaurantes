@@ -66,4 +66,18 @@ public class AdditionalDao extends AbstractFacade<Additional> implements Seriali
       em.close();
     }
   }
+  public List<Additional> searchByDish(int dishId) {
+    EntityManager em = getEntityManager();
+    try {
+      return em.createQuery("SELECT obj FROM Additional obj WHERE obj.additionalCategory.dish.id = :dishId")
+        .setParameter("dishId", dishId)
+        .getResultList();
+    } catch (Exception e) {
+      System.out.print("An error occurred while getting additional by dish ID = '" + dishId + "' from table additional.\n\n Error:" + e + "\n\n");
+      return null;
+    } finally {
+      em.close();
+    }
+  }
+  
 }

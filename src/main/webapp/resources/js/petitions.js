@@ -34,42 +34,41 @@ async function loadDishes() {  //Funcionando
 }
 
 
-async function loadAddiotionals()
-{
-  try
-  {
-    var result = await $.ajax({
-      type: "GET", 
-      url:"restaurant/Additionals/additionals",
-      contentType: "application/json"});
-    
-    console.log(result);
-    console.log("la wea");
-    return result;
+//async function loadAddiotionals()
+//{
+//  try
+//  {
+//    var result = await $.ajax({
+//      type: "GET", 
+//      url:"restaurant/Additionals/additionals",
+//      contentType: "application/json"});
+//    
+//    console.log(result);
+//    return result;
+//
+//  } catch (exception)
+//  {
+//    console.error(exception);
+//  }
+//}
 
-  } catch (exception)
-  {
-    console.error(exception);
-  }
-}
-
-async function loadAddiotionalsCategory() 
-{
-  try
-  {
-    var result = await $.ajax({
-      type: "GET", 
-      url:"restaurant/Additionals/adi-cats",
-      contentType: "application/json"});
-
-      console.log(result);
-    return result;
-
-  } catch (exception)
-  {
-    console.error(exception);
-  }
-}
+//async function loadAddiotionalsCategory() 
+//{
+//  try
+//  {
+//    var result = await $.ajax({
+//      type: "GET", 
+//      url:"restaurant/Additionals/adi-cats",
+//      contentType: "application/json"});
+//
+//      console.log(result);
+//    return result;
+//
+//  } catch (exception)
+//  {
+//    console.error(exception);
+//  }
+//}
 
 //-------------------------------Terminan los llamados para carga----------------------------//
 
@@ -134,31 +133,12 @@ async function updateUser(email, password, firstName, lastName, cellphone) //fun
     return result;
 }
 
-//async function updateCategory(id,description)
-//{
-//  var category = {
-//    id:id,
-//    description: description,
-//  };
-//  
-//  var result = 
-//            await $.ajax({
-//              type: "PUT",
-//              data: JSON.stringify(category),
-//              url: `${ctx}/restaurant/category/update`,
-//              contentType: "application/json"});
-//            
-//    console.log(result);
-//    return result; 
-//}
-
-async function updateCategory(id,description)
+async function updateCategory(id,description)  // Funcionando
 {
   var category = {
     id:id,
-    description: description,
+    description: description
   };
-  
   var result = 
             await $.ajax({
               type: "PUT",
@@ -170,7 +150,7 @@ async function updateCategory(id,description)
     return result; 
 }
 
-async function updateDish(id,category,price,name,description)
+async function updateDish(id,category,price,name,description)   //Funcionando, necesita si o si la categoria completa
 {
   var dish = {
     id:id,
@@ -179,19 +159,17 @@ async function updateDish(id,category,price,name,description)
     name:name,
     description:description
   };
-  
   var result = 
             await $.ajax({
               type: "PUT",
               data: JSON.stringify(dish),
               url: `${ctx}/restaurant/Dishes/update`,
-              contentType: "application/json"});
-            
+              contentType: "application/json"});          
     console.log(result);
     return result;  
 }
 
-async function updateOrderStatus(id,status)
+async function updateOrderStatus(id,status)   //Funcionando
 {
    var new_status = {
     id:id,
@@ -268,22 +246,39 @@ async function getBills(id)
   
 }
 
+async function getSelecteds(id)  //Funcionando
+{
+   var result = 
+            await $.ajax({
+              type: "GET", 
+              url: `${ctx}/restaurant/Selected/getall/`+id,            
+              contentType: "application/json"});
+    return result;
+
+}
+
+async function getDishComplements(id) // Funcionando
+{
+  var result = 
+            await $.ajax({
+              type: "GET", 
+              url: `${ctx}/restaurant/Dishes/complements/`+id,            
+              contentType: "application/json"});
+    return result;
+}
+
+
+
 //-----------------------------Terminan gets especificos----------------------------//
 
-function prueba()
+async function prueba()
 {
-  var array = [1,2,3];
-  var array1 = [3,4,5];
-  var array2 = [6,7,8];
-  
-  var objeto1 =
-          {
-            lista1:array,
-    lista2:array1,
-    lista3:array2
-  };
-  
-  return objeto1;
+//   var result = 
+//            await $.ajax({
+//              type: "GET", 
+//              url: `${ctx}/restaurant/Dishes/complements/`+3,            
+//              contentType: "application/json"});
+//    return result;
 
 }
 
@@ -316,6 +311,78 @@ async function createAddress(user,address1,address2,city,postcode,country,state)
   
 }
 
+
+async function createDish(id,category,price,name,description)  //Funcionando
+{
+  var dish = {
+    id:id,
+    category:category,
+    price:price,
+    name:name,
+    description:description
+  };
+  var result = 
+            await $.ajax({
+              type: "POST",
+              data: JSON.stringify(dish),
+              url: `${ctx}/restaurant/Dishes/create`,
+              contentType: "application/json"});          
+    console.log(result);
+    return result;  
+}
+
+async function createCategory(description)  //Funcionando
+{
+  var desc = {
+    description:description
+  };
+  var result = 
+            await $.ajax({
+              type: "POST",
+              data: JSON.stringify(desc),
+              url: `${ctx}/restaurant/category/create`,
+              contentType: "application/json"});          
+    console.log(result);
+    return result;  
+}
+
+async function createAdditional(price, description, additionalCategory) //Funcionando
+{
+  var additional ={
+    price:price,
+    description:description,
+    additionalcategory:additionalCategory
+  };
+          
+  var result = 
+            await $.ajax({
+              type: "POST",
+              data: JSON.stringify(additional),
+              url: `${ctx}/restaurant/Additionals/create`,
+              contentType: "application/json"});          
+    console.log(result);
+    return result;  
+}
+
+async function createAdditionalCategory(dish,description,multiple,required) //Funcionando, multiple y required deben ser parametros booleanos, 1 y 0 no funciona....
+{
+  var additionalcat ={
+    dish:dish,
+    description:description,
+    multiple:multiple,
+    required:required
+  };
+          
+  var result = 
+            await $.ajax({
+              type: "POST",
+              data: JSON.stringify(additionalcat),
+              url: `${ctx}/restaurant/Additionals/create-cat`,
+              contentType: "application/json"});          
+    console.log(result);
+    return result;  
+}
+
 //--------------------------------------Terminan creates -----------------------//
 
 //-------------------------------------Inician deletes--------------------------//
@@ -330,3 +397,5 @@ async function deleteDirections(id)  //Funcionando
     return result;
   
 }
+
+// CREAR Y EDITAR ADMINISTRADORES Y DELETE

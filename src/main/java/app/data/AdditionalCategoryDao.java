@@ -66,4 +66,18 @@ public class AdditionalCategoryDao extends AbstractFacade<AdditionalCategory> im
       em.close();
     }
   }
+  
+  public List<AdditionalCategory> searchByDish(int dishId) {
+    EntityManager em = getEntityManager();
+    try {
+      return em.createQuery("SELECT obj FROM AdditionalCategory obj WHERE obj.dish.id = :dishId")
+        .setParameter("dishId", dishId)
+        .getResultList();
+    } catch (Exception e) {
+      System.out.print("An error occurred while getting AdditionalCategory by dish ID = '" + dishId + "' from table AdditionalCategory.\n\n Error:" + e + "\n\n");
+      return null;
+    } finally {
+      em.close();
+    }
+  }
 }
