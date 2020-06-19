@@ -4,7 +4,7 @@
 <head>
   <%@ include file="/head.jsp" %> 
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/user.css">
-  <title>Account - TastyTasty</title>
+  <title>Address Book - TastyTasty</title>
   <script>$(window).on('load', () => $('#a-address').addClass('active'))</script>
 </head>
 <body>
@@ -19,6 +19,15 @@
           <div v-if="addresses.length === 0">
             There are no addresses
           </div>
+          <list-item v-for="address in addresses" :item="address" :key="address.id" @update="addmodify($event)">
+            {{ address.address1 }}
+            <br>
+            {{ address.address2 }}
+            <br>
+            {{ address.city }}, {{ address.state }}, {{ address.country }}.
+            <br>
+            {{ address.postcode }}
+          </list-item>
           <button class="button" @click="addmodify()">Add new address</button>
         </div>
         <overlay-box v-model="isOverlayAddShown">
@@ -64,7 +73,7 @@
                 placeholder="Country"
                 :class="{invalid: !isCountryValid}">
             </div>
-          <button class="button" v-bind:disabled="!isValid">
+          <button class="button" @click="submit" v-bind:disabled="!isValid">
             <template v-if="id==null">Add</template>
             <template v-else>Update</template>
           </button>
