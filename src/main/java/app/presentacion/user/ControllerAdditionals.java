@@ -99,7 +99,7 @@ public class ControllerAdditionals {
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Additional updateDishes( Additional add) {
+  public Additional updateAdditional( Additional add) {
     try {
          Additional exist = AdditionalModel.getInstance().exist(add.getId());
 
@@ -109,6 +109,31 @@ public class ControllerAdditionals {
         exist.setAdditionalCategory(add.getAdditionalCategory()); //pasar el additional category
         
         AdditionalModel.getInstance().edit(exist);
+        return exist;
+      } else {
+         throw new NotFoundException();
+      }
+        } catch (Exception ex) {
+            throw new NotFoundException(); 
+        }
+  }
+  
+  @Path("/update-cat")
+  @PUT
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public AdditionalCategory updateAdditionalCat( AdditionalCategory add) {
+    try {
+         AdditionalCategory exist = AdditionalCategoryModel.getInstance().exist(add.getId());
+
+      if (exist != null) {        
+        
+        exist.setDescription(add.getDescription());
+        exist.setDish(add.getDish());
+        exist.setMultiple(add.getMultiple());
+        exist.setRequired(add.getRequired());
+        
+        AdditionalCategoryModel.getInstance().edit(exist);
         return exist;
       } else {
          throw new NotFoundException();

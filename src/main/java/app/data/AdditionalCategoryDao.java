@@ -53,6 +53,20 @@ public class AdditionalCategoryDao extends AbstractFacade<AdditionalCategory> im
       em.close();
     }
   }
+  
+  public AdditionalCategory exist(int id) {
+    EntityManager em = getEntityManager();
+    try {
+      return (AdditionalCategory) em.createQuery("SELECT obj FROM AdditionalCategory obj WHERE obj.id = :id")
+        .setParameter("id", id).getSingleResult();
+        
+    } catch (Exception e) {
+      System.out.print("An error occurred while getting AdditionalCategory = '" + id + "' from table User.\n\n Error:" + e + "\n\n");
+      return null;
+    } finally {
+      em.close();
+    }
+  }
 
   public List<AdditionalCategory> getAll() {
     EntityManager em = getEntityManager();

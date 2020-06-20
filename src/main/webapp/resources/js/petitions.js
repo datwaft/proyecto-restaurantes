@@ -285,7 +285,7 @@ async function updateAddress(id,address1,address2,city,postcode,country,state)  
     return result;  
 }
 
-async function updateAdditional(id,price,description,additionalCategory) //Funcionando 
+async function updateAdditional(id,price,description,additionalCategory) //Funcionando NECESITA SI O SI EL ADDITIONAL CATEGORY
 {
   var additional = {
     id:id,
@@ -299,6 +299,29 @@ async function updateAdditional(id,price,description,additionalCategory) //Funci
               type: "PUT",
               data: JSON.stringify(additional),
               url: `${ctx}/restaurant/Additionals/update`,
+              contentType: "application/json"});
+            
+    console.log(result);
+    return result;  
+  
+}
+
+
+async function updateAdditionalCategory(id,dish,description,multiple,required) //Funcionando NECESITA SI O SI EL dish ademas requires y multiple debe ser true o false
+{
+  var additional = {
+    id:id,
+    dish:dish,
+    description:description,
+    multiple:multiple,
+    required:required
+  };
+  
+   var result = 
+            await $.ajax({
+              type: "PUT",
+              data: JSON.stringify(additional),
+              url: `${ctx}/restaurant/Additionals/update-cat`,
               contentType: "application/json"});
             
     console.log(result);
