@@ -9,7 +9,10 @@ import app.logic.Bill;
 import app.logic.SelectedAdditional;
 import app.logic.SelectedAdditionalCategory;
 import app.logic.SelectedDish;
+import app.logic.model.AdditionalCategoryModel;
+import app.logic.model.AdditionalModel;
 import app.logic.model.BillModel;
+import app.logic.model.DishModel;
 import app.logic.model.SelectedAdditionalCategoryModel;
 import app.logic.model.SelectedAdditionalModel;
 import app.logic.model.SelectedDishModel;
@@ -26,6 +29,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
@@ -67,6 +71,66 @@ public class ControllerSelected {
       listas.put("SelectedAdditional", Sadd);
 
       return listas;
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
+  }
+  
+  
+  @POST
+  @Path("/dish-create")
+  @Produces({MediaType.APPLICATION_JSON})
+  public SelectedDish createSelectedDish(SelectedDish add) {
+    try {
+//      //---------------
+//      app.logic.Dish prueba1 = DishModel.getInstance().getAll().get(0);
+//      add.setDish(prueba1);
+//      app.logic.Bill prueba2 = BillModel.getInstance().exist(1);
+//      add.setBill(prueba2);
+//      //----------------------
+
+      System.out.print(add.getQuantity());
+      SelectedDishModel.getInstance().create(add);
+      return add;
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
+  }
+  
+  @POST
+  @Path("/addcategory-create")
+  @Produces({MediaType.APPLICATION_JSON})
+  public SelectedAdditionalCategory createSelectedCategory(SelectedAdditionalCategory add) {
+    try {
+      //---------------
+      app.logic.SelectedDish prueba1 = SelectedDishModel.getInstance().getAll().get(0);
+      add.setSelectedDish(prueba1);
+      app.logic.AdditionalCategory prueba2 = AdditionalCategoryModel.getInstance().getAll().get(0);
+      add.setAdditionalCategory(prueba2);
+      //----------------------
+
+      SelectedAdditionalCategoryModel.getInstance().create(add);
+      return add;
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
+  }
+  
+  @POST
+  @Path("/additional-create")
+  @Produces({MediaType.APPLICATION_JSON})
+  public SelectedAdditional createSelectedAdditional(SelectedAdditional add) {
+    try {
+//      ---------------
+//      SelectedAdditionalCategory prueba1 = SelectedAdditionalCategoryModel.getInstance().getAll().get(0);
+//      add.setSelectedAdditionalCategory(prueba1);
+//      app.logic.Additional prueba2 = AdditionalModel.getInstance().getAll().get(0);
+//      add.setAdditional(prueba2);
+//      ----------------------
+
+
+      SelectedAdditionalModel.getInstance().create(add);
+      return add;
     } catch (Exception ex) {
       throw new NotFoundException();
     }

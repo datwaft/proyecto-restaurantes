@@ -533,6 +533,60 @@ async function createBill(user,address,name,orderType,orderTime,status)  //Funci
   
 }
 
+
+async function createSelectedDish(dish,bill,quantity)  //Funcionando
+{
+  var sDish ={
+    dish:dish,
+    bill:bill,
+    quantity:quantity
+  };
+  
+  var result = 
+            await $.ajax({
+              type: "POST",
+              data: JSON.stringify(sDish),
+              url: `${ctx}/restaurant/Selected/dish-create`,
+              contentType: "application/json"});          
+    console.log(result);
+    return result;  
+}
+
+async function createSelectedAdditionalCategory(selectedDish,additionalCategory)
+{
+  var SAcategory = {
+    selectedDish:selectedDish,
+    additionalCategory:additionalCategory
+  };
+  
+  var result = 
+            await $.ajax({
+              type: "POST",
+              data: JSON.stringify(SAcategory),
+              url: `${ctx}/restaurant/Selected/addcategory-create`,
+              contentType: "application/json"});          
+    console.log(result);
+    return result;  
+  
+}
+
+async function createSelectedAdditional(selectedAdditionalCategory,additional)  //Funcionando
+{
+  var Sadditional = {
+    selectedAdditionalCategory:selectedAdditionalCategory,
+    additional:additional
+  };
+  
+  var result = 
+            await $.ajax({
+              type: "POST",
+              data: JSON.stringify(Sadditional),
+              url: `${ctx}/restaurant/Selected/additional-create`,
+              contentType: "application/json"});          
+    console.log(result);
+    return result;  
+}
+
 //--------------------------------------Terminan creates -----------------------//
 
 //-------------------------------------Inician deletes--------------------------//
