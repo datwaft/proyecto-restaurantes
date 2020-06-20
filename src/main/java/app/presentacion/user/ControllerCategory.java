@@ -64,7 +64,7 @@ public class ControllerCategory {
     try {
 
 //      System.out.print(add.getDescription());
-//      CategoryModel.getInstance().create(add);
+      CategoryModel.getInstance().create(add); //Retornar el nuevo objeto.
       return add;
     } catch (Exception ex) {
       throw new NotFoundException();

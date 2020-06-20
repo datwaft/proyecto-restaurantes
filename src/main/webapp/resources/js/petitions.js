@@ -33,7 +33,7 @@ async function loadDishes() {  //Funcionando
   }
 }
 
-async function loadUsers()
+async function loadUsers() // funcionando
 {
 
     var result = 
@@ -44,7 +44,7 @@ async function loadUsers()
     return result;
 }
 
-async function loadAdmins()
+async function loadAdmins() //funcionando
 {
    var result = 
             await $.ajax({
