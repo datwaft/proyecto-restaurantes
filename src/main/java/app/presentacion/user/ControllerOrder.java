@@ -7,6 +7,10 @@ package app.presentacion.user;
 
 import app.logic.Bill;
 import app.logic.model.BillModel;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -17,6 +21,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
@@ -85,8 +90,25 @@ public class ControllerOrder {
   }
   
   
-  
-  
-  //ultimas 20
-  //todas las ordenes.
+  @POST
+  @Path("/create/{date}")
+  @Produces({MediaType.APPLICATION_JSON})
+  public Bill create(Bill add, @PathParam("date") String day) {
+    try {
+
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      Date date = format.parse(day);
+
+      add.setOrderTime(date);
+
+      BillModel.getInstance().create(add);
+
+      List<Bill> bill = BillModel.getInstance().getAll();
+      Bill exist = bill.get(bill.size() - 1);
+
+      return exist;
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
+  }
 }

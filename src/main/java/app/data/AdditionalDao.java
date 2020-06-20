@@ -53,6 +53,20 @@ public class AdditionalDao extends AbstractFacade<Additional> implements Seriali
       em.close();
     }
   }
+  
+  public Additional exist(int id) {
+    EntityManager em = getEntityManager();
+    try {
+      return (Additional) em.createQuery("SELECT obj FROM Additional obj WHERE obj.id = :id")
+        .setParameter("id", id).getSingleResult();
+        
+    } catch (Exception e) {
+      System.out.print("An error occurred while getting Username = '" + id + "' from table User.\n\n Error:" + e + "\n\n");
+      return null;
+    } finally {
+      em.close();
+    }
+  }
 
   public List<Additional> getAll() {
     EntityManager em = getEntityManager();

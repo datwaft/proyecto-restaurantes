@@ -285,6 +285,27 @@ async function updateAddress(id,address1,address2,city,postcode,country,state)  
     return result;  
 }
 
+async function updateAdditional(id,price,description,additionalCategory) //Funcionando 
+{
+  var additional = {
+    id:id,
+    price:price,
+    description:description,
+    additionalCategory:additionalCategory
+  };
+  
+   var result = 
+            await $.ajax({
+              type: "PUT",
+              data: JSON.stringify(additional),
+              url: `${ctx}/restaurant/Additionals/update`,
+              contentType: "application/json"});
+            
+    console.log(result);
+    return result;  
+  
+}
+
 //---------------------------------TERMINAN UPDATES---------------------------------//
 
 //-----------------------------Inician gets especificos-----------------------------//
@@ -464,6 +485,31 @@ async function createAdditionalCategory(dish,description,multiple,required) //Fu
     return result;  
 }
 
+async function createBill(user,address,name,orderType,orderTime,status)  //Funcionando, se necesita string en formato yyyy-MM-dd HH:mm:ss
+{
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+  var orders ={
+    user:user,
+    address:address,
+    name:name,
+    orderType:orderType,
+    orderTime:orderTime,
+    status:status
+  };
+
+  var result = 
+            await $.ajax({
+              type: "POST",
+              data: JSON.stringify(orders),
+              url: `${ctx}/restaurant/Orders/create/`+date,
+              contentType: "application/json"});          
+    console.log(result);
+    return result;  
+  
+}
+
 //--------------------------------------Terminan creates -----------------------//
 
 //-------------------------------------Inician deletes--------------------------//
@@ -478,3 +524,6 @@ async function deleteDirections(id)  //Funcionando
     return result;
   
 }
+
+
+

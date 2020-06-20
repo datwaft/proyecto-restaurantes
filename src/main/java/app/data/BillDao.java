@@ -5,6 +5,7 @@ import app.logic.Bill;
 import app.logic.Category;
 import app.logic.Dish;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
@@ -82,4 +83,5 @@ public class BillDao extends AbstractFacade<Bill> implements Serializable {
       em.close();
     }
   }
+
 }

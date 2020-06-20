@@ -94,4 +94,27 @@ public class ControllerAdditionals {
       throw new NotFoundException();
     }
   }
+  
+  @Path("/update")
+  @PUT
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Additional updateDishes( Additional add) {
+    try {
+         Additional exist = AdditionalModel.getInstance().exist(add.getId());
+
+      if (exist != null) {        
+        exist.setDescription(add.getDescription());
+        exist.setPrice(add.getPrice());
+        exist.setAdditionalCategory(add.getAdditionalCategory()); //pasar el additional category
+        
+        AdditionalModel.getInstance().edit(exist);
+        return exist;
+      } else {
+         throw new NotFoundException();
+      }
+        } catch (Exception ex) {
+            throw new NotFoundException(); 
+        }
+  }
 }
