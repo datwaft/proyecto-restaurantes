@@ -561,7 +561,7 @@ async function createSelectedAdditionalCategory(selectedDish,additionalCategory)
   
   var result = 
             await $.ajax({
-              type: "POST",
+              type: "PUT",
               data: JSON.stringify(SAcategory),
               url: `${ctx}/restaurant/Selected/addcategory-create`,
               contentType: "application/json"});          

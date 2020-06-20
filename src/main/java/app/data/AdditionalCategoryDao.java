@@ -71,7 +71,7 @@ public class AdditionalCategoryDao extends AbstractFacade<AdditionalCategory> im
   public List<AdditionalCategory> getAll() {
     EntityManager em = getEntityManager();
     try {
-      return em.createQuery("SELECT obj FROM Additional obj")
+      return em.createQuery("SELECT obj FROM AdditionalCategory obj")
         .getResultList();
     } catch (Exception e) {
       System.out.print("An error occurred while getting all from table AdditionalCategory.\n\n Error:" + e + "\n\n");

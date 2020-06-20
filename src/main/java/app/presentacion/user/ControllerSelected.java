@@ -5,6 +5,7 @@
  */
 package app.presentacion.user;
 
+import app.logic.AdditionalCategory;
 import app.logic.Bill;
 import app.logic.SelectedAdditional;
 import app.logic.SelectedAdditionalCategory;
@@ -97,17 +98,17 @@ public class ControllerSelected {
     }
   }
   
-  @POST
+  @PUT
   @Path("/addcategory-create")
   @Produces({MediaType.APPLICATION_JSON})
   public SelectedAdditionalCategory createSelectedCategory(SelectedAdditionalCategory add) {
     try {
-      //---------------
-      app.logic.SelectedDish prueba1 = SelectedDishModel.getInstance().getAll().get(0);
-      add.setSelectedDish(prueba1);
-      app.logic.AdditionalCategory prueba2 = AdditionalCategoryModel.getInstance().getAll().get(0);
-      add.setAdditionalCategory(prueba2);
-      //----------------------
+//      //---------------
+//      SelectedDish prueba1 = SelectedDishModel.getInstance().getAll().get(0);
+//      add.setSelectedDish(prueba1);
+//      AdditionalCategory prueba2 = AdditionalCategoryModel.getInstance().getAll().get(0);
+//      add.setAdditionalCategory(prueba2);
+//      //----------------------
 
       SelectedAdditionalCategoryModel.getInstance().create(add);
       return add;
