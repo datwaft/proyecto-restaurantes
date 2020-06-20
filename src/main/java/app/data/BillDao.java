@@ -42,10 +42,10 @@ public class BillDao extends AbstractFacade<Bill> implements Serializable {
     }
   }
   
-  public List<Bill> search(int id) {
+  public List<Bill> search(String id) {
     EntityManager em = getEntityManager();
     try {
-      return em.createQuery("SELECT obj FROM Bill obj WHERE obj.user_id = :id")
+      return em.createQuery("SELECT obj FROM Bill obj WHERE obj.user.email = :id")
         .setParameter("id", id)
         .getResultList();
     } catch (Exception e) {

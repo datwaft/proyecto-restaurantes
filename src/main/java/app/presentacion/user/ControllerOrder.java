@@ -17,6 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -34,17 +35,31 @@ public class ControllerOrder {
   
   public ControllerOrder() {
   }
-  @Path("/orders")
+  @Path("/orders/{id}")
   @GET
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public List<Bill> getDishes(Bill bill) {
+  public List<Bill> getOrders(@PathParam("id") String id) {
     try {        
-          return BillModel.getInstance().search(bill.getId());
+          return BillModel.getInstance().search(id);
         } catch (Exception ex) {
             throw new NotFoundException(); 
         }
   }
+  
+  @Path("/orders/all")
+  @GET
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<Bill> getAllOrders() {
+    try {        
+          return BillModel.getInstance().getAll();
+        } catch (Exception ex) {
+            throw new NotFoundException(); 
+        }
+  }
+  
+  
   
   @Path("/status")
   @PUT
@@ -68,4 +83,10 @@ public class ControllerOrder {
       throw new NotFoundException();
     }
   }
+  
+  
+  
+  
+  //ultimas 20
+  //todas las ordenes.
 }

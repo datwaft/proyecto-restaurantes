@@ -302,16 +302,25 @@ async function getDirections(id)  //Funcionando.
 
 async function getBills(id)
 {
+  var result =
+          await $.ajax({
+            type: "GET",
+            url: `${ctx}/restaurant/Orders/orders/` + id,
+            contentType: "application/json"});
+  if (result.length > 20)
+    return result.slice(-20);
+  else {
+    return result;
+  }
+}
 
-    var bill = {
-      address1:id
-    };
-    
+
+async function getAllBills()
+{
     var result = 
             await $.ajax({
               type: "GET", 
-              data: JSON.stringify(bill), 
-              url: `${ctx}/restaurant/Orders/order`,            
+              url: `${ctx}/restaurant/Orders/orders/all`,            
               contentType: "application/json"});
     console.log(result);
     return result;
@@ -469,5 +478,3 @@ async function deleteDirections(id)  //Funcionando
     return result;
   
 }
-
-// CREAR Y EDITAR ADMINISTRADORES Y DELETE

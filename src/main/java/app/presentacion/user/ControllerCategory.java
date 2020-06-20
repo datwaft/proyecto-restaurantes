@@ -70,5 +70,4 @@ public class ControllerCategory {
       throw new NotFoundException();
     }
   }
-
 }
