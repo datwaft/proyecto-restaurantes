@@ -92,7 +92,8 @@ public class ControllerSelected {
 
       System.out.print(add.getQuantity());
       SelectedDishModel.getInstance().create(add);
-      return add;
+       List<SelectedDish> list = SelectedDishModel.getInstance().getAll();
+      return list.get(list.size()-1);
     } catch (Exception ex) {
       throw new NotFoundException();
     }
@@ -111,7 +112,8 @@ public class ControllerSelected {
 //      //----------------------
 
       SelectedAdditionalCategoryModel.getInstance().create(add);
-      return add;
+       List<SelectedAdditionalCategory> list = SelectedAdditionalCategoryModel.getInstance().getAll();
+      return list.get(list.size()-1);
     } catch (Exception ex) {
       throw new NotFoundException();
     }
@@ -131,7 +133,8 @@ public class ControllerSelected {
 
 
       SelectedAdditionalModel.getInstance().create(add);
-      return add;
+       List<SelectedAdditional> list = SelectedAdditionalModel.getInstance().getAll();
+      return list.get(list.size()-1);
     } catch (Exception ex) {
       throw new NotFoundException();
     }

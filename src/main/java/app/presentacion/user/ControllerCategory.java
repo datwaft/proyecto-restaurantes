@@ -65,7 +65,9 @@ public class ControllerCategory {
 
 //      System.out.print(add.getDescription());
       CategoryModel.getInstance().create(add); //Retornar el nuevo objeto.
-      return add;
+      
+       List<app.logic.Category> list = CategoryModel.getInstance().getAll(); //retornar add cualquier cosa
+      return list.get(list.size()-1);
     } catch (Exception ex) {
       throw new NotFoundException();
     }
