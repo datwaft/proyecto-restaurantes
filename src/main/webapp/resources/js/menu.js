@@ -54,7 +54,20 @@ var data = {
    *  Puede ser "ASAP", en cuyo caso equivaldría a decir la fecha y hora actual.
    *  También puede ser una fecha en formato: yyyy-MM-dd HH:mm e.g. 2020-06-10 22:53.
    */
-  time: "ASAP"
+  time: "ASAP",
+  /*
+  */
+  isOverlayShown: false,
+  dish: {
+    name: '',
+    description: '',
+    price: '',
+    additionalCategories: [],
+    additionals: []
+  },
+  selectedDish: {
+    quantity: 1
+  }
 };
 
 /* ============================================================================================ 
@@ -63,6 +76,38 @@ var data = {
  */
 
 /* --> Vue Components <-- */
+
+var overlay = {
+  model: {
+    prop: 'isShown',
+    event: 'hide'
+  },
+  props: {
+    isShown: Boolean
+  },
+  methods: {
+    hide() {
+      this.$emit('hide', false);
+    }
+  },
+  template: `
+    <transition name="fade">
+      <div class="overlay" v-if="isShown">
+        <div>
+          <div class="box">
+            <h3>
+              <slot name="title"></slot>
+            </h3>
+            <i class="fas fa-times-circle" @click="hide"></i>
+          </div>
+          <div class="box">
+            <slot></slot>
+          </div>
+        </div>
+      </div>
+    </transition>
+  `
+};
 
 var dropdown = {
   data: function () {
@@ -148,15 +193,86 @@ var vmDishes = new Vue({
   el: '#dishes',
   data: data,
   components: {
-    'dropdown-menu': dropdownInline
+    'dropdown-menu': dropdownInline,
+    'overlay-box': overlay
   },
   methods: {
     getCategoryById(id) {
       var object = this.categories.find((e) => e.id == id);
       return (object ? object.description : "Invalid Category");
+    },
+    async showOverlay(dish) {
+      this.dish.additionalCategories = [];
+      this.dish.category = dish.category;
+      this.dish.description = dish.description;
+      this.dish.id = dish.id;
+      this.dish.name = dish.name;
+      this.dish.price = dish.price;
+
+      var petition = await getDishComplements(dish.id);
+      this.dish.additionalCategories = petition.AdditionalCategory;
+      for (category of this.dish.additionalCategories) {
+        var additionals = petition.Additionals.filter((e) => e.additionalCategory.id === category.id);
+        if (additionals.length === 0) {
+          this.dish.additionalCategories.filter((e) => e.id !== category.id);
+        } else {
+          category.additionals = additionals;
+        }
+      }
+      this.selectedDish = {
+        quantity: 1
+      };
+      for (category of this.dish.additionalCategories) {
+        if (category.multiple) {
+          Vue.set(this.selectedDish, category.id, [])
+        } else {
+          Vue.set(this.selectedDish, category.id, null)
+        }
+      }
+      this.isOverlayShown = true;
+    },
+    addDishToCart() {
+      var object = {
+        dish: this.dish,
+        quantity: this.selectedDish.quantity,
+        categories: {}
+      };
+      for([key, value] of Object.entries(this.selectedDish)) {
+        if (key !== 'quantity')
+          object.categories[key] = value;
+      }
+      this.cart.push(object);
+      this.isOverlayShown = false;
     }
   },
   computed: {
+    isSelectionValid: function() {
+      var conditions = [];
+      for (category of this.dish.additionalCategories) {
+        if (category.required) {
+          if (category.multiple) {
+            conditions.push(this.selectedDish[category.id].length > 0);
+          } else {
+            conditions.push(this.selectedDish[category.id] !== null);
+          }
+        }
+      }
+      return conditions.every((e) => e);
+    },
+    isQuantityValid: function() {
+      var conditions = [
+        this.selectedDish.quantity > 0,
+        !isNaN(this.selectedDish.quantity)
+      ];
+      return conditions.every((e) => e);
+    },
+    isValid: function() {
+      var conditions = [
+        this.isSelectionValid,
+        this.isQuantityValid
+      ];
+      return conditions.every((e) => e);
+    },
     dishesByCategory: function() {
       var result = {};
       this.dishes.forEach((e) => {
@@ -171,6 +287,11 @@ var vmDishes = new Vue({
     }
   }
 })
+
+var vmCart = new Vue({
+  el: '#cart',
+  data: data
+});
 
 /* ============================================================================================ 
  * FIN DE LA PROGRAMACIÓN RELACIONADA CON VUEJS

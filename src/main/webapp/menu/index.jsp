@@ -66,17 +66,71 @@
 								</div>
 								<div class="content-left">
 									<b>₡{{ dish.price }}</b>
-									<button class="button">
+									<button class="button" @click="showOverlay(dish)">
 										<i class="fas fa-plus"></i>
 									</button>
 								</div>
               </div>
             </dropdown-menu>
           </div>
+          <overlay-box v-model="isOverlayShown">
+            <template #title>Add dish to cart</template>
+            <b>Name: </b> {{ dish.name }}<br>
+            <b>Description: </b> {{ dish.description }}<br>
+            <b>Price: </b> {{ dish.price }}<br>
+            <div class="list" v-for="category of dish.additionalCategories">
+              <div class="list-title">
+                <b>{{ category.description }}</b>
+                <i>{{ category.required ? 'Required' : 'Not Required' }}</i>
+              </div>
+              <div v-if="category.multiple">
+                <div class="list-item" v-for="additional of category.additionals" :key="additional.id">
+                  <span>{{ additional.description }}</span>
+                  <span>
+                    <input
+                      type="checkbox"
+                      :value="additional"
+                      v-model="selectedDish[category.id]"
+                      :class="{invalid: !isSelectionValid}">
+                  </span>
+                </div>
+              </div>
+              <div v-else>
+                <div class="list-item" v-for="additional of category.additionals" :key="additional.id">
+                  <span>{{ additional.description }}: ₡{{ additional.price }}</span>
+                  <span>
+                    <input
+                      name="category.id"
+                      type="radio"
+                      :value="additional"
+                      v-model="selectedDish[category.id]"
+                      :class="{invalid: !isSelectionValid}">
+                  </span>
+                </div>
+              </div>
+              <div class="input-group">
+                <div class="square-button" @click="selectedDish.quantity--">
+                  <i class="fas fa-minus"></i>
+                </div>
+                <input
+                  type="number"
+                  min="1"
+                  :class="{invalid: !isQuantityValid}"
+                  v-model.number="selectedDish.quantity">
+                <div class="square-button" @click="selectedDish.quantity++">
+                  <i class="fas fa-plus"></i>
+                </div>
+              </div>
+            </div>
+            <div class="divisor"></div>
+            <button class="button" @click="addDishToCart()" v-bind:disabled="!isValid">
+              Add dish to cart
+            </button>
+          </overlay-box>
         </div>
         <!-- END Vue: vmDishes -->
       </div>
-      <div class="right box">
+      <div id="cart" class="right box">
         <!-- START Vue: vmOrderMode -->
         <div id="orderMode">
           <span class="selectable" :class="{active: isDelivery}" @click="orderMode = 'delivery'">
@@ -90,7 +144,9 @@
         </div>
         <!-- END Vue: vmOrderMode -->
         <div class="cart">
-          Add menu items to your cart.
+          <template v-if="cart.length == 0">
+            Add menu items to your cart.
+          </template>
         </div>
         <button class="button" id="checkout">Checkout</button>
       </div>

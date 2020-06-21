@@ -46,5 +46,5 @@
     </div>
   </main>
 </body>
-<script src="${pageContext.request.contextPath}/resources/js/admin/login.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/admin/login.js" defer></script>
 </html>

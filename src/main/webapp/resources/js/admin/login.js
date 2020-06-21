@@ -32,8 +32,8 @@ var vmLogIn = new Vue({
   methods: {
     async submit() {
       try {
-        // var admin = await verifyLoginAdmin(this.username, this.password);
-        // sessionData.admin = admin;
+        var admin = await verifyAdminLogin(this.username, this.password);
+        sessionData.admin = admin;
         window.location.href = `${ctx}/admin/`;
       } catch (ex) {
         console.log(ex);
@@ -49,7 +49,7 @@ var vmLogIn = new Vue({
 
 $(window).on('load', () => {
   if (sessionData.admin) {
-    data.admin.username = sessionData.admin.username;
-    data.admin.password = sessionData.admin.password;
+    data.username = sessionData.admin.username;
+    data.password = sessionData.admin.password;
   }
 })

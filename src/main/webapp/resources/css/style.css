@@ -94,7 +94,8 @@ body {
   overflow: visible;
 }
 
-input.invalid {
+input.invalid,
+select.invalid {
   border: 1px solid rgba(var(--invalid-color), .8);
 }
 

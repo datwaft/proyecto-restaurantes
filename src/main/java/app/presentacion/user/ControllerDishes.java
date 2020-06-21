@@ -86,9 +86,9 @@ public class ControllerDishes {
       List<Additional> add = new ArrayList<>();
 
 
-      addC = AdditionalCategoryModel.getInstance().searchByDish(1);
+      addC = AdditionalCategoryModel.getInstance().searchByDish(Integer.parseInt(id));
       System.out.println(addC);
-      add = AdditionalModel.getInstance().searchByDish(1);
+      add = AdditionalModel.getInstance().searchByDish(Integer.parseInt(id));
       System.out.println(add);
 
       listas.put("AdditionalCategory", addC);

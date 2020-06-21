@@ -30,3 +30,6 @@ insert into `dish`(`category`, `price`, `name`, `description`) values
 (3, 49000, 'Espaguetti', 'Rico espaguetti'),
 (4, 29000, 'Ensalada griega', 'Rica ensalada'),
 (5, 45000, 'Ensalada rusa', 'Rica ensalada vegetariana');
+
+select * from additionalCategory;
+select * from additional;

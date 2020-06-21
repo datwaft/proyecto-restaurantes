@@ -73,12 +73,12 @@ var vmAdmins = new Vue({
       this.isOverlayShown = true;
     },
     async update() {
-      this.admins = await getAdmins();
+      this.admins = await loadAdmins();
     },
     async submit() {
       try {
-        // await createAdmin(this.username, this.password);
-        // this.update();
+        await registerAdmin(this.username, this.password);
+        this.update();
         vmNotification.showNotification(
           "Transaction processed",
           "An administrator has been created",
@@ -96,11 +96,5 @@ var vmAdmins = new Vue({
 })
 
 $(window).on('load', () => {
-  // vmAdmins.update();
-  data.admins = [
-    {username: 'admin', password: 'password'},
-    {username: 'mario', password: 'pass'},
-    {username: 'david', password: 'xdxdxd'},
-    {username: 'mario2', password: 'losiram01'}
-  ]
+  vmAdmins.update();
 })

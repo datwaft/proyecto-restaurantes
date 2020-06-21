@@ -129,7 +129,8 @@ body {
   margin-bottom: .5rem;
 }
 
-input {
+input,
+select {
   border-radius: 5px;
   padding: 0.5rem 1rem;
   border: 1px solid rgb(var(--background-color));
@@ -144,11 +145,13 @@ input {
   margin-bottom: 1rem;
 }
 
-.input-group input:not(:last-of-type) {
+.input-group input:not(:last-child),
+.input-group select:not(:last-child) {
   margin-right: .5rem;
 }
 
-.input-group input {
+.input-group input,
+.input-group select {
   flex-grow: 1;
 }
 
@@ -198,4 +201,64 @@ input {
 
 .only-title h1 {
   font-size: 2.5rem;
+}
+
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                           Extras                                           ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
+.mini {
+  padding: .5rem 0;
+  border-top: 1px solid rgba(0,0,0,.5);
+  border-bottom: 1px solid rgba(0,0,0,.5);
+  margin: .5rem 0;
+}
+
+.mini * {
+  font-size: .8rem;
+}
+
+.additionals-list {
+  padding-bottom: .5rem;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  margin-bottom: .5rem;
+  padding-left: 2rem;
+}
+
+.additional-item {
+  margin-bottom: .5rem;
+}
+
+.additional-category-header {
+  padding-bottom: .5rem;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  margin-bottom: .5rem;
+}
+
+.additional-category-header .input-group {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.square-button {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbox {
+  margin: 0 .3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbox:last-of-type {
+  margin-right: .5rem;
 }

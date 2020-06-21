@@ -60,11 +60,11 @@ public class ControllerSelected {
       List<SelectedAdditionalCategory> SaddCat = new ArrayList<>();
       List<SelectedAdditional> Sadd = new ArrayList<>();
 
-      Sdish = SelectedDishModel.getInstance().searchByBill(1);
+      Sdish = SelectedDishModel.getInstance().searchByBill(Integer.parseInt(id));
       System.out.println(Sdish);
-      SaddCat = SelectedAdditionalCategoryModel.getInstance().searchByBill(1);
+      SaddCat = SelectedAdditionalCategoryModel.getInstance().searchByBill(Integer.parseInt(id));
       System.out.println(SaddCat);
-      Sadd = SelectedAdditionalModel.getInstance().searchByBill(1);
+      Sadd = SelectedAdditionalModel.getInstance().searchByBill(Integer.parseInt(id));
       System.out.println(Sadd);
 
       listas.put("SelectedDishes", Sdish);
