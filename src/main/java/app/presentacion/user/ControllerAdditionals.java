@@ -152,9 +152,13 @@ public class ControllerAdditionals {
     try {
             
       List<AdditionalCategory> list = AdditionalCategoryModel.getInstance().getAll();
+      if (list.isEmpty())
+      {
+        throw new NotFoundException();
+      }
       return list.get(list.size()-1).getId();
         } catch (Exception ex) {
-            throw new NotFoundException(); 
+            return 0; 
         }
   }
 }
