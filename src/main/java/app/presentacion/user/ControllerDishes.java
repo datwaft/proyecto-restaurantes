@@ -109,7 +109,8 @@ public class ControllerDishes {
 //      add.setCategory(cat);
       System.out.print(add.getDescription());
       DishModel.getInstance().create(add);
-      return add;
+      List<Dish> list = DishModel.getInstance().getAll();
+      return list.get(list.size()-1);
     } catch (Exception ex) {
       throw new NotFoundException();
     }

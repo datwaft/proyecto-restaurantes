@@ -74,7 +74,8 @@ public class ControllerAdditionals {
 //      add.setAdditionalCategory(AdditionalCategoryModel.getInstance().find(1));
 //      System.out.print(add.getDescription());
       AdditionalModel.getInstance().create(add);
-      return add;
+       List<Additional> list = AdditionalModel.getInstance().getAll(); //borrar cualquier vara
+      return list.get(list.size()-1);
     } catch (Exception ex) {
       throw new NotFoundException();
     }
