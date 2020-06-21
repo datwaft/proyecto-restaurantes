@@ -485,7 +485,7 @@ async function createAdditional(price, description, additionalCategory) //Funcio
   var additional ={
     price:price,
     description:description,
-    additionalcategory:additionalCategory
+    additionalCategory:additionalCategory
   };
           
   var result = 
