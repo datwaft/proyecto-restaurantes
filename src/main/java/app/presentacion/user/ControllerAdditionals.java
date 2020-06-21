@@ -142,4 +142,18 @@ public class ControllerAdditionals {
             throw new NotFoundException(); 
         }
   }
+  
+    @GET
+  @Path("/last")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Integer getLast() {
+    
+    try {
+            
+      List<AdditionalCategory> list = AdditionalCategoryModel.getInstance().getAll();
+      return list.get(list.size()-1).getId();
+        } catch (Exception ex) {
+            throw new NotFoundException(); 
+        }
+  }
 }

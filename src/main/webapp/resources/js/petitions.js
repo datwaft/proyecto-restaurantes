@@ -393,6 +393,16 @@ async function getDishComplements(id) // Funcionando
 }
 
 
+async function getLastAdditionaC()
+{
+  var result = 
+            await $.ajax({
+              type: "GET", 
+              url: `${ctx}/restaurant/Additionals/last`,            
+              contentType: "application/json"});
+    return result;
+}
+
 
 //-----------------------------Terminan gets especificos----------------------------//
 
