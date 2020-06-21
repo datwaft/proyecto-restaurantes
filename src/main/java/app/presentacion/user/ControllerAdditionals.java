@@ -86,10 +86,11 @@ public class ControllerAdditionals {
   @Produces({MediaType.APPLICATION_JSON})
   public AdditionalCategory createCategory(AdditionalCategory add) {
     try {
-      add.setDish(DishModel.getInstance().find(1));
+      add.setDish(DishModel.getInstance().find(1)); //comentar
       System.out.print(add.getDescription());
       AdditionalCategoryModel.getInstance().create(add);
-      return add;
+      List<AdditionalCategory> list = AdditionalCategoryModel.getInstance().getAll();     
+      return list.get(list.size()-1);
     } catch (Exception ex) {
       throw new NotFoundException();
     }

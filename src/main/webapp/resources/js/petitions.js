@@ -443,7 +443,6 @@ async function createAddress(user,address1,address2,city,postcode,country,state)
             
     console.log(result);
     return result;  
-  
 }
 
 
