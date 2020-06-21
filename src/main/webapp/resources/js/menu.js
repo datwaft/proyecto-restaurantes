@@ -172,13 +172,23 @@ var cartItem = {
             price += e2.price;
           }
         } else {
-          price += e.price;
+          if (e != null) {
+            price += e.price;
+          }
         }
       }
       return price * this.item.quantity;
     },
     hasCategories: function () {
-      return Object.keys(this.item.categories).length !== 0;
+      var conditions = [];
+      for([key, e] of Object.entries(this.item.categories)) {
+        if (Array.isArray(e)) {
+          conditions.push(e.length > 0);
+        } else {
+          conditions.push(e != null);
+        }
+      }
+      return Object.keys(this.item.categories).length !== 0 && conditions.every((e) => e);
     }
   },
   template: `
@@ -189,7 +199,7 @@ var cartItem = {
       </button>
       &nbsp;
       <div class="cart-item-trigger" @click="isShown=!isShown">
-        {{ item.dish.name }}
+        {{ item.dish.name }} × {{ item.quantity }}
         <div>
         ₡{{ totalPrice }}&nbsp;
         <template v-if="hasCategories">
@@ -201,14 +211,14 @@ var cartItem = {
     <div class="cart-item-item" v-if="hasCategories" v-show="isShown">
       <div class="divisor"></div>
       <div v-for="selection in item.categories">
-        <template v-if="Array.isArray(selection)">
+        <template v-if="Array.isArray(selection) && selection.length > 0">
           <b> {{ selection[0].additionalCategory.description }} </b>
           <div class="separate" v-for="sel in selection">
             <span>{{ sel.description }}</span>
             <span>₡{{ sel.price }}</span>
           </div>
         </template>
-        <template v-else>
+        <template v-else-if="!Array.isArray(selection) && selection !== null">
           <b> {{ selection.additionalCategory.description }} </b>
           <div class="separate">
             <span>{{ selection.description }}</span>
