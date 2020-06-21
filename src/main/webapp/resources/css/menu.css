@@ -187,16 +187,6 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 0 5px 5px 0;
 }
 
-/* ==> Cart <== */
-
-.cart {
-  min-height: 20vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
 /* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
 /* ║                                           Extras                                           ║ */
 /* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
@@ -234,6 +224,10 @@ select {
   margin-bottom: 1rem;
 }
 
+.decorator-input-group {
+  margin-bottom: 0 !important;
+}
+
 .input-group input:not(:last-child) + :not(.square-button),
 .input-group select:not(:last-child) + :not(.square-button) {
   margin-right: .5rem;
@@ -242,10 +236,6 @@ select {
 .input-group input,
 .input-group select {
   flex-grow: 1;
-}
-
-.button:not(:last-child) {
-  margin-bottom: .5rem;
 }
 
 .list-item {
@@ -284,10 +274,9 @@ select {
 }
 
 .list-title {
-  padding: .5rem 0;
+  padding-top: .5rem;
   border-top: 1px solid rgba(0,0,0,.5);
-  border-bottom: 1px solid rgba(0,0,0,.1);
-  margin: .5rem 0;
+  margin-top: .5rem;
   display: flex;
   flex-direction:row;
   justify-content: space-between;
@@ -308,4 +297,75 @@ select {
 
 input[type="number"] {
   text-align: center;
+}
+
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                            Cart                                            ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
+.cart {
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart-item:first-of-type {
+  border-top: 1px solid rgba(0,0,0.5);
+  margin-top: .25rem;
+  padding-top: .25rem;
+}
+
+.cart-item {
+  width: 100%;
+  margin-bottom: .25rem;
+  border-bottom: 1px solid rgba(0,0,0.5);
+  padding-bottom: .25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-item-item .divisor {
+  padding-bottom: 0rem;
+  margin-bottom: 0rem;
+}
+
+.cart-item-item {
+  opacity: .8;
+}
+
+.minus-button {
+  background: rgb(var(--main-color));
+  color: rgb(var(--secondary-color));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0 1px;
+}
+
+.cart-item > div:first-child {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item-trigger {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.separate {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }

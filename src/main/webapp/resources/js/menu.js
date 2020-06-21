@@ -147,6 +147,80 @@ var dropdownInline = {
   `
 };
 
+var cartItem = {
+  data: function () {
+    return {
+      isShown: false
+    }
+  },
+  props: {
+    item: {
+      type: Object,
+      required: true
+    },
+    index: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    totalPrice: function () {
+      var price = this.item.dish.price;
+      for([key, e] of Object.entries(this.item.categories)) {
+        if (Array.isArray(e)) {
+          for([key2, e2] of Object.entries(e)) {
+            price += e2.price;
+          }
+        } else {
+          price += e.price;
+        }
+      }
+      return price * this.item.quantity;
+    },
+    hasCategories: function () {
+      return Object.keys(this.item.categories).length !== 0;
+    }
+  },
+  template: `
+  <div class="cart-item">
+    <div>
+      <button class="button minus-button" @click="$emit('remove', index)">
+        <i class="fas fa-minus"></i>
+      </button>
+      &nbsp;
+      <div class="cart-item-trigger" @click="isShown=!isShown">
+        {{ item.dish.name }}
+        <div>
+        ₡{{ totalPrice }}&nbsp;
+        <template v-if="hasCategories">
+          <i class="fas" :class="{'fa-arrow-up': !isShown, 'fa-arrow-down': isShown}"></i>
+        </template>
+        </div>
+      </div>
+    </div>
+    <div class="cart-item-item" v-if="hasCategories" v-show="isShown">
+      <div class="divisor"></div>
+      <div v-for="selection in item.categories">
+        <template v-if="Array.isArray(selection)">
+          <b> {{ selection[0].additionalCategory.description }} </b>
+          <div class="separate" v-for="sel in selection">
+            <span>{{ sel.description }}</span>
+            <span>₡{{ sel.price }}</span>
+          </div>
+        </template>
+        <template v-else>
+          <b> {{ selection.additionalCategory.description }} </b>
+          <div class="separate">
+            <span>{{ selection.description }}</span>
+            <span>₡{{ selection.price }}</span>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+  `
+}
+
 /* --> Vue Instances <-- */
 
 var vmCategories = new Vue({
@@ -159,19 +233,6 @@ var vmCategories = new Vue({
       } else {
         this.selected.push(id);
       }
-    }
-  }
-});
-
-var vmOrderMode = new Vue({
-  el: '#orderMode',
-  data: data,
-  computed: {
-    isDelivery: function () {
-      return this.orderMode == "delivery";
-    },
-    isPickUp: function () {
-      return this.orderMode == "pick-up";
     }
   }
 });
@@ -233,7 +294,7 @@ var vmDishes = new Vue({
     },
     addDishToCart() {
       var object = {
-        dish: this.dish,
+        dish: Object.assign({}, this.dish),
         quantity: this.selectedDish.quantity,
         categories: {}
       };
@@ -290,7 +351,29 @@ var vmDishes = new Vue({
 
 var vmCart = new Vue({
   el: '#cart',
-  data: data
+  data: data,
+  components: {
+    'cart-item': cartItem
+  },
+  computed: {
+    isDelivery: function () {
+      return this.orderMode == "delivery";
+    },
+    isPickUp: function () {
+      return this.orderMode == "pick-up";
+    },
+    canCheckout: function () {
+      return this.cart.length > 0;
+    }
+  },
+  methods: {
+    remove(key) {
+      this.cart.splice(key, 1);
+    },
+    checkout() {
+      window.location.href = `${ctx}/checkout/`;
+    }
+  }
 });
 
 /* ============================================================================================ 
@@ -307,4 +390,43 @@ var vmCart = new Vue({
 $(window).on('load', async () => {
   data.categories = await loadCategory();
   data.dishes = await loadDishes();
+});
+
+$(window).on('load', () => {
+  if (sessionStorage.getItem("cart")) {
+    data.cart = JSON.parse(sessionStorage.getItem('cart'));
+  }
+  if (sessionStorage.getItem("orderMode")) {
+    data.orderMode = JSON.parse(sessionStorage.getItem('orderMode'));
+  }
+  if (sessionStorage.getItem("time")) {
+    data.time = JSON.parse(sessionStorage.getItem('time'));
+  }
+});
+
+/*  Esta función guarda en la sesión el usuario (si este está disponible) extraído de sessionData.
+ *  También borra el usuario de la sesión si sessionData.user pasa a ser null.
+ */
+$(window).on('unload', () => {
+  if (data.cart !== null) {
+    sessionStorage.setItem('cart', JSON.stringify(data.cart));
+  } else {
+    if (sessionStorage.getItem("cart")) {
+      data.cart = sessionStorage.removeItem('cart');
+    }
+  }
+  if (data.orderMode !== null) {
+    sessionStorage.setItem('orderMode', JSON.stringify(data.orderMode));
+  } else {
+    if (sessionStorage.getItem("orderMode")) {
+      data.orderMode = sessionStorage.removeItem('orderMode');
+    }
+  }
+  if (data.time !== null) {
+    sessionStorage.setItem('time', JSON.stringify(data.time));
+  } else {
+    if (sessionStorage.getItem("time")) {
+      data.time = sessionStorage.removeItem('time');
+    }
+  }
 });

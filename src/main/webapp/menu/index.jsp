@@ -100,7 +100,7 @@
                   <span>{{ additional.description }}: ₡{{ additional.price }}</span>
                   <span>
                     <input
-                      name="category.id"
+                      :name="category.id"
                       type="radio"
                       :value="additional"
                       v-model="selectedDish[category.id]"
@@ -108,18 +108,19 @@
                   </span>
                 </div>
               </div>
-              <div class="input-group">
-                <div class="square-button" @click="selectedDish.quantity--">
-                  <i class="fas fa-minus"></i>
-                </div>
-                <input
-                  type="number"
-                  min="1"
-                  :class="{invalid: !isQuantityValid}"
-                  v-model.number="selectedDish.quantity">
-                <div class="square-button" @click="selectedDish.quantity++">
-                  <i class="fas fa-plus"></i>
-                </div>
+            </div>
+            <div class="divisor"></div>
+            <div class="input-group decorator-inpur-group">
+              <div class="square-button" @click="selectedDish.quantity--">
+                <i class="fas fa-minus"></i>
+              </div>
+              <input
+                type="number"
+                min="1"
+                :class="{invalid: !isQuantityValid}"
+                v-model.number="selectedDish.quantity">
+              <div class="square-button" @click="selectedDish.quantity++">
+                <i class="fas fa-plus"></i>
               </div>
             </div>
             <div class="divisor"></div>
@@ -133,11 +134,11 @@
       <div id="cart" class="right box">
         <!-- START Vue: vmOrderMode -->
         <div id="orderMode">
-          <span class="selectable" :class="{active: isDelivery}" @click="orderMode = 'delivery'">
+          <span class="selectable" :class="{active: isDelivery}" @click="orderMode='delivery'">
             <b>Delivery</b><br>
             in 15 min
           </span>
-          <span class="selectable" :class="{active: isPickUp}" @click="orderMode = 'pick-up'">
+          <span class="selectable" :class="{active: isPickUp}" @click="orderMode='pick-up'">
             <b>Pick-up</b><br>
             starts 06:00am
           </span>
@@ -147,8 +148,19 @@
           <template v-if="cart.length == 0">
             Add menu items to your cart.
           </template>
+          <cart-item
+            v-for="(item, key) in cart"
+            :key="key"
+            :item="item"
+            :index="key"
+            @remove="remove($event)">
+          </cart-item>
         </div>
-        <button class="button" id="checkout">Checkout</button>
+        <button
+          class="button"
+          id="checkout"
+          :disabled="!canCheckout"
+          @click="checkout()">Checkout</button>
       </div>
     </div>
   </main>
