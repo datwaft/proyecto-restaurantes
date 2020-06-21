@@ -55,7 +55,8 @@ public class ControllerAddress {
 
       System.out.print(add.getAddress1());
       AddressModel.getInstance().create(add);
-      return add;
+      List<Address> last = AddressModel.getInstance().getAll();  //Esta puede eliminarse si no sirve
+      return last.get(last.size()-1);
     } catch (Exception ex) {
       throw new NotFoundException();
     }

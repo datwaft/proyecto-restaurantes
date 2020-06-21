@@ -36,7 +36,6 @@ public class ControllerAdditionals {
   @Context
   private UriInfo context;
 
-
   public ControllerAdditionals() {
   }
 
@@ -44,26 +43,26 @@ public class ControllerAdditionals {
   @Path("/additionals")
   @Produces(MediaType.APPLICATION_JSON)
   public List<Additional> getAdditionals() {
-    
+
     try {
-             System.out.println("Llega a jalar las additional category");
-            return AdditionalModel.getInstance().getAll();
-        } catch (Exception ex) {
-            throw new NotFoundException(); 
-        }
+      System.out.println("Llega a jalar las additional category");
+      return AdditionalModel.getInstance().getAll();
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
   }
-  
+
   @GET
   @Path("/adi-cats")
   @Produces(MediaType.APPLICATION_JSON)
   public List<AdditionalCategory> getAdditionalCategories() {
-    
+
     try {
-          System.out.println("Llega a jalar las additional category");
-           return AdditionalCategoryModel.getInstance().getAll();
-        } catch (Exception ex) {
-            throw new NotFoundException(); 
-        }
+      System.out.println("Llega a jalar las additional category");
+      return AdditionalCategoryModel.getInstance().getAll();
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
   }
 
   @POST
@@ -71,94 +70,93 @@ public class ControllerAdditionals {
   @Produces({MediaType.APPLICATION_JSON})
   public Additional create(Additional add) {
     try {
-      
-      add.setAdditionalCategory(AdditionalCategoryModel.getInstance().find(1));
-      System.out.print(add.getDescription());
+
+//      add.setAdditionalCategory(AdditionalCategoryModel.getInstance().find(1));
+//      System.out.print(add.getDescription());
       AdditionalModel.getInstance().create(add);
       return add;
     } catch (Exception ex) {
       throw new NotFoundException();
     }
   }
-  
+
   @POST
   @Path("/create-cat")
   @Produces({MediaType.APPLICATION_JSON})
   public AdditionalCategory createCategory(AdditionalCategory add) {
     try {
-      add.setDish(DishModel.getInstance().find(1)); //comentar
-      System.out.print(add.getDescription());
+//      add.setDish(DishModel.getInstance().find(1)); //comentar
+//      System.out.print(add.getDescription());
       AdditionalCategoryModel.getInstance().create(add);
-      List<AdditionalCategory> list = AdditionalCategoryModel.getInstance().getAll();     
-      return list.get(list.size()-1);
+      List<AdditionalCategory> list = AdditionalCategoryModel.getInstance().getAll();
+      return list.get(list.size() - 1);
     } catch (Exception ex) {
       throw new NotFoundException();
     }
   }
-  
+
   @Path("/update")
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Additional updateAdditional( Additional add) {
+  public Additional updateAdditional(Additional add) {
     try {
-         Additional exist = AdditionalModel.getInstance().exist(add.getId());
+      Additional exist = AdditionalModel.getInstance().exist(add.getId());
 
-      if (exist != null) {        
+      if (exist != null) {
         exist.setDescription(add.getDescription());
         exist.setPrice(add.getPrice());
         exist.setAdditionalCategory(add.getAdditionalCategory()); //pasar el additional category
-        
+
         AdditionalModel.getInstance().edit(exist);
         return exist;
       } else {
-         throw new NotFoundException();
+        throw new NotFoundException();
       }
-        } catch (Exception ex) {
-            throw new NotFoundException(); 
-        }
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
   }
-  
+
   @Path("/update-cat")
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public AdditionalCategory updateAdditionalCat( AdditionalCategory add) {
+  public AdditionalCategory updateAdditionalCat(AdditionalCategory add) {
     try {
-         AdditionalCategory exist = AdditionalCategoryModel.getInstance().exist(add.getId());
+      AdditionalCategory exist = AdditionalCategoryModel.getInstance().exist(add.getId());
 
-      if (exist != null) {        
-        
+      if (exist != null) {
+
         exist.setDescription(add.getDescription());
         exist.setDish(add.getDish());
         exist.setMultiple(add.getMultiple());
         exist.setRequired(add.getRequired());
-        
+
         AdditionalCategoryModel.getInstance().edit(exist);
         return exist;
       } else {
-         throw new NotFoundException();
+        throw new NotFoundException();
       }
-        } catch (Exception ex) {
-            throw new NotFoundException(); 
-        }
+    } catch (Exception ex) {
+      throw new NotFoundException();
+    }
   }
-  
-    @GET
+
+  @GET
   @Path("/last")
   @Produces(MediaType.APPLICATION_JSON)
   public Integer getLast() {
-    
+
     try {
-            
+
       List<AdditionalCategory> list = AdditionalCategoryModel.getInstance().getAll();
-      if (list.isEmpty())
-      {
+      if (list.isEmpty()) {
         throw new NotFoundException();
       }
-      return list.get(list.size()-1).getId();
-        } catch (Exception ex) {
-            return 0; 
-        }
+      return list.get(list.size() - 1).getId();
+    } catch (Exception ex) {
+      return 0;
+    }
   }
 }
