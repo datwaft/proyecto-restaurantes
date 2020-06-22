@@ -1,0 +1,48 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#app {
+  margin: 5rem 0;
+  min-width: 80vw;
+}
+
+.title {
+  font-family: TitilliumWebSemiBold;
+  font-weight: normal;
+  margin: 0;
+}
+
+.box {
+  width: 100%;
+}
+
+.bill table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bill > table td {
+  padding: .5rem;
+  border: 1px solid rgba(0,0,0,.1);
+}
+
+.bill td.title {
+  text-transform: uppercase;
+}
+
+td .arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.box:not(:last-of-type) {
+  margin-bottom: .5rem;
+}
