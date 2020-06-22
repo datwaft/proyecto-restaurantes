@@ -529,7 +529,7 @@ async function createBill(user,address,name,orderType,orderTime,status)  //Funci
     address:address,
     name:name,
     orderType:orderType,
-    orderTime:orderTime,
+    orderTime:null,
     status:status
   };
 

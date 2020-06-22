@@ -33,3 +33,4 @@ insert into `dish`(`category`, `price`, `name`, `description`) values
 
 select * from additionalCategory;
 select * from additional;
+select * from bill;
