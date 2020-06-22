@@ -522,6 +522,8 @@ async function createBill(user,address,name,orderType,orderTime,status)  //Funci
   var today = new Date();
   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
+  console.log(date);
+
   var orders ={
     user:user,
     address:address,
@@ -535,7 +537,7 @@ async function createBill(user,address,name,orderType,orderTime,status)  //Funci
             await $.ajax({
               type: "POST",
               data: JSON.stringify(orders),
-              url: `${ctx}/restaurant/Orders/create/`+date,
+              url: `${ctx}/restaurant/Orders/create/`+orderTime,
               contentType: "application/json"});          
     console.log(result);
     return result;  

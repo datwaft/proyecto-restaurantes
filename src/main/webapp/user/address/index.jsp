@@ -53,17 +53,17 @@
               <input
                 type="text"
                 v-model.trim="city"
-                placeholder="First line of Address"
+                placeholder="City"
                 :class="{invalid: !isCityValid}">
               <input
                 type="text"
                 v-model.trim="state"
-                placeholder="First line of Address"
+                placeholder="State"
                 :class="{invalid: !isStateValid}">
               <input
                 type="text"
                 v-model.trim="postcode"
-                placeholder="First line of Address"
+                placeholder="Postcode"
                 :class="{invalid: !isPostcodeValid}">
             </div>
             <div class="input-group">

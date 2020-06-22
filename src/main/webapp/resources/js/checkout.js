@@ -1,72 +1,17 @@
-/*  NOTA IMPORTANTE 
- *  
- *  En la variable global llamada 'data' es donde se guardan los datos de esta página web,
- *  con solo modificarla ya se modifican sus datos.
- *
- *  Ejemplo: 
- *    Para actualizar las categorias basta con hacer `data.categories = [...]` y con eso ya
- *    se renderizan las nuevas categorías.
- *
- *  Adicionalmente, voy a poner una descripción a cada atributo del data para saber qué
- *  hace cada uno y qué utilidad posee.
- *
- *  Pd: Abajo del todo está la función donde se hacen las llamadas a la BD al inicio del
- *  programa.
- */ 
-
 var data = {
-  /*  Aquí van las categorias para los platillos.
-   *
-   *  ¿Cómo deben ser los objetos internos?
-   *    Deben tener mínimo un atributo 'id' y un atributo 'description'.
-   *    Se le puede cambiar el nombre a los atributos internos, nada más avisar (ejemplo: si se
-   *    quiere 'name' en lugar de 'description').
-   */
-  categories: [],
-  /*  Aquí van los platillos.
-   *
-   *  ¿Cómo deben ser los objetos internos?
-   *    Deben tener mínimo los siguientes atributos:
-   *    - id
-   *    - name
-   *    - description
-   *    - price
-   *    - category (el id de la categoría a la que pertenecen)
-   *
-   *  La categoría se puede cambiar cuando se vaya a usar con la base de datos.
-   */
-  dishes: [],
-  /*  Aquí van los platillos que están en el carrito.
-   *
-   *  Todavía NO está planeado cómo seran, o cómo implementarlo, ahí lo vemos :D
-   */
   cart: [],
-  /*  Es el id de la categoría que está seleccionada actualmente.
-   *  Si es null entonces se muestran todas las categorias.
-   */
-  selected: [],
-  /*  Es el modo de entrega, o sea, si es por envío o la persona viene a recogerlo.
-   *  Es un string siempre.
-   *  Puede ser "delivery" o "pick-up".
-   */
   orderMode: "delivery",
-  /*  Es la fecha de entrega que el usuario eligió.
-   *  Puede ser "ASAP", en cuyo caso equivaldría a decir la fecha y hora actual.
-   *  También puede ser una fecha en formato: yyyy-MM-dd HH:mm e.g. 2020-06-10 22:53.
-   */
   time: "ASAP",
-  /*
-  */
-  isOverlayShown: false,
-  dish: {
-    name: '',
-    description: '',
-    price: '',
-    additionalCategories: [],
-    additionals: []
-  },
-  selectedDish: {
-    quantity: 1
+  name: '',
+  addresses: [],
+  address: null,
+  fillAddress: {
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    postcode: '',
+    country: ''
   }
 };
 
@@ -76,38 +21,6 @@ var data = {
  */
 
 /* --> Vue Components <-- */
-
-var overlay = {
-  model: {
-    prop: 'isShown',
-    event: 'hide'
-  },
-  props: {
-    isShown: Boolean
-  },
-  methods: {
-    hide() {
-      this.$emit('hide', false);
-    }
-  },
-  template: `
-    <transition name="fade">
-      <div class="overlay" v-if="isShown">
-        <div>
-          <div class="box">
-            <h3>
-              <slot name="title"></slot>
-            </h3>
-            <i class="fas fa-times-circle" @click="hide"></i>
-          </div>
-          <div class="box">
-            <slot></slot>
-          </div>
-        </div>
-      </div>
-    </transition>
-  `
-};
 
 var dropdown = {
   data: function () {
@@ -231,21 +144,7 @@ var cartItem = {
   `
 }
 
-/* --> Vue Instances <-- */
-
-var vmCategories = new Vue({
-  el: '#categories',
-  data: data,
-  methods: {
-    select(id) {
-      if (this.selected.includes(id)) {
-        this.selected = this.selected.filter((e) => e !== id);
-      } else {
-        this.selected.push(id);
-      }
-    }
-  }
-});
+/* --> Instances <-- */
 
 var vmTime = new Vue({
   el: '#time',
@@ -258,106 +157,167 @@ var vmTime = new Vue({
       this.time = $('#date-picker').val();
     }
   }
-})
+});
 
-var vmDishes = new Vue({
-  el: '#dishes',
-  data: data,
-  components: {
-    'dropdown-menu': dropdownInline,
-    'overlay-box': overlay
+var vmInformation = new Vue({
+  el: '#information',
+  data: {
+    data: data,
+    session: sessionData
   },
-  methods: {
-    getCategoryById(id) {
-      var object = this.categories.find((e) => e.id == id);
-      return (object ? object.description : "Invalid Category");
-    },
-    async showOverlay(dish) {
-      this.dish.additionalCategories = [];
-      this.dish.category = dish.category;
-      this.dish.description = dish.description;
-      this.dish.id = dish.id;
-      this.dish.name = dish.name;
-      this.dish.price = dish.price;
-
-      var petition = await getDishComplements(dish.id);
-      this.dish.additionalCategories = petition.AdditionalCategory;
-      for (category of this.dish.additionalCategories) {
-        var additionals = petition.Additionals.filter((e) => e.additionalCategory.id === category.id);
-        if (additionals.length === 0) {
-          this.dish.additionalCategories.filter((e) => e.id !== category.id);
-        } else {
-          category.additionals = additionals;
-        }
-      }
-      this.selectedDish = {
-        quantity: 1
-      };
-      for (category of this.dish.additionalCategories) {
-        if (category.multiple) {
-          Vue.set(this.selectedDish, category.id, [])
-        } else {
-          Vue.set(this.selectedDish, category.id, null)
-        }
-      }
-      this.isOverlayShown = true;
-    },
-    addDishToCart() {
-      var object = {
-        dish: Object.assign({}, this.dish),
-        quantity: this.selectedDish.quantity,
-        categories: {}
-      };
-      for([key, value] of Object.entries(this.selectedDish)) {
-        if (key !== 'quantity')
-          object.categories[key] = value;
-      }
-      this.cart.push(object);
-      this.isOverlayShown = false;
+  watch: {
+    'data.address': function(noveau, old) {
+        this.data.fillAddress.address1 = noveau.address1;
+        this.data.fillAddress.address2 = noveau.address2;
+        this.data.fillAddress.city = noveau.city;
+        this.data.fillAddress.state = noveau.state;
+        this.data.fillAddress.postcode = noveau.postcode;
+        this.data.fillAddress.country = noveau.country;
     }
   },
   computed: {
-    isSelectionValid: function() {
-      var conditions = [];
-      for (category of this.dish.additionalCategories) {
-        if (category.required) {
-          if (category.multiple) {
-            conditions.push(this.selectedDish[category.id].length > 0);
-          } else {
-            conditions.push(this.selectedDish[category.id] !== null);
+    hasUser: function () {
+      return this.session.user !== null;
+    },
+    isNameValid: function () {
+      var conditions = [
+        this.data.name.length > 0,
+        this.data.name.length < 45
+      ];
+      return conditions.every((e) => e);
+    },
+    isAddressValid: function () {
+      var conditions = [
+        this.data.address != null
+      ];
+      return conditions.every((e) => e);
+    },
+    isAddress1Valid: function () {
+      var conditions = [
+        this.data.fillAddress.address1.length > 0,
+        this.data.fillAddress.address1.length <= 100
+      ];
+      return conditions.every((e) => e);
+    },
+    isAddress2Valid: function () {
+      var conditions = [
+        this.data.fillAddress.address2.length > 0,
+        this.data.fillAddress.address2.length <= 100
+      ];
+      return conditions.every((e) => e);
+    },
+    isCityValid: function () {
+      var conditions = [
+        this.data.fillAddress.city.length > 0,
+        this.data.fillAddress.city.length <= 45
+      ];
+      return conditions.every((e) => e);
+    },
+    isStateValid: function () {
+      var conditions = [
+        this.data.fillAddress.state.length > 0,
+        this.data.fillAddress.state.length <= 45
+      ];
+      return conditions.every((e) => e);
+    },
+    isPostcodeValid: function () {
+      var conditions = [
+        this.data.fillAddress.postcode.length > 0,
+        this.data.fillAddress.postcode.length <= 45
+      ];
+      return conditions.every((e) => e);
+    },
+    isCountryValid: function () {
+      var conditions = [
+        this.data.fillAddress.country.length > 0,
+        this.data.fillAddress.country.length <= 45
+      ];
+      return conditions.every((e) => e);
+    },
+    isFillAddressValid: function () {
+      var conditions = [
+        this.isAddress1Valid,
+        this.isAddress2Valid,
+        this.isCityValid,
+        this.isStateValid,
+        this.isPostcodeValid,
+        this.isCountryValid
+      ];
+      return conditions.every((e) => e);
+    },
+    canBuy: function () {
+      return this.data.cart.length > 0;
+    },
+    isValid: function () {
+      var conditions = [
+        this.canBuy,
+        this.isFillAddressValid || this.isAddressValid
+      ];
+      return conditions.every((e) => e);
+    },
+    realTime: function () {
+      if (this.data.time !== 'ASAP')
+        return this.data.time;
+      var today = new Date().toISOString();
+      return today.replace(/[TZ]/g, ' ').slice(0,16);
+    }
+  },
+  methods: {
+    async buy() {
+      var bill = null;
+      try {
+        if (this.hasUser) {
+          bill = {
+            user: this.session.user,
+            address: this.data.address,
+            name: null,
+            orderType: this.data.orderMode,
+            orderTime: this.realTime,
+            status: 'received'
+          }
+        } else {
+          bill = {
+            user: null,
+            address: null,
+            name: this.data.name,
+            orderType: this.data.orderMode,
+            orderTime: this.realTime,
+            status: 'received'
+          }
+          bill.address = await createAddress(this.session.user,
+            this.data.fillAddress.address1,
+            this.data.fillAddress.address2,
+            this.data.fillAddress.city,
+            this.data.fillAddress.postcode,
+            this.data.fillAddress.country,
+            this.data.fillAddress.state);
+        }
+        console.log(bill);
+        var createdBill = await createBill(
+          bill.user,
+          bill.address,
+          bill.name,
+          bill.orderType,
+          bill.orderTime+":00",
+          bill.status);
+        console.log(createdBill);
+        for (item of this.data.cart) {
+          for([key, selectedDish] in item) {
+
           }
         }
+        // this.cart = [];
+        // window.location.href = `${ctx}/`;
+      } catch (ex) {
+        console.error(ex);
+        vmNotification.showNotification(
+          "An error ocurred while trying to buy",
+          "Please try again please",
+          "error")
       }
-      return conditions.every((e) => e);
-    },
-    isQuantityValid: function() {
-      var conditions = [
-        this.selectedDish.quantity > 0,
-        !isNaN(this.selectedDish.quantity)
-      ];
-      return conditions.every((e) => e);
-    },
-    isValid: function() {
-      var conditions = [
-        this.isSelectionValid,
-        this.isQuantityValid
-      ];
-      return conditions.every((e) => e);
-    },
-    dishesByCategory: function() {
-      var result = {};
-      this.dishes.forEach((e) => {
-        if (this.selected.length == 0 || this.selected.includes(e.category.id)) {
-          if (!result[e.category.id]) {
-            result[e.category.id] = [];
-          }
-          result[e.category.id].push(e);
-        }
-      });
-      return result;
     }
   }
-})
+});
 
 var vmCart = new Vue({
   el: '#cart',
@@ -371,9 +331,6 @@ var vmCart = new Vue({
     },
     isPickUp: function () {
       return this.orderMode == "pick-up";
-    },
-    canCheckout: function () {
-      return this.cart.length > 0;
     },
     orderTotal: function () {
       var total = 0;
@@ -398,9 +355,6 @@ var vmCart = new Vue({
   methods: {
     remove(key) {
       this.cart.splice(key, 1);
-    },
-    checkout() {
-      window.location.href = `${ctx}/checkout/`;
     }
   }
 });
@@ -410,15 +364,10 @@ var vmCart = new Vue({
  * ============================================================================================
  */
 
-/*  NOTA IMPORTANTE
- *
- *  Aquí se hacen las llamadas a la BD al inicio del programa.
- *  Actualmente tienen datos de prueba.
- */
-
 $(window).on('load', async () => {
-  data.categories = await loadCategory();
-  data.dishes = await loadDishes();
+  if (sessionData.user) {
+    data.addresses = await getDirections(sessionData.user.email);
+  }
 });
 
 $(window).on('load', () => {

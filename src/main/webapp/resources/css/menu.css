@@ -228,9 +228,13 @@ select {
   margin-bottom: 0 !important;
 }
 
-.input-group input:not(:last-child) + :not(.square-button),
-.input-group select:not(:last-child) + :not(.square-button) {
+.input-group input:not(:last-child),
+.input-group select:not(:last-child) {
   margin-right: .5rem;
+}
+
+.square-button + input {
+  margin-right: 0rem !important;
 }
 
 .input-group input,
@@ -368,4 +372,27 @@ input[type="number"] {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+/* ╔════════════════════════════════════════════════════════════════════════════════════════════╗ */
+/* ║                                          Checkout                                          ║ */
+/* ╚════════════════════════════════════════════════════════════════════════════════════════════╝ */
+
+#information {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  background: rgb(var(--background-color));
+  color: rgb(var(--main-alternate-color));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 .5rem;
+}
+
+.label + select,
+.label + input {
+  border-radius: 0 5px 5px 0;
 }

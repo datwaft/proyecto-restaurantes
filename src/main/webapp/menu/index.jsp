@@ -156,6 +156,9 @@
             @remove="remove($event)">
           </cart-item>
         </div>
+        <div>
+          <b>Total: </b>₡{{ orderTotal }}
+        </div>
         <button
           class="button"
           id="checkout"
