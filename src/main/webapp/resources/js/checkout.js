@@ -292,7 +292,6 @@ var vmInformation = new Vue({
             this.data.fillAddress.country,
             this.data.fillAddress.state);
         }
-        console.log(bill);
         var createdBill = await createBill(
           bill.user,
           bill.address,
@@ -300,10 +299,34 @@ var vmInformation = new Vue({
           bill.orderType,
           bill.orderTime+":00",
           bill.status);
-        console.log(createdBill);
         for (item of this.data.cart) {
-          for([key, selectedDish] in item) {
-
+          var selectedDish = await createSelectedDish(
+            item.dish,
+            createdBill,
+            item.quantity
+          );
+          for([key, selected] of Object.entries(item.categories)) {
+            if (Array.isArray(selected) && selected.length > 0) {
+              var selectedAdditionalCategory = await createSelectedAdditionalCategory(
+                selectedDish,
+                selected[0].additionalCategory
+              );
+              for(additional of selected) {
+                await createSelectedAdditional(
+                  selectedAdditionalCategory,
+                  additional
+                );
+              }
+            } else if (!Array.isArray(selected) && selected != null) {
+              var selectedAdditionalCategory = await createSelectedAdditionalCategory(
+                selectedDish,
+                selected.additionalCategory
+              );
+              await createSelectedAdditional(
+                selectedAdditionalCategory,
+                selected
+              );
+            }
           }
         }
         // this.cart = [];
