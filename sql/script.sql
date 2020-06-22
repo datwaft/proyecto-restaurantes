@@ -31,6 +31,7 @@ insert into `dish`(`category`, `price`, `name`, `description`) values
 (4, 29000, 'Ensalada griega', 'Rica ensalada'),
 (5, 45000, 'Ensalada rusa', 'Rica ensalada vegetariana');
 
+select * from admin;
 select * from additionalCategory;
 select * from additional;
 select * from bill;
