@@ -15,7 +15,16 @@
  */ 
 
 var data = {
-  bills: []
+  bills: [],
+  filter: '',
+  filterMode: '',
+  filters: [
+    'id',
+    'user',
+    'type',
+    'time',
+    'status'
+  ]
 };
 
 /* ============================================================================================ 
@@ -278,6 +287,55 @@ var vmApp = new Vue({
   data: data,
   components: {
     'component-bill': bill
+  },
+  computed: {
+    filtered: function () {
+      try {
+        var list = this.bills;
+        var regex = RegExp(this.filter);
+        return list.filter((object) => {
+          if (this.filter.length === 0) return true;
+          switch (this.filterMode) {
+            case 'id':
+              if (regex.test(object.id)) {
+                return true;
+              }
+              break;
+            case 'user':
+              if (object.user) {
+                if (regex.test(object.user.email)) {
+                  return true;
+                }
+              } else {
+                if (regex.test(object.name)) {
+                  return true;
+                }
+              }
+              break;
+            case 'type':
+              if (regex.test(object.orderType)) {
+                return true;
+              }
+              break;
+            case 'time':
+              if (regex.test(object.orderTime.replace(/[TZ]/g, ' ').slice(0,16))) {
+                return true;
+              }
+              break;
+            case 'status':
+              if (regex.test(object.status)) {
+                return true;
+              }
+              break;
+            default:
+              return true;
+          }
+        });
+      } catch(ex) {
+        console.error(ex);
+        return this.bills;
+      }
+    }
   }
 });
 
