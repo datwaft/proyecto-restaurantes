@@ -85,7 +85,7 @@
               </div>
               <div v-if="category.multiple">
                 <div class="list-item" v-for="additional of category.additionals" :key="additional.id">
-                  <span>{{ additional.description }}</span>
+                  <span>{{ additional.description }}: ₡{{ additional.price }}</span>
                   <span>
                     <input
                       type="checkbox"

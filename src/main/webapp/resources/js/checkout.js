@@ -179,6 +179,9 @@ var vmInformation = new Vue({
     hasUser: function () {
       return this.session.user !== null;
     },
+    shouldBeWritten: function () {
+      return !this.hasUser || this.data.addresses.length === 0;
+    },
     isNameValid: function () {
       var conditions = [
         this.data.name.length > 0,
@@ -267,13 +270,33 @@ var vmInformation = new Vue({
       var bill = null;
       try {
         if (this.hasUser) {
-          bill = {
-            user: this.session.user,
-            address: (this.data.orderMode === 'delivery' ? this.data.address : null),
-            name: null,
-            orderType: this.data.orderMode,
-            orderTime: this.realTime,
-            status: 'received'
+          if (this.data.addresses.length === 0) {
+            bill = {
+              user: this.session.user,
+              address: null,
+              name: null,
+              orderType: this.data.orderMode,
+              orderTime: this.realTime,
+              status: 'received'
+            }
+            if (this.data.orderMode === 'delivery') {
+              bill.address = await createAddress(this.session.user,
+                this.data.fillAddress.address1,
+                this.data.fillAddress.address2,
+                this.data.fillAddress.city,
+                this.data.fillAddress.postcode,
+                this.data.fillAddress.country,
+                this.data.fillAddress.state);
+            }
+          } else {
+            bill = {
+              user: this.session.user,
+              address: (this.data.orderMode === 'delivery' ? this.data.address : null),
+              name: null,
+              orderType: this.data.orderMode,
+              orderTime: this.realTime,
+              status: 'received'
+            }
           }
         } else {
           bill = {

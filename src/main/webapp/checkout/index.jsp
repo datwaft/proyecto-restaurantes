@@ -60,7 +60,7 @@
                 v-model.trim="data.fillAddress.address1"
                 placeholder="First line of Address"
                 :class="{invalid: !isAddress1Valid}"
-                :readonly="hasUser">
+                :readonly="!shouldBeWritten">
             </div>
             <div class="input-group">
               <input
@@ -68,7 +68,7 @@
                 v-model.trim="data.fillAddress.address2"
                 placeholder="Second line of Address"
                 :class="{invalid: !isAddress2Valid}"
-                :readonly="hasUser">
+                :readonly="!shouldBeWritten">
             </div>
             <div class="input-group">
               <input
@@ -76,19 +76,19 @@
                 v-model.trim="data.fillAddress.city"
                 placeholder="City"
                 :class="{invalid: !isCityValid}"
-                :readonly="hasUser">
+                :readonly="!shouldBeWritten">
               <input
                 type="text"
                 v-model.trim="data.fillAddress.state"
                 placeholder="State"
                 :class="{invalid: !isStateValid}"
-                :readonly="hasUser">
+                :readonly="!shouldBeWritten">
               <input
                 type="text"
                 v-model.trim="data.fillAddress.postcode"
                 placeholder="Postcode"
                 :class="{invalid: !isPostcodeValid}"
-                :readonly="hasUser">
+                :readonly="!shouldBeWritten">
             </div>
             <div class="input-group">
               <input
@@ -96,7 +96,7 @@
                 v-model.trim="data.fillAddress.country"
                 placeholder="Country"
                 :class="{invalid: !isCountryValid}"
-                :readonly="hasUser">
+                :readonly="!shouldBeWritten">
             </div>
           </template>
           <template v-else>
