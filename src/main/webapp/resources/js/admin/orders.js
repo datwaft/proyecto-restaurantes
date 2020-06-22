@@ -156,13 +156,33 @@ var dish = {
 var bill = {
   data: function () {
     return {
-      isShown: false
+      isShown: false,
+      statusList: [
+        'received',
+        'preparation',
+        'completed'
+      ]
     }
   },
   props: {
     object: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    async change(event) {
+      await updateOrderStatus(
+        this.object.id,
+        event.target.value
+      );
+      this.update();
+    },
+    async update() {
+      data.bills = await getAllBills();
+      for(e of data.bills) {
+        Vue.set(e, 'selecteds', await getSelecteds(e.id));
+      }
     }
   },
   computed: {
@@ -231,7 +251,13 @@ var bill = {
           <td>{{ name }}</td>
           <td>{{ object.orderType }}</td>
           <td>{{ time }}</td>
-          <td>{{ object.status }}</td>
+          <td>
+            <select v-model="object.status" @change="change($event)">
+              <option v-for="status in statusList" v-bind:value="status">
+                {{ status }}
+              </option>
+            </select>
+          </td>
         </tr>
         <tr v-show="isShown">
           <td colspan="5" v-if="object.selecteds">

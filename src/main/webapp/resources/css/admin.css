@@ -286,6 +286,10 @@ td .arrow {
   height: 100%;
 }
 
+td select {
+  width: 100%;
+}
+
 #app {
   margin: 5rem 0;
   min-width: 80vw;
