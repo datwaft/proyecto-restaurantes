@@ -18,10 +18,24 @@
         <div class="title">Category List</div>
       </div>
       <div class="box">
+        <div class="input-group">
+          <input
+            type="text"
+            v-model.trim="filter"
+            placeholder="Please enter your filter">
+          <select v-model='filterMode'>
+            <option disabled value="">Please select one</option>
+            <option v-for="filter in filters" :value="filter">
+              {{ filter }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="box">
         <div v-if="categories.length === 0">
           There are no categories
         </div>
-        <list-item v-for="category in categories" :item="category" :key="category.id" @update="addmodify($event)">
+        <list-item v-for="category in filtered" :item="category" :key="category.id" @update="addmodify($event)">
           <b>ID: </b>{{ category.id }}
           <br>
           <b>Description: </b>{{ category.description }}

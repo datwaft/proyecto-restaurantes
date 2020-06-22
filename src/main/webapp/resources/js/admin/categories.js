@@ -2,7 +2,13 @@ var data = {
   categories: [],
   id: null,
   description: '',
-  isOverlayShown: false
+  isOverlayShown: false,
+  filter: '',
+  filterMode: '',
+  filters: [
+    'id',
+    'description'
+  ]
 }
 
 var overlay = {
@@ -78,6 +84,32 @@ var vmCategories = new Vue({
         this.isDescriptionValid
       ];
       return conditions.every((e) => e);
+    },
+    filtered: function () {
+      try {
+        var list = this.categories;
+        var regex = RegExp(this.filter);
+        return list.filter((object) => {
+          if (this.filter.length === 0) return true;
+          switch (this.filterMode) {
+            case 'id':
+              if (regex.test(object.id)) {
+                return true;
+              }
+              break;
+            case 'description':
+              if (regex.test(object.description)) {
+                return true;
+              }
+              break;
+            default:
+              return true;
+          }
+        });
+      } catch(ex) {
+        console.error(ex);
+        return this.categories;
+      }
     }
   },
   methods: {

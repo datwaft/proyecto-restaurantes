@@ -18,10 +18,24 @@
         <div class="title">Users List</div>
       </div>
       <div class="box">
+        <div class="input-group">
+          <input
+            type="text"
+            v-model.trim="filter"
+            placeholder="Please enter your filter">
+          <select v-model='filterMode'>
+            <option disabled value="">Please select one</option>
+            <option v-for="filter in filters" :value="filter">
+              {{ filter }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="box">
         <div v-if="users.length === 0">
           There are no users
         </div>
-        <div class="item" v-for="user of users" :id="user.email">
+        <div class="item" v-for="user of filtered" :id="user.email">
           <b>Email: </b>{{ user.email }}
           <br>
           <b>Password: </b>{{ user.password }}

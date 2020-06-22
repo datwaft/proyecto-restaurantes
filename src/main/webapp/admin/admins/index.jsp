@@ -18,10 +18,24 @@
         <div class="title">Administrators List</div>
       </div>
       <div class="box">
+        <div class="input-group">
+          <input
+            type="text"
+            v-model.trim="filter"
+            placeholder="Please enter your filter">
+          <select v-model='filterMode'>
+            <option disabled value="">Please select one</option>
+            <option v-for="filter in filters" :value="filter">
+              {{ filter }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="box">
         <div v-if="admins.length === 0">
           There are no administrators
         </div>
-        <div class="item" v-for="admin of admins" :id="admin.username">
+        <div class="item" v-for="admin of filtered" :id="admin.username">
           <b>Username: </b>{{ admin.username }}
           <br>
           <b>Password: </b>{{ admin.password }}

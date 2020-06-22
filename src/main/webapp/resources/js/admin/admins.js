@@ -2,7 +2,13 @@ var data = {
   admins: [],
   username: '',
   password: '',
-  isOverlayShown: false
+  isOverlayShown: false,
+  filter: '',
+  filterMode: '',
+  filters: [
+    'username',
+    'password'
+  ]
 }
 
 var overlay = {
@@ -64,6 +70,32 @@ var vmAdmins = new Vue({
         this.isPasswordValid
       ];
       return conditions.every((e) => e);
+    },
+    filtered: function () {
+      try {
+        var list = this.admins;
+        var regex = RegExp(this.filter);
+        return list.filter((object) => {
+          if (this.filter.length === 0) return true;
+          switch (this.filterMode) {
+            case 'username':
+              if (regex.test(object.username)) {
+                return true;
+              }
+              break;
+            case 'password':
+              if (regex.test(object.password)) {
+                return true;
+              }
+              break;
+            default:
+              return true;
+          }
+        });
+      } catch(ex) {
+        console.error(ex);
+        return this.admins;
+      }
     }
   },
   methods: {

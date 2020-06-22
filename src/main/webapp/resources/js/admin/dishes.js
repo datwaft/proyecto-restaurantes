@@ -12,7 +12,16 @@ var data = {
   additionalCategories: [],
   additionals: [],
   lastCategoryId: 0,
-  isOverlayShown: false
+  isOverlayShown: false,
+  filter: '',
+  filterMode: '',
+  filters: [
+    'id',
+    'name',
+    'description',
+    'category',
+    'price'
+  ]
 }
 
 var overlay = {
@@ -242,6 +251,47 @@ var vmDishes = new Vue({
         this.isDescriptionValid
       ];
       return conditions.every((e) => e);
+    },
+    filtered: function () {
+      try {
+        var list = this.dishes;
+        var regex = RegExp(this.filter);
+        return list.filter((object) => {
+          if (this.filter.length === 0) return true;
+          switch (this.filterMode) {
+            case 'id':
+              if (regex.test(object.id)) {
+                return true;
+              }
+              break;
+            case 'name':
+              if (regex.test(object.name)) {
+                return true;
+              }
+              break;
+            case 'description':
+              if (regex.test(object.description)) {
+                return true;
+              }
+              break;
+            case 'category':
+              if (regex.test(object.category.description)) {
+                return true;
+              }
+              break;
+            case 'price':
+              if (regex.test(object.price)) {
+                return true;
+              }
+              break;
+            default:
+              return true;
+          }
+        });
+      } catch(ex) {
+        console.error(ex);
+        return this.dishes;
+      }
     }
   },
   methods: {
