@@ -189,7 +189,6 @@ var bill = {
     totalPrice: function () {
       if (!this.object.dishes) return -1;
       var price = 0;
-      console.log(this.object.dishes);
       for (dish in this.object.dishes) {
         var pricel = dish.dish.dish.price;
         for (e in dish.categories) {
@@ -200,6 +199,13 @@ var bill = {
         price += pricel * dish.dish.quantity;
       }
       return price;
+    },
+    name: function () {
+      if (this.object.user) {
+        return this.object.user.email;
+      } else {
+        return this.object.name;
+      }
     }
   },
   components: {
@@ -210,6 +216,7 @@ var bill = {
       <table>
         <tr>
           <td class="title">id</td>
+          <td class="title">user</td>
           <td class="title">type</td>
           <td class="title">time</td>
           <td class="title">status</td>
@@ -221,6 +228,7 @@ var bill = {
         </tr>
         <tr>
           <td>{{ object.id }}</td>
+          <td>{{ name }}</td>
           <td>{{ object.orderType }}</td>
           <td>{{ time }}</td>
           <td>{{ object.status }}</td>
@@ -259,7 +267,7 @@ var vmApp = new Vue({
  */
 
 $(window).on('load', async () => {
-  data.bills = await getBills(sessionData.user.email);
+  data.bills = await getAllBills();
   for(e of data.bills) {
     Vue.set(e, 'selecteds', await getSelecteds(e.id));
   }
