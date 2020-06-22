@@ -251,7 +251,7 @@ var vmInformation = new Vue({
     isValid: function () {
       var conditions = [
         this.canBuy,
-        this.isFillAddressValid || this.isAddressValid
+        this.isFillAddressValid || this.isAddressValid || this.data.orderMode == 'pick-up'
       ];
       return conditions.every((e) => e);
     },
@@ -269,7 +269,7 @@ var vmInformation = new Vue({
         if (this.hasUser) {
           bill = {
             user: this.session.user,
-            address: this.data.address,
+            address: (this.data.orderMode === 'delivery' ? this.data.address : null),
             name: null,
             orderType: this.data.orderMode,
             orderTime: this.realTime,
@@ -284,13 +284,15 @@ var vmInformation = new Vue({
             orderTime: this.realTime,
             status: 'received'
           }
-          bill.address = await createAddress(this.session.user,
-            this.data.fillAddress.address1,
-            this.data.fillAddress.address2,
-            this.data.fillAddress.city,
-            this.data.fillAddress.postcode,
-            this.data.fillAddress.country,
-            this.data.fillAddress.state);
+          if (this.data.orderMode === 'delivery') {
+            bill.address = await createAddress(this.session.user,
+              this.data.fillAddress.address1,
+              this.data.fillAddress.address2,
+              this.data.fillAddress.city,
+              this.data.fillAddress.postcode,
+              this.data.fillAddress.country,
+              this.data.fillAddress.state);
+          }
         }
         var createdBill = await createBill(
           bill.user,
@@ -329,7 +331,7 @@ var vmInformation = new Vue({
             }
           }
         }
-        this.cart = [];
+        this.data.cart = [];
         window.location.href = `${ctx}/`;
       } catch (ex) {
         console.error(ex);

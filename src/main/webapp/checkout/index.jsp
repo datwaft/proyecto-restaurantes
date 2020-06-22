@@ -44,59 +44,64 @@
               placeholder="Name"
               :class="{invalid: !isNameValid}">
           </div>
-          <div class="input-group"v-if="hasUser && data.addresses.length">
-            <div class="label">Address</div>
-            <select v-model="data.address">
-              <option disabled :value="null">Please select one</option>
-              <option v-for="address in data.addresses" v-bind:value="address">
-                {{ address.address1 }}, {{ address.address2 }}
-              </option>
-            </select>
-          </div>
-          <div class="input-group">
-            <input
-              type="text"
-              v-model.trim="data.fillAddress.address1"
-              placeholder="First line of Address"
-              :class="{invalid: !isAddress1Valid}"
-              :readonly="hasUser">
-          </div>
-          <div class="input-group">
-            <input
-              type="text"
-              v-model.trim="data.fillAddress.address2"
-              placeholder="Second line of Address"
-              :class="{invalid: !isAddress2Valid}"
-              :readonly="hasUser">
-          </div>
-          <div class="input-group">
-            <input
-              type="text"
-              v-model.trim="data.fillAddress.city"
-              placeholder="City"
-              :class="{invalid: !isCityValid}"
-              :readonly="hasUser">
-            <input
-              type="text"
-              v-model.trim="data.fillAddress.state"
-              placeholder="State"
-              :class="{invalid: !isStateValid}"
-              :readonly="hasUser">
-            <input
-              type="text"
-              v-model.trim="data.fillAddress.postcode"
-              placeholder="Postcode"
-              :class="{invalid: !isPostcodeValid}"
-              :readonly="hasUser">
-          </div>
-          <div class="input-group">
-            <input
-              type="text"
-              v-model.trim="data.fillAddress.country"
-              placeholder="Country"
-              :class="{invalid: !isCountryValid}"
-              :readonly="hasUser">
-          </div>
+          <template v-if="data.orderMode==='delivery'">
+            <div class="input-group"v-if="hasUser && data.addresses.length">
+              <div class="label">Address</div>
+              <select v-model="data.address">
+                <option disabled :value="null">Please select one</option>
+                <option v-for="address in data.addresses" v-bind:value="address">
+                  {{ address.address1 }}, {{ address.address2 }}
+                </option>
+              </select>
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                v-model.trim="data.fillAddress.address1"
+                placeholder="First line of Address"
+                :class="{invalid: !isAddress1Valid}"
+                :readonly="hasUser">
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                v-model.trim="data.fillAddress.address2"
+                placeholder="Second line of Address"
+                :class="{invalid: !isAddress2Valid}"
+                :readonly="hasUser">
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                v-model.trim="data.fillAddress.city"
+                placeholder="City"
+                :class="{invalid: !isCityValid}"
+                :readonly="hasUser">
+              <input
+                type="text"
+                v-model.trim="data.fillAddress.state"
+                placeholder="State"
+                :class="{invalid: !isStateValid}"
+                :readonly="hasUser">
+              <input
+                type="text"
+                v-model.trim="data.fillAddress.postcode"
+                placeholder="Postcode"
+                :class="{invalid: !isPostcodeValid}"
+                :readonly="hasUser">
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                v-model.trim="data.fillAddress.country"
+                placeholder="Country"
+                :class="{invalid: !isCountryValid}"
+                :readonly="hasUser">
+            </div>
+          </template>
+          <template v-else>
+            <div class="title">Continue, please</div>
+          </template>
           <button
             class="button"
             id="checkout"
