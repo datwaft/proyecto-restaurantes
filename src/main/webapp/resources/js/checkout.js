@@ -329,8 +329,8 @@ var vmInformation = new Vue({
             }
           }
         }
-        // this.cart = [];
-        // window.location.href = `${ctx}/`;
+        this.cart = [];
+        window.location.href = `${ctx}/`;
       } catch (ex) {
         console.error(ex);
         vmNotification.showNotification(
